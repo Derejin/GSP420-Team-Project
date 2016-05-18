@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="GSPWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GSPWindow.cpp" />
     <ClCompile Include="TestWindow.cpp" />
   </ItemGroup>
