@@ -5,9 +5,12 @@
 //- added test of update loop
 //modified 5/17 17:16PST by Richard
 //- added test of Graphics class
+//modified 5/17 18:02PST by Richard
+//- added Texture junk
 
 #include "GSPWindow.h"
 #include "Graphics.h"
+#include "Texture.h"
 
 //set screen width and height here
 const int SCREEN_WIDTH = 1080;
@@ -18,6 +21,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   GSPWindow gameWindow(L"Testing Window", SCREEN_WIDTH, SCREEN_HEIGHT);
   Graphics gfx(gameWindow);
 
+  //nothing to do with this yet, but it appears to be loading correctly
+  Texture test(L"test image.png");
+
   while(gameWindow.update()) {
     gfx.startDraw();
     //draw calls go here
@@ -26,3 +32,4 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 
 	return 0;
 }
+

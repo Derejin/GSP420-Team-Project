@@ -21,11 +21,21 @@
   <ItemGroup>
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GSPWindow.h" />
+    <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GSPWindow.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="TestWindow.cpp" />
+    <ClCompile Include="Texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="test image.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Image>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CB0797B1-C76F-403A-A8D6-B1780EE10398}</ProjectGuid>

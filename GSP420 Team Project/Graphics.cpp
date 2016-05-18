@@ -5,6 +5,8 @@
 #include "GSPWindow.h"
 #pragma comment(lib, "d2d1.lib")
 
+#include "ImageLoader.h" //~~@ for testing - will remove later (RB)
+
 Graphics::Graphics(const GSPWindow& window) {
   //factory object is used to generate other interfaces bound to the same context
   HRESULT result = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &factory);
@@ -17,6 +19,8 @@ Graphics::Graphics(const GSPWindow& window) {
   D2D1_HWND_RENDER_TARGET_PROPERTIES hTargProps = D2D1::HwndRenderTargetProperties(window.getHandle(), sz);
   result = factory->CreateHwndRenderTarget(targProps, hTargProps, &renderTarget);
   assert(SUCCEEDED(result) && "Failed to create render target.");
+
+  ImageLoader::gfx = this; //~~@ for testing - will remove later (RB)
 }
 
 void Graphics::startDraw() {
