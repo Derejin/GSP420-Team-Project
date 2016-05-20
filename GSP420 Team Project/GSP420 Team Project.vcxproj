@@ -22,12 +22,14 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GSPWindow.h" />
     <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GSPWindow.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="TestWindow.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
