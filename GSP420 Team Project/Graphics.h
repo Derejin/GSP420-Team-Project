@@ -27,4 +27,5 @@ private:
   friend class Plane;
   friend class ImageLoader;
   friend class Font;
+  friend class Text;
 };
