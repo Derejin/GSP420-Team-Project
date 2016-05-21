@@ -10,6 +10,8 @@
 //modified 5/20 4:39 AM by Derek
 //- added test logic for InputManager, updated comments+format+texture testing name
 //- error encountered: seeking help from Richard due to InputManager class not instantiating properly
+//modified 5/20, 11:30 PM by Derek
+//- fixed issue with InputManager construction, updated test to work
 
 #include "GSPWindow.h"
 #include "Graphics.h"
@@ -30,27 +32,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 	Graphics gfx(gameWindow);
 
 	//input initialization
-	//InputManager input(HINSTANCE, gameWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
-	//RETURNS ERROR: 'variable "gameWindow" is not a type name'
-	//also same for SCREEN_WIDTH and SCREEN_HEIGHT. seems to indicate
-	//constructor is improperly built, but I saw no errors within InputManager.h or InputManager.cpp
-	//unsure what the problem is here, so commented out
-
+	InputManager input((HINSTANCE)GetModuleHandle(NULL), gameWindow.getHandle(), SCREEN_WIDTH, SCREEN_HEIGHT);
+	
 	//nothing to do with this yet, but it appears to be loading correctly
 	Texture testTexture(L"test image.png");
 
-	//INPUT TESTING - COMMENTED OUT FOR NOW DUE TO ERROR//
-	/*
-	//to test input, press Z to start window
-	std::cout << "Press Z to start window \n";
+	//add test for input manager here
 
-	while (!input.IsKeyPressed(KEY_DASH))
-	{
-		
-	};
-	*/
-
-	while(gameWindow.update()) {
+	while (gameWindow.update()) {
 		gfx.startDraw();
 		//draw calls go here
 		gfx.endDraw();

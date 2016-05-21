@@ -4,6 +4,12 @@
 //created 5/19/2016, 9:38 PM, by Derek Baumgartner
 //based upon Rastertek tutorial at http://www.rastertek.com/dx11tut13.html
 
+//updated 5/20/2016, 11:28 PM by Derek Baumgartner,
+//to add required comments for DirectInput
+
+#pragma comment(lib, "dinput8.lib")
+#pragma comment(lib, "dxguid.lib")
+
 #include "InputManager.h"
 
 //parameterized constructor - only constructor that should be used for this class

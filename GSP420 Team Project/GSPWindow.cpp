@@ -1,3 +1,6 @@
+#pragma comment(lib, "dinput8.lib")
+#pragma comment(lib, "dxguid.lib")
+
 #include "GSPWindow.h"
 
 //created 5/17/2016, 6:00 PM, by Derek Baumgartner

@@ -4,6 +4,9 @@
 //created 5/19/2016, 9:21 PM, by Derek Baumgartner
 //based upon Rastertek tutorial at http://www.rastertek.com/dx11tut13.html
 
+//updated 5/20/2016, 11:38 by Derek,
+//to streamline KeyInput enum
+
 #pragma once
 #include <assert.h>
 
@@ -73,9 +76,9 @@ public:
 		//note: the above const int INPUT_NUM_KEYS must be set to the number of elements
 		//in this array!
 		KEY_ESC = 0,
-		KEY_ENTER = 1,
-		KEY_JUMP = 2,
-		KEY_DASH = 3,
+		KEY_ENTER,
+		KEY_JUMP,
+		KEY_DASH,
 	};
 
 	bool ReadFrame(); //runs ReadKeyboard, ReadMouse, then ProcessInput
