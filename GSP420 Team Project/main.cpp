@@ -16,6 +16,9 @@
 //-testing of input was working, but rectangle wasn't being set properly to 
 //see the changes caused by pressing Z.
 
+//Testing if this works
+//Testing number two
+
 #include "GSPWindow.h"
 #include "Graphics.h"
 #include "Text.h"
