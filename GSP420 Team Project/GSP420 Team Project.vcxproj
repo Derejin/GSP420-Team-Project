@@ -19,16 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Font.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GSPWindow.h" />
     <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GSPWindow.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
-    <ClCompile Include="TestWindow.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -7,10 +7,13 @@
 //- added test of Graphics class
 //modified 5/17 18:02PST by Richard
 //- added Texture junk
+//modified 5/20 14:24PST by Richard
+//- changed file name to main.cpp, testing font functions
 
 #include "GSPWindow.h"
 #include "Graphics.h"
-#include "Texture.h"
+#include "Text.h"
+#include "Font.h"
 
 //set screen width and height here
 const int SCREEN_WIDTH = 1080;
@@ -21,12 +24,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   GSPWindow gameWindow(L"Testing Window", SCREEN_WIDTH, SCREEN_HEIGHT);
   Graphics gfx(gameWindow);
 
-  //nothing to do with this yet, but it appears to be loading correctly
-  Texture test(L"test image.png");
+  Font font(L"Arial");
+  Text text(L"The herp derpinest.", &font);
+  text.setRect(D2D1::RectF(100.f, 100.f, 300.f, 100.f));
 
   while(gameWindow.update()) {
     gfx.startDraw();
-    //draw calls go here
+    text.draw();
     gfx.endDraw();
   }
 

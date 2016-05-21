@@ -6,6 +6,7 @@
 #pragma comment(lib, "d2d1.lib")
 
 #include "ImageLoader.h" //~~@ for testing - will remove later (RB)
+#include "Font.h"
 
 Graphics::Graphics(const GSPWindow& window) {
   //factory object is used to generate other interfaces bound to the same context
@@ -20,7 +21,8 @@ Graphics::Graphics(const GSPWindow& window) {
   result = factory->CreateHwndRenderTarget(targProps, hTargProps, &renderTarget);
   assert(SUCCEEDED(result) && "Failed to create render target.");
 
-  ImageLoader::gfx = this; //~~@ for testing - will remove later (RB)
+  Font::gfx = ImageLoader::gfx = this; //~~@ for testing - will remove later (RB)
+  
 }
 
 void Graphics::startDraw() {
