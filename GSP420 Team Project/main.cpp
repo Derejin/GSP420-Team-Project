@@ -9,11 +9,15 @@
 //- added Texture junk
 //modified 5/20 14:24PST by Richard
 //- changed file name to main.cpp, testing font functions
+//modified 5/20 11:49EST by Derek
+//-adding InputManager and InputManager testing - testing not working yet, key input not
+//seemingly being read.
 
 #include "GSPWindow.h"
 #include "Graphics.h"
 #include "Text.h"
 #include "Font.h"
+#include "InputManager.h"
 
 //set screen width and height here
 const int SCREEN_WIDTH = 1080;
@@ -23,14 +27,29 @@ const int SCREEN_HEIGHT = 600;
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   GSPWindow gameWindow(L"Testing Window", SCREEN_WIDTH, SCREEN_HEIGHT);
   Graphics gfx(gameWindow);
+  InputManager input(HINSTANCE(GetModuleHandle(NULL)), gameWindow.getHandle(), SCREEN_WIDTH, SCREEN_HEIGHT);
 
   Font font(L"Arial");
   Text text(L"The herp derpinest.", &font);
   text.setRect(D2D1::RectF(100.f, 100.f, 300.f, 100.f));
 
   while(gameWindow.update()) {
-    gfx.startDraw();
-    text.draw();
+	//to test input: will check for "Z" (KEY_DASH)
+	//and change the text's rectangle
+	  //currently not working.
+	  input.ReadFrame();
+
+	  if (input.IsKeyPressed(InputManager::KEY_DASH))
+	  {
+		  text.setRect(D2D1::RectF(100.f, 100.f, 600.f, 300.f));
+	  }
+	  else
+	  {
+		  text.setRect(D2D1::RectF(100.f, 100.f, 300.f, 100.f));
+	  }
+	
+	gfx.startDraw();
+	text.draw();
     gfx.endDraw();
   }
 
