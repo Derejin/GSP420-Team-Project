@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{de1c847a-7c21-4ee8-a971-97b729145645}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{95af2ae9-10bc-4aa4-8404-6ebbdc55df43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{152a0198-0b64-458b-bf20-d34318280520}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GSPWindow.h">
@@ -38,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
