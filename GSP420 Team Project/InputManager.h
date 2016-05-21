@@ -5,13 +5,13 @@
 //based upon Rastertek tutorial at http://www.rastertek.com/dx11tut13.html
 
 //updated 5/20/2016, 11:38 by Derek,
-//to streamline KeyInput enum
+//to streamline KeyInput enum and fix the directinput version declaration
 
 #pragma once
 #include <assert.h>
 
 //directinput version declaration
-#define DIRECTINPUT_VERSION0x0800
+#define DIRECTINPUT_VERSION 0x0800
 
 //linker requirements
 #pragma comment(lib, "dinput8.lib")
