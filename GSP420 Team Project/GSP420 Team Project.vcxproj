@@ -24,6 +24,8 @@
     <ClInclude Include="GSPWindow.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="MenuManager.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
@@ -34,6 +36,8 @@
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
