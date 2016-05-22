@@ -3,7 +3,6 @@
 
 #include "Graphics.h"
 #include "GSPWindow.h"
-#include "Bitmap.h"
 #include "Sprite.h"
 #pragma comment(lib, "d2d1.lib")
 
@@ -24,23 +23,16 @@ Graphics::Graphics(const GSPWindow& window) {
   assert(SUCCEEDED(result) && "Failed to create render target.");
 
   Font::gfx = ImageLoader::gfx = this; //~~@ for testing - will remove later (RB)
-  
+  Sprite::gfx = ImageLoader::gfx = this; //~~@ for testing- will remove later(CB/RB)
 }
 
 void Graphics::startDraw() {
   renderTarget->BeginDraw();
   renderTarget->Clear();
-  for (Sprite* sp : sprites) { sp->draw(renderTarget); }// Added this in to handle drawing the sprites
+  
 }
 
 void Graphics::endDraw() {
   renderTarget->EndDraw();
 }
 
-Sprite Graphics::createSprite() {
-	return Sprite(*this);
-}
-
-Bitmap Graphics::loadImageFromFile(const std::wstring& filename) {
-	return Bitmap(loader.loadBitmap(filename));
-}

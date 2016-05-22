@@ -25,7 +25,7 @@
 #include "Font.h"
 #include "InputManager.h"
 #include "Sprite.h"
-#include "Bitmap.h"
+
 
 //set screen width and height here
 const int SCREEN_WIDTH = 1080;
@@ -38,47 +38,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   InputManager input(HINSTANCE(GetModuleHandle(NULL)), gameWindow.getHandle(), SCREEN_WIDTH, SCREEN_HEIGHT);
 
   //Bitmap objects serve as handles and information sources for loaded textures
-  Bitmap stellaBmp = gfx.loadImageFromFile(L"stella_walk_2.png");
+  Texture tex(L"stella_walk_2.png");
 
-  Sprite stellaSpr = gfx.createSprite();
-  stellaSpr.setBitmap(stellaBmp); //link this sprite to the loaded bitmap resource
-	//these are setting the size of the source-rect that describes what portion of the texture to render (describes the size of an animation cell)
-  stellaSpr.srcWidth = (float)(stellaBmp.getWidth() / 4);
-  stellaSpr.srcHeight = (float)(stellaBmp.getHeight() / 8);
-  //these are setting the size of the sprite itself (size to render at)
-  stellaSpr.width = stellaSpr.srcWidth;
-  stellaSpr.height = stellaSpr.srcHeight;
-  //and the position to render at
-  stellaSpr.x = (SCREEN_WIDTH - stellaSpr.width) / 2;
-  stellaSpr.y = (SCREEN_HEIGHT - stellaSpr.height) / 2;
+  Sprite stellaspr;
+  stellaspr.setBitmap(tex); 
+  stellaspr.destRect = stellaspr.srcRect;
+  stellaspr.opacity = 1.0f;
+  
+  stellaspr.srcWidth = (float)(tex.getWidth() / 4);
+  stellaspr.srcHeight = (float)(tex.getHeight() / 8);
 
-  Bitmap coinBmp = gfx.loadImageFromFile(L"Full Coins.png");
-  std::vector<Sprite> sprites{ gfx.createSprite(), gfx.createSprite(), gfx.createSprite() };
-  for (auto& spr : sprites) {
-	  spr.setBitmap(coinBmp);//link this sprite to the loaded bitmap resource
-		//these are setting the size of the source-rect that describes what portion of the texture to render (describes the size of an animation cell)
-	  spr.srcWidth = (float)(coinBmp.getWidth() / 8);
-	  spr.srcHeight = (float)coinBmp.getHeight();
-	  //these are setting the size of the sprite itself (size to render at)
-	  spr.width = spr.srcWidth * 2;
-	  spr.height = spr.srcHeight * 2;
-  }
+  int startx = 0;// starting point for sprite animation for walking
+  int endx = tex.getWidth(); //end point for sprite animation walking
 
-  int tickCount = 0;  //render-locked timer
+  int starty = 256; // this is the front position of the cell I am wanting to use for walking
+  int endy = 320; // this is the end position of the cell I am wanting to use for walking
+  int walkingSpeed = 3; // walking speed for each tich that the z button is held down
 
-					  //Stella-specific animation stuff
-  const int faceorder[] = { 0, 5, 1, 6, 3, 7, 2, 4 }; //spritesheet was in a weird order and I don't feel like changing it(from demo)
-  int stepFreq = 10;   //how many ticks pass before advancing animation frame
+  int tickCount = 0;
+
+  //Stella-specific animation stuff
+  const int faceorder[] = { 0, 5, 1, 6, 3, 7, 2, 4 }; //spritesheet was in a weird order and I don't feel like changing it
+  int stepFreq = 30;   //how many ticks pass before advancing animation frame
   int turnFreq = 100; //how many ticks pass before changing direction
   int stepCells = 4;  //number of cells in walking loop (horizontal frames)
   int directions = 8; //number of directions represented (vertical frames)
-
-					  //coin-specific animation stuff
-  int coinFreq = 5; //how many ticks pass before advancing animation frame
-  int coinFrames = 8; // how many different frames for this sprite
-  float coinRot = 0;  // starting rotation
-  float rotSpd = -0.01f; //speed of the rotation
-  int rotRadius = 150; // radius of the rotation
 
   Font font(L"Arial");
   Text text(L"The herp derpinest.", &font);
@@ -90,30 +74,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 	  //currently not working.
 	  input.ReadFrame();
 
+	  tickCount++;
+
+	  //update stella
+	  
 	  if (input.IsKeyPressed(InputManager::KEY_DASH)) {
 		  text.setRect(D2D1::RectF(200.f, 100.f, 400.f, 300.f));
+		  stellaspr.srcRect = (D2D1::RectF(((tickCount % (stepCells  * stepFreq)) / stepFreq) * stellaspr.srcWidth, starty, ((tickCount % (stepCells  * stepFreq)) / stepFreq) * stellaspr.srcWidth + stellaspr.srcWidth, endy));
+		  stellaspr.destRect = (D2D1::RectF(startx+=walkingSpeed,0, endx+=walkingSpeed, tex.getHeight()));
 	  }
 	  else {
 		  text.setRect(D2D1::RectF(100.f, 100.f, 300.f, 100.f));
 	  }
 	
-	  tickCount++;
-
-	  //update stella
-	  stellaSpr.srcX = ((tickCount % (stepCells  * stepFreq)) / stepFreq) * stellaSpr.srcWidth;
-	  stellaSpr.srcY = faceorder[((tickCount % (directions * turnFreq)) / turnFreq)] * stellaSpr.srcHeight;
-
-	  //update coins
-	  coinRot += rotSpd;
-	  for (size_t i = 0; i < sprites.size(); i++) {
-		  sprites[i].srcX = ((tickCount % (coinFrames * coinFreq)) / coinFreq) * sprites[0].srcWidth;
-		  float myRot = coinRot + (i * 2.0944f); //offset angle by 1/3 of a rotation
-		  sprites[i].x = (SCREEN_WIDTH / 2) + (rotRadius * cos(myRot));
-		  sprites[i].y = (SCREEN_HEIGHT / 2) + (rotRadius * sin(myRot));
-	  }
+	  
 	gfx.startDraw();
 	text.draw();
-	
+	stellaspr.draw();
     gfx.endDraw();
   }
 
