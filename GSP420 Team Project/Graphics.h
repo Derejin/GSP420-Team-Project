@@ -5,9 +5,13 @@
 #include <d2d1.h>
 #include <atlbase.h>
 
+
+
 class GSPWindow;
 
+
 class Graphics {
+	friend class Sprite;// needed this to work on sprites/subject to removal later
 public:
   //constructor - render target will be sized to match window's user-area
   //remember to bind the object to its subordinate classes during bootstrap
@@ -28,4 +32,7 @@ private:
   friend class ImageLoader;
   friend class Font;
   friend class Text;
+
+  
+  
 };
