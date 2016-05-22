@@ -1,20 +1,30 @@
 //created 5/21/2016 at 1:32 AM EST by Derek Baumgartner
 //MenuManager class, for managing menus!
+//updated 5/22/2016 at 5:39 AM EST by Derek Baumgartner
+//to add support for GSPMessage system and have the class contain a pointer to 
+//the controlling InputManager
 
 #pragma once
 #include <vector>
 #include "MenuButton.h"
 
+//declare the InputManager class here, for usage in this class
+class InputManager;
+
 class MenuManager
 {
 private:
 
+	//default constructor. Should not be used! privatized to discourage its use
+	MenuManager();
+
 	std::vector<MenuButton> Buttons; //vector array for storing this menu's buttons
 
-	//to be implemented when Message struct created
-	//std::vector<Message> MessageQueue; //vector array for storing messages sent to this Menu
+	std::vector<GSPMessage> MessageQueue; //vector array for storing messages sent to this Menu
 
 	int currentSelection; //currently selected button in the vector array
+
+	InputManager* myManager; //the InputManager this menu is dependent upon
 
 	//selection incrementation/decrementation functions.
 	//these should not run if the mouse moved in the current frame,
@@ -26,16 +36,14 @@ public:
 
 	friend class MenuButton; //allows this class to modify private MenuButton values and call its privatized constructor
 
-	//constructors - both initialize currentSelection to 0
-	MenuManager(); //default constructor - runs Buttons.reserve(4) to make room for four buttons
-	MenuManager(int reserveSize); //runs Buttons.reserve(reserveSize) instead
+	//constructor. sets currentSelection to 0, Buttons.reserve(reserveSize), and sets
+	//myManger to the passed-in inputmanager
+	MenuManager(InputManager inputmanager, int reserveSize);
 
-	//to be implemented when Message struct created
-	//bool ReceiveMessage(Message theMessage); //adds message to the MessageQueue
+	bool ReceiveMessage(GSPMessage theMessage); //adds message to the MessageQueue
 
-	//to be implemented when Message struct created
-	//bool ReadMessage(Message redMessage); //reads the latest message in the MessageQueue, and removes it.
-	//									//if there are no messages, returns false.
+	bool ReadMessage(GSPMessage &redMessage); //reads the latest message in the MessageQueue, and removes it.
+										//if there are no messages, returns false.
 
 	void DecodeMessage(int messageValue); //reads the passed-in message value, acts on it
 										//0 for "mouse moved"

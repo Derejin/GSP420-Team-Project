@@ -1,51 +1,44 @@
 //created 5/21/2016 at 1:57 AM EST by Derek Baumgartner
 //MenuManager method definitions!
-//needs Message support
+//updated 5/22/2016 at 5:40 AM EST by Derek Baumgartner
+//to add GSPMessage support and point to the passed-in InputManager
 
 #include "MenuManager.h"
+#include "InputManager.h"
 
-//default constructor!
-MenuManager::MenuManager()
+//parameterized constructor!
+MenuManager::MenuManager(InputManager inputmanager, int reserveSize)
 {
 	//initialize currentSelection
 	currentSelection = 0;
 
-	//and reserve 4 spots in the buttons vector array
-	Buttons.reserve(4);
-}
-
-//parameterized constructor! manually set how much to reserve in Buttons
-MenuManager::MenuManager(int reserveSize)
-{
-	//initialize currentSelection
-	currentSelection = 0;
+	//set pointer towards the passed-in InputManager
+	myManager = &inputmanager;
 
 	//and reserve the requested amount of spots in Buttons!
 	Buttons.reserve(reserveSize);
 }
 
-//to be implemented when Message struct is created
-/*
+
 //ReceiveMessage, for adding the message to MessageQueue!
-bool MenuManager::ReceiveMessage(Message theMessage)
+bool MenuManager::ReceiveMessage(GSPMessage theMessage)
 {
 	MessageQueue.push_back(theMessage);
 
 	//for success
 	return true;
-}*/
+}
 
-//to be implemented when Message struct is created
-/*
+
 //if there's a message in the MessageQueue, read the latest message
 //and store it in the passed-in Message argument
-bool MenuManager::ReadMessage(Message &redMessage)
+bool MenuManager::ReadMessage(GSPMessage &redMessage)
 {
 	//if there are messages
 	if (MessageQueue.size() > 0)
 	{
-		//copy latest message
-		Message redMessage = MessageQueue[front];
+		//copy latest message value
+		GSPMessage redMessage = MessageQueue.front();
 
 		//and remove it
 		MessageQueue.erase(MessageQueue.begin());
@@ -56,17 +49,17 @@ bool MenuManager::ReadMessage(Message &redMessage)
 	//otherwise, return false
 	else
 		return false;
-}*/
+}
 
-//to be implemented when how this class should access the current MousePosition
-//from InputManager is decided.
-/*
 //reads the passed in messageValue, performs the action.
 //only call this during Update.
 void MenuManager::DecodeMessage(int messageValue)
 {
 	//for preventing key usage if any message in the current read is Mouse Moved (i.e. 0)
 	bool MouseHasntMoved = true;
+
+	//current mouse position, red from the controlling InputManager
+	Point MousePosition = myManager->GetMouseLocation();
 
 	switch (messageValue)
 	{
@@ -75,16 +68,14 @@ void MenuManager::DecodeMessage(int messageValue)
 		//since mouse moved, set MouseHasntMoved to false
 		MouseHasntMoved = false;
 
-		//prepare loop
-		int i = 0;
 		//and for each button
-		for (i; i < Buttons.size() - 1; i++)
+		for (int i = 0; i < Buttons.size() - 1; i++)
 		{
 			//check if the mouse is hovering over it
 			if (Buttons[i].IsHover(MousePosition.X, MousePosition.Y))
 			{
 				//deselect current Button
-				Buttons[currentSelection].UpdateSprite;
+				Buttons[currentSelection].UpdateSprite(0);
 				//update currentSelection
 				currentSelection = i;
 				//and that selected button's sprite
@@ -115,7 +106,7 @@ void MenuManager::DecodeMessage(int messageValue)
 			&& Buttons[currentSelection].GetSprite() == 2)
 		{
 			//tell this button to send its message, and go back to Sprite 1.
-			Buttons[currentSelection].SendMessage();
+			Buttons[currentSelection].GiveMessage();
 			Buttons[currentSelection].UpdateSprite(1);
 		}
 		//if not, just set the button to Sprite 0.
@@ -127,7 +118,7 @@ void MenuManager::DecodeMessage(int messageValue)
 	case 3: //ENTER pressed
 
 		//just tell current button to send its message!
-		Buttons[currentSelection].SendMessage();
+		Buttons[currentSelection].GiveMessage();
 
 		break;
 
@@ -153,7 +144,7 @@ void MenuManager::DecodeMessage(int messageValue)
 		//do nothing
 		break;
 	}
-}*/
+}
 
 //to be implemented when Sprite support added for MenuButton
 /*
@@ -204,8 +195,7 @@ void MenuManager::IncrementSelection()
 	Buttons[currentSelection].UpdateSprite(1);
 }
 
-//requires Message support.
-/*
+
 //Update function! Should be run every frame.
 //changes selection based on received mouse/keyboard input messages,
 //and modifies the MenuButtons in Buttons accordingly. Also responsible
@@ -216,16 +206,14 @@ void MenuManager::Update()
 	//message reading logic likely needs updating!
 
 	//currentMessage, for storing the message Update currently is acting upon
-	Message currentMessage;
-	
 	//set its message to 401, for "no message found"
-	currentMessage.message = 401;
+	GSPMessage currentMessage(401);
 
 	//read latest message, if there is one. decode it, then read the next and decode it.
 	while(ReadMessage(currentMessage))
-		DecodeMessage(currentMessage);
+		DecodeMessage(currentMessage.theMessage);
 
 	//draw all the buttons in the Buttons array
 	for (int i = 0; i < Buttons.size() - 1; i++)
 		Buttons[i].Draw();
-}*/
+}
