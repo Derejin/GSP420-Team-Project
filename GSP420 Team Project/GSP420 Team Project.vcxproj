@@ -19,22 +19,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseRecipient.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="GSPMessage.h" />
     <ClInclude Include="GSPWindow.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="MenuManager.h" />
+    <ClInclude Include="MessageHandler.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseRecipient.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GSPWindow.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="MenuManager.cpp" />
+    <ClCompile Include="MessageHandler.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
