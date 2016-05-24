@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Sprite">
       <UniqueIdentifier>{fe02f878-2801-40f1-b621-862f1f8c8473}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Messaging">
+      <UniqueIdentifier>{d8ee0b90-4312-48c7-b8c8-d2e6ab4831b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Messaging">
+      <UniqueIdentifier>{837e5121-83cd-4d1f-bb39-121f2d00c793}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GSPWindow.h">
@@ -56,6 +62,24 @@
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Header Files\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuButton.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuManager.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseRecipient.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHandler.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="GSPMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +109,18 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuButton.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuManager.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseRecipient.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageHandler.cpp">
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
