@@ -40,7 +40,7 @@ private:
 public:
 	//constructor. sets currentSelection to 0, Buttons.reserve(reserveSize), and sets
 	//myManger to the passed-in inputmanager
-	MenuManager(InputManager inputmanager, int reserveSize);
+	MenuManager(InputManager &inputmanager, int reserveSize);
 
 	void DecodeMessage(int messageValue); //reads the passed-in message value, acts on it
 										//0 for "mouse moved"

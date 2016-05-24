@@ -5,6 +5,8 @@
 //updated 5/23/2016 at 3:16 AM EST by Derek Baumgartner
 //to fill out some sections now that there's Sprite support 
 //and update message-related goodies
+//updated 5/24/2016 at 4:34 PM by Derek, with help from Richard,
+//to fix constructor and various other goodies
 
 
 //to mark this as a file that may need changing if the messaging system is changed,
@@ -15,7 +17,7 @@
 #include "MessageHandler.h" //for access to the MessageHandler singleton.
 
 //parameterized constructor!
-MenuManager::MenuManager(InputManager inputmanager, int reserveSize)
+MenuManager::MenuManager(InputManager &inputmanager, int reserveSize)
 {
 	//initialize currentSelection
 	currentSelection = 0;
@@ -32,23 +34,23 @@ MenuManager::MenuManager(InputManager inputmanager, int reserveSize)
 void MenuManager::DecodeMessage(int messageValue)
 {
 	//for preventing key usage if any message in the current read is Mouse Moved (i.e. 0)
-	bool MouseHasntMoved = true;
+	bool MouseHasMoved = false;
 
 	//current mouse position, red from the controlling InputManager
 	Point MousePosition = myManager->GetMouseLocation();
 
 	//pointer to message, if DecodeMessage ends up sending a message from a button!
-	GSPMessage* ResultMessage = 0;
+	GSPMessage* ResultMessage = nullptr;
 
 	switch (messageValue)
 	{
 	case 0: //mouse moved
 
 		//since mouse moved, set MouseHasntMoved to false
-		MouseHasntMoved = false;
+		MouseHasMoved = true;
 
 		//and for each button
-		for (int i = 0; i < Buttons.size() - 1; i++)
+		for (size_t i = 0; i < Buttons.size() - 1; i++)
 		{
 			//check if the mouse is hovering over it
 			if (Buttons[i].IsHover(MousePosition.X, MousePosition.Y))
@@ -60,8 +62,7 @@ void MenuManager::DecodeMessage(int messageValue)
 				//and that selected button's sprite
 				Buttons[currentSelection].UpdateSprite(1);
 
-				//then set i to Buttons.size() to end the loop
-				i = Buttons.size();
+				break;
 			}
 		}
 		break;
@@ -111,7 +112,7 @@ void MenuManager::DecodeMessage(int messageValue)
 
 		//if the mouse hasn't moved this frame and if there's more than one button,
 		//decrement selection
-		if (MouseHasntMoved && Buttons.size() > 1)
+		if (!MouseHasMoved && Buttons.size() > 1)
 			DecrementSelection();
 
 		break;
@@ -120,7 +121,7 @@ void MenuManager::DecodeMessage(int messageValue)
 
 		//if the mouse hasn't moved this frame and if there's more than one button,
 		//increment selection
-		if (MouseHasntMoved && Buttons.size() > 1)
+		if (!MouseHasMoved && Buttons.size() > 1)
 			IncrementSelection();
 
 		break;
@@ -136,7 +137,7 @@ void MenuManager::DecodeMessage(int messageValue)
 void MenuManager::AddButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pressedSprite,
 	int width, int height, int X, int Y, GSPMessage buttonMessage)
 {
-	Buttons.push_back(MenuButton(buttonSprite, hoverSprite, 
+	Buttons.emplace_back(MenuButton(buttonSprite, hoverSprite, 
 		pressedSprite, width, height, X, Y, buttonMessage));
 }
 
@@ -191,7 +192,7 @@ void MenuManager::Update()
 
 	//currentMessage, for storing the message Update currently is acting upon
 	//set its receiver to none, and its message to 401, for "no message found"
-	GSPMessage* currentMessage = 0;
+	GSPMessage* currentMessage = nullptr;
 
 	//read latest message, if there is one. decode it, delete it, then read the next and decode it.
 	while (ReadMessage(currentMessage))

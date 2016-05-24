@@ -41,9 +41,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   GSPWindow gameWindow(L"Testing Window", SCREEN_WIDTH, SCREEN_HEIGHT);
   Graphics gfx(gameWindow);
   InputManager input(HINSTANCE(GetModuleHandle(NULL)), gameWindow.getHandle(), SCREEN_WIDTH, SCREEN_HEIGHT);
-
-  //BUG: for some odd reason, attempting to instantiate testMenu results in InputManager failing
-  //to acquire keyboard. Very unsure why.
+  
+  //commented out for now, yet to be fully tested
   //MenuManager testMenu(input, 4);
 
   //FOR MOVING SPRITE EXAMPLE, STELLA//
