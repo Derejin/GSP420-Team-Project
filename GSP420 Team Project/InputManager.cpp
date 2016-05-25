@@ -11,10 +11,12 @@
 #pragma comment(lib, "dxguid.lib")
 
 #include "InputManager.h"
+#include <assert.h>
+
 
 //parameterized constructor - only constructor that should be used for this class
 //sets up DirectInput, and sets up connected mouse+keyboard
-InputManager::InputManager(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeight)
+InputManager::InputManager(GSPWindow& win)
 {
 	//zero out pointers
 	input_directInput = 0;
@@ -25,15 +27,15 @@ InputManager::InputManager(HINSTANCE hinstance, HWND hwnd, int screenWidth, int 
 	HRESULT result;
 
 	//store screen size, for positioning the mouse cursor
-	input_screenWidth = screenWidth;
-	input_screenHeight = screenHeight;
+	input_screenWidth = win.WIDTH;
+	input_screenHeight = win.HEIGHT;
 
 	//initialize mouse location
 	input_MousePos.X = 0;
 	input_MousePos.Y = 0;
 
 	//initialize DirectInput
-	result = DirectInput8Create(hinstance, DIRECTINPUT_VERSION, IID_IDirectInput8, 
+	result = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, 
 		(void**)&input_directInput, NULL);
 	//assert it worked properly
 	assert(!FAILED(result) && "DirectInput: Initialization Failed");
@@ -52,7 +54,7 @@ InputManager::InputManager(HINSTANCE hinstance, HWND hwnd, int screenWidth, int 
 
 	//set keyboard cooperative level, so keyboard won't share with other programs
 	//change to DISCL_NONEXCLUSIVE if you want to share
-	result = input_keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
+	result = input_keyboard->SetCooperativeLevel(win.getHandle(), DISCL_FOREGROUND | DISCL_EXCLUSIVE);
 	//assert it worked properly
 	assert(!FAILED(result) && "DirectInput: Keyboard Set Cooperative Level Failed");
 
@@ -75,7 +77,7 @@ InputManager::InputManager(HINSTANCE hinstance, HWND hwnd, int screenWidth, int 
 	//mouse cooperative level set to nonexclusive, 
 	//so it can move in and out of the game window at will
 	//set to DISCL_EXCLUSIVE to lock to the window
-	result = input_mouse->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	result = input_mouse->SetCooperativeLevel(win.getHandle(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	//assert it worked properly
 	assert(!FAILED(result) && "DirectInput: Mouse Set Cooperative Level Failed");
 

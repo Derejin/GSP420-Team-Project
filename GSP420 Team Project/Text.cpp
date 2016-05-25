@@ -9,7 +9,7 @@ Text::Text(const std::wstring& string, Font* font) : string(string), font(font) 
   rect = D2D1::RectF(0, 0, vpsz.width, vpsz.height);
 }
 
-void Text::setRect(D2D1_RECT_F rect) {
+void Text::setRect(GSPRect rect) {
   this->rect = rect;
 }
 

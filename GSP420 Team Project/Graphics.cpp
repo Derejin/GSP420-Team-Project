@@ -4,6 +4,7 @@
 #include "Graphics.h"
 #include "GSPWindow.h"
 #include "Sprite.h"
+#include "Plane.h"
 #pragma comment(lib, "d2d1.lib")
 
 #include "ImageLoader.h" //~~@ for testing - will remove later (RB)
@@ -23,7 +24,9 @@ Graphics::Graphics(const GSPWindow& window) {
   assert(SUCCEEDED(result) && "Failed to create render target.");
 
   Font::gfx = ImageLoader::gfx = this; //~~@ for testing - will remove later (RB)
-  Sprite::gfx = ImageLoader::gfx = this; //~~@ for testing- will remove later(CB/RB)
+  Sprite::gfx = this; //~~@ for testing- will remove later(CB/RB)
+  Plane::gfx = this;
+  Plane::destRect = GSPRect(0, 0, (float)window.WIDTH, (float)window.HEIGHT);
 }
 
 void Graphics::startDraw() {

@@ -29,7 +29,9 @@
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuManager.h" />
     <ClInclude Include="MessageHandler.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Stella_temp.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Utility.h" />
@@ -45,14 +47,26 @@
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="MessageHandler.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Stella_temp.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Full Coins.png" />
-    <Image Include="stella_walk_2.png" />
+    <Image Include="Full Coins.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Image>
+    <Image Include="stella_walk_2.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Image>
     <Image Include="test image.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Image>
+    <Image Include="tilesetOpenGameBackground_3.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </Image>

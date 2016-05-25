@@ -26,5 +26,5 @@ private:
 
   //These classes need access to the COM interface
   friend class Sprite;
-  friend class Texture;
+  friend class Plane;
 };
