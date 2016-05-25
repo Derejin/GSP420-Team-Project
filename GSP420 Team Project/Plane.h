@@ -1,22 +1,22 @@
+//created by colton on 5/20
 #pragma once
 #include "Texture.h"
 #include "Utility.h"
 
-class Sprite {
+class Plane {
 public:
-	void setBitmap(Texture& texture);
-	void draw();
+  void setTexture(Texture& texture);
+  void draw();
 
 	float opacity= 1.0f;
 	GSPRect srcRect;
-	GSPRect destRect;
   int z = 0;
 
 private:
 	CComPtr<ID2D1Bitmap> bmp;
 
 	friend class Graphics;
-  //set this in bootstrap
-  static Graphics* gfx;
-
+  //set these in bootstrap
+	static Graphics* gfx;
+  static GSPRect destRect;
 };

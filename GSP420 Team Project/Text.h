@@ -5,6 +5,7 @@
 #pragma once
 #include <string>
 #include <d2d1.h>
+#include "Utility.h"
 
 class Font;
 
@@ -19,7 +20,7 @@ public:
     //depending which is closer to the top of the screen.
     //Ideally this would be replaced with setPos() and setWrap(), but
     //those can be added later as extensions if needed.
-  void setRect(D2D1_RECT_F rect);
+  void setRect(GSPRect rect);
 
   //Swap out Font object
   void setFont(Font* font);

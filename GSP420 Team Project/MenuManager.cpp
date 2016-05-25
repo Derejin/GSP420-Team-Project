@@ -170,7 +170,7 @@ void MenuManager::IncrementSelection()
 
 	//if currentSelection is not the last button in the Buttons vector array,
 	//then increment it
-	if (currentSelection < Buttons.size() - 1)
+	if ((size_t)currentSelection < Buttons.size() - 1)
 		currentSelection++;
 	//otherwise, set it to the first button
 	else
@@ -204,6 +204,5 @@ void MenuManager::Update()
 	}
 
 	//draw all the buttons in the Buttons array
-	for (int i = 0; i < Buttons.size() - 1; i++)
-		Buttons[i].Draw();
+  for(auto& btn : Buttons) { btn.Draw(); }
 }

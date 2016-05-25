@@ -8,17 +8,10 @@
 //to streamline KeyInput enum and fix the directinput version declaration
 
 #pragma once
-#include <assert.h>
 
-//directinput version declaration
 #define DIRECTINPUT_VERSION 0x0800
-
-//linker requirements
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
-
-//DirectInput header
 #include <dinput.h>
+#include "GSPWindow.h"
 
 //struct Point, for simultaneously holding an X and a Y coordinate
 struct Point
@@ -33,10 +26,6 @@ const int INPUT_NUM_KEYS = 4;
 class InputManager
 {
 private:
-	//do not use default constructor - use parameterized instead
-	//default constructor placed as private to prevent misuse
-	InputManager();
-
 	IDirectInput8* input_directInput; // pointer to the IDirectInput8 instance, for managing DirectInput
 	IDirectInputDevice8* input_keyboard; // pointer to the keyboard
 	IDirectInputDevice8* input_mouse; // pointer to the mouse
@@ -65,7 +54,7 @@ private:
 
 public:
 	//parameterized constructor. do not use default! (privatized default to help deal with that)
-	InputManager(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeight);
+	InputManager(GSPWindow& win);
 
 	//destructor
 	~InputManager();

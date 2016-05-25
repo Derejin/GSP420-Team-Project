@@ -23,7 +23,7 @@ void MessageHandler::Instantiate()
 void MessageHandler::AddRecipient(BaseRecipient* desiredRecipient, RClass recipientID)
 {
 	//If the vector memory has been allocated the replace the pointer
-	if ((int)recipientID < RecipientList.size())
+	if ((size_t)recipientID < RecipientList.size())
 	{
 		if (RecipientList[(int)recipientID])
 		{
@@ -36,7 +36,7 @@ void MessageHandler::AddRecipient(BaseRecipient* desiredRecipient, RClass recipi
 	{
 		int oldsize = RecipientList.size();
 		RecipientList.resize((int)recipientID + 1);
-		for (int i = oldsize; i < RecipientList.size() - 1; ++i)
+		for (size_t i = oldsize; i < RecipientList.size() - 1; ++i)
 		{
 			RecipientList[i] = 0;
 		}
@@ -50,7 +50,7 @@ void MessageHandler::AddRecipient(BaseRecipient* desiredRecipient, RClass recipi
 //only use this if you want to free up an ID without tying something else to it.
 void MessageHandler::RemoveRecipient(RClass recipientID)
 {
-	if (RecipientList.size() - 1 > recipientID)
+	if (RecipientList.size() - 1 > (size_t)recipientID)
 	{
 		delete RecipientList[(int)recipientID];
 		RecipientList[(int)recipientID] = 0;
@@ -70,7 +70,7 @@ bool MessageHandler::HandleMessage(GSPMessage *theMessage)
 	else
 	{
 		//Pass the message to receiver, check if valid
-		if (RecipientList.size() > theMessage->Recipient && RecipientList[theMessage->Recipient])
+		if (RecipientList.size() > (size_t)theMessage->Recipient && RecipientList[theMessage->Recipient])
 		{
 			if (RecipientList[theMessage->Recipient]->ReceiveMessage(theMessage))
 			{

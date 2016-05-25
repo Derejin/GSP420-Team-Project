@@ -5,7 +5,7 @@ Graphics* Sprite::gfx = nullptr;
 
 void Sprite::setBitmap(Texture& texture) {
 	bmp = texture.comObj;
-	srcRect = D2D1::RectF(0, 0, texture.getWidth(), texture.getHeight());
+	srcRect = GSPRect(0, 0, (float)texture.getWidth(), (float)texture.getHeight());
 }
 
 void Sprite::draw() {
