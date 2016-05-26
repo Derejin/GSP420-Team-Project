@@ -5,10 +5,7 @@
 #include <d2d1.h>
 #include <atlbase.h>
 
-
-
 class GSPWindow;
-
 
 class Graphics {
 	friend class Sprite;// needed this to work on sprites/subject to removal later
@@ -32,7 +29,5 @@ private:
   friend class ImageLoader;
   friend class Font;
   friend class Text;
-
-  
   
 };

@@ -1,8 +1,9 @@
 #pragma once
 #include "Texture.h"
 #include "Utility.h"
+#include "RenderObject.h"
 
-class Sprite {
+class Sprite : public RenderObject {
 public:
 	void setBitmap(Texture& texture);
 	void draw();
@@ -10,7 +11,6 @@ public:
 	float opacity= 1.0f;
 	GSPRect srcRect;
 	GSPRect destRect;
-  int z = 0;
 
 private:
 	CComPtr<ID2D1Bitmap> bmp;
