@@ -3,8 +3,9 @@
 #pragma once
 #include "Sprite.h"
 #include "Utility.h"
+#include "RenderObject.h"
 
-class Plane {
+class Plane : public RenderObject {
 public:
   void setTexture(Texture& texture);
   void draw();
@@ -13,7 +14,6 @@ public:
 	GSPRect srcRect;
   float scrollx = 0;
   float scrolly = 0;
-  int z = 0;
 
 private:
 	Sprite sprites[4];

@@ -6,10 +6,11 @@
 #include <string>
 #include <d2d1.h>
 #include "Utility.h"
+#include "RenderObject.h"
 
 class Font;
 
-class Text {
+class Text : public RenderObject {
 public:
   Text(const std::wstring& string, Font* font);
 
