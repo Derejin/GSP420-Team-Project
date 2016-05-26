@@ -39,6 +39,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   InputManager input(gameWindow);
   DepthBatch batch;
 
+  MenuManager *testMenu = new MenuManager(input);
+
   Font font(L"Arial");
   font.setColor(D2D1::ColorF(0,1));
   font.setSize(40.0f);
@@ -59,17 +61,73 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   batch.addRO(&plane);
   plane.z = -100;
 
+  //menu setup//
+  Texture coinTex(L"Full Coins.png");
+  Sprite coinSprites[8];
+
+  coinSprites[0].setBitmap(coinTex);
+  coinSprites[0].srcRect.width /= 8;
+
+  coinSprites[0].destRect = coinSprites[1].srcRect;
+  coinSprites[0].destRect.x = 10;
+  coinSprites[0].destRect.y = 200;
+
+  //copy the sprite into the other coin sprites,
+  //but change srcRect so they use a diff part of the tex
+  for (int i = 1; i < 7; i++)
+  {
+	  coinSprites[i] = coinSprites[0];
+	  coinSprites[i].srcRect.x += (coinSprites[i].srcRect.width)*i;
+  }
+
+  //create the first example button - no message
+  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
+	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RNONE, 0));
+
+  //scoot the destRect.x over by 100, then create a new button
+  for (int i = 0; i < 7; i++)
+	  coinSprites[i].destRect.x += 100;
+
+  //create the second example button - no message
+  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[7],
+	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RNONE, 0));
+
+  //scoot the destRect.x over by another 100, then create a new button
+  for (int i = 0; i < 7; i++)
+	  coinSprites[i].destRect.x += 100;
+
+  //create the third example button - no message
+  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[1],
+	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RNONE, 0));
+
+  batch.addRO(testMenu);
+
   while(gameWindow.update()) {
 	  input.ReadFrame();
-    if(input.IsKeyPressed(InputManager::KEY_ESC)) { break; }
+	  if(input.IsKeyPressed(InputManager::KEY_ESC)) { break; }
 
-    if(input.IsKeyPressed(InputManager::KEY_DASH)) { stella.update(); }
+      if(input.IsKeyPressed(InputManager::KEY_DASH)) { stella.update(); }
 
-    plane.scrollx += 2;
+	  //replacement code for updating menu, that does not use messaging system. to be updated when messaging system
+	  //fully online
+	  if (input.MouseMoved()) { testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 0)); }
+	  if (input.IsMouseTriggered(InputManager::MOUSE_LEFT)) { testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 1)); }
+	  if (input.IsMouseReleased(InputManager::MOUSE_LEFT)) { testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 2)); }
+	  if (input.IsKeyPressed(InputManager::KEY_ENTER)) { testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 3)); }
+	  if (input.IsKeyPressed(InputManager::KEY_UP) || input.IsKeyPressed(InputManager::KEY_W)) {
+		  testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 4));
+	  }
+	  if (input.IsKeyPressed(InputManager::KEY_DOWN) || input.IsKeyPressed(InputManager::KEY_S)) {
+		  testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 5));
+	  }
+
+	  testMenu->Update();
+
+      plane.scrollx += 2;
 
 	  gfx.startDraw();
-    batch.draw();
-    gfx.endDraw();
+      batch.draw();
+      gfx.endDraw();
   }
 
 	return 0;

@@ -25,6 +25,7 @@ MenuButton::MenuButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pressedSp
 	posX = X;
 	posY = Y;
 	buttonMessage = theMessage;
+	currentSprite = SPRITE_REGULAR;
 }
 
 //ReturnMessage! To return the message stored in this button.
@@ -47,13 +48,13 @@ bool MenuButton::IsHover(int X, int Y)
 }
 
 //UpdateSprite, for updating the sprite!
-void MenuButton::UpdateSprite(int spriteState)
+void MenuButton::UpdateSprite(SpriteType spriteState)
 {
 	currentSprite = spriteState;
 }
 
 //Draw function, for drawing the current sprite during a Draw pass. To be called by the managing MenuManager.
-void MenuButton::Draw()
+void MenuButton::draw()
 {
 	buttonSprites[currentSprite].draw();
 }

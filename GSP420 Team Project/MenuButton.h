@@ -11,8 +11,9 @@
 #pragma once
 #include "Sprite.h"
 #include "GSPMessage.h"
+#include "RenderObject.h"
 
-class MenuButton
+class MenuButton: public RenderObject
 {
 	//so MenuManager can access the constructor!
 	friend class MenuManager;
@@ -47,6 +48,13 @@ protected:
 
 public:
 
+	//enum for sprite updates
+	enum SpriteType {
+		SPRITE_REGULAR,	//0
+		SPRITE_HOVER,	//1
+		SPRITE_PRESSED	//2
+	};
+
 	bool IsHover(int X, int Y); 	//checks X coordinate against posX and spriteWidth
 									//checks Y coordinate against posY and spriteHeight
 									//returns true if both fall within/on the related values
@@ -56,10 +64,7 @@ public:
 
 	int GetSprite() { return currentSprite; } //getter for currentSprite!
 
-	void UpdateSprite(int spriteState); 	//updates currentSprite to the corresponding argument int value
-											//0 means regular. updates (not hovered over)
-											//1 means hoverSprite (mouse over button, but not pressed in)
-											//2 means pressedSprite (mouse over button when left mouse pressed)
+	void UpdateSprite(SpriteType spriteState); 	//updates currentSprite to the corresponding argument SpriteType value
 
-	void Draw(); //draws the sprite! needs Sprite support to draw, however.
+	void draw(); //draws the sprite!
 };
