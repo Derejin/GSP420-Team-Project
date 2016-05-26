@@ -28,9 +28,12 @@
 #include "Sprite.h"
 #include "MessageHandler.h"
 #include "MenuManager.h"
-#include "Stella_temp.h"
 #include "Plane.h"
 #include "DepthBatch.h"
+
+//test files
+#include "Stella_temp.h"
+#include "TestText_temp.h"
 
 //main function - throws error if window fails
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
@@ -41,18 +44,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 
   MenuManager *testMenu = new MenuManager(input);
 
+  //messenger setup
+  gMessageHandler->Instantiate();
+  gMessageHandler->AddRecipient(testMenu, RTESTMENU);
+
   Font font(L"Arial");
   font.setColor(D2D1::ColorF(0,1));
   font.setSize(40.0f);
 
   Text text(L"Example of Text!", &font);
-  text.setRect(GSPRect(200.f, 300.f, 200.f, 200.f));
+  text.setRect(GSPRect(200.f, 150.f, 200.f, 200.f));
   batch.addRO(&text);
   text.z = 0;
 
   Stella stella;
   batch.addRO(&stella);
   stella.z = 100;
+
+  TestText * movableText = new TestText();
+  gMessageHandler->AddRecipient(movableText, RTESTTEXT);
+  batch.addRO(movableText);
 
   Texture bgtex(L"tilesetOpenGameBackground_3.png");
 
@@ -80,25 +91,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 	  coinSprites[i].srcRect.x += (coinSprites[i].srcRect.width)*i;
   }
 
-  //create the first example button - no message
+  //create the first example button, which tells testText to move up
   testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
-	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RNONE, 0));
+	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RTESTTEXT, 0));
 
   //scoot the destRect.x over by 100, then create a new button
   for (int i = 0; i < 7; i++)
 	  coinSprites[i].destRect.x += 100;
 
-  //create the second example button - no message
+  //create the second example button -  tells testText to move down
   testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[7],
-	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RNONE, 0));
+	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RTESTTEXT, 1));
 
   //scoot the destRect.x over by another 100, then create a new button
   for (int i = 0; i < 7; i++)
 	  coinSprites[i].destRect.x += 100;
 
-  //create the third example button - no message
+  //create the third example button - tells testText to move back into starting position
   testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[1],
-	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RNONE, 0));
+	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RTESTTEXT, 2));
 
   batch.addRO(testMenu);
 
@@ -108,19 +119,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 
       if(input.IsKeyPressed(InputManager::KEY_DASH)) { stella.update(); }
 
-	  //replacement code for updating menu, that does not use messaging system. to be updated when messaging system
-	  //fully online
-	  if (input.MouseMoved()) { testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 0)); }
-	  if (input.IsMouseTriggered(InputManager::MOUSE_LEFT)) { testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 1)); }
-	  if (input.IsMouseReleased(InputManager::MOUSE_LEFT)) { testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 2)); }
-	  if (input.IsKeyPressed(InputManager::KEY_ENTER)) { testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 3)); }
-	  if (input.IsKeyPressed(InputManager::KEY_UP) || input.IsKeyPressed(InputManager::KEY_W)) {
-		  testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 4));
-	  }
-	  if (input.IsKeyPressed(InputManager::KEY_DOWN) || input.IsKeyPressed(InputManager::KEY_S)) {
-		  testMenu->ReceiveMessage(new GSPMessage(RTESTMENU, 5));
-	  }
+	  //for testing if messaging system works
+	  if (input.IsKeyTriggered(InputManager::KEY_W)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 0)); }
+	  if (input.IsKeyTriggered(InputManager::KEY_S)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 1)); }
+	  if (input.IsKeyTriggered(InputManager::KEY_ENTER)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 2)); }
 
+	  /* for testing the menu buttons - currently they don't draw or render or somesuch, so commenting these out
+	  if (input.MouseMoved()) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 0)); }
+	  if (input.IsMouseTriggered(InputManager::MOUSE_LEFT)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 1)); }
+	  if (input.IsMouseReleased(InputManager::MOUSE_LEFT)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 2)); }
+	  if (input.IsKeyTriggered(InputManager::KEY_ENTER)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 3)); }
+	  if (input.IsKeyTriggered(InputManager::KEY_UP) || input.IsKeyTriggered(InputManager::KEY_W)) {
+		  gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 4));
+	  }
+	  if (input.IsKeyTriggered(InputManager::KEY_DOWN) || input.IsKeyTriggered(InputManager::KEY_S)) {
+		  gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 5));
+	  }*/
+
+	  movableText->Update();
 	  testMenu->Update();
 
       plane.scrollx += 2;

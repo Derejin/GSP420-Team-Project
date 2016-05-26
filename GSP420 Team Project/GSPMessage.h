@@ -14,7 +14,8 @@
 enum RClass
 {
 	RNONE, //no recipient
-	RTESTMENU //for test version of menumanager, currently only real recipient
+	RTESTMENU, //for test version of menumanager, for Wk4 Code Demonstration+Testing
+	RTESTTEXT //for code demonstration - text modification class
 };
 
 //GSPMessage structure!

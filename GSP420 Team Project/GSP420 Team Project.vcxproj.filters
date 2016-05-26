@@ -31,6 +31,12 @@
     <Filter Include="Header Files\Messaging">
       <UniqueIdentifier>{837e5121-83cd-4d1f-bb39-121f2d00c793}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Testing">
+      <UniqueIdentifier>{6faad531-fce8-4b57-b0a5-4d7962c7ed00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Testing">
+      <UniqueIdentifier>{8aa8c8af-bc69-4c5e-ae37-09ca609fed2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GSPWindow.h">
@@ -78,14 +84,17 @@
     <ClInclude Include="Plane.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Stella_temp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DepthBatch.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="RenderObject.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Stella_temp.h">
+      <Filter>Header Files\Testing</Filter>
+    </ClInclude>
+    <ClInclude Include="TestText_temp.h">
+      <Filter>Header Files\Testing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,11 +140,14 @@
     <ClCompile Include="Plane.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Stella_temp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DepthBatch.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Stella_temp.cpp">
+      <Filter>Source Files\Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="TestText_temp.cpp">
+      <Filter>Source Files\Testing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
