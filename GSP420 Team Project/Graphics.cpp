@@ -25,14 +25,12 @@ Graphics::Graphics(const GSPWindow& window) {
 
   Font::gfx = ImageLoader::gfx = this; //~~@ for testing - will remove later (RB)
   Sprite::gfx = this; //~~@ for testing- will remove later(CB/RB)
-  Plane::gfx = this;
-  Plane::destRect = GSPRect(0, 0, (float)window.WIDTH, (float)window.HEIGHT);
+  Plane::screenRect = GSPRect(0, 0, (float)window.WIDTH, (float)window.HEIGHT);
 }
 
 void Graphics::startDraw() {
   renderTarget->BeginDraw();
   renderTarget->Clear();
-  
 }
 
 void Graphics::endDraw() {

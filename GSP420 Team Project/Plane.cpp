@@ -1,15 +1,35 @@
 //created by colton on 5/20
+
 #include "Graphics.h"
 #include "Plane.h"
 
-Graphics* Plane::gfx = nullptr;
-GSPRect Plane::destRect;
+GSPRect Plane::screenRect;
 
 void Plane::setTexture(Texture& texture) {
-	bmp = texture.comObj;
-	srcRect = GSPRect(0, 0, (float)texture.getWidth(), (float)texture.getHeight());
+  srcRect = GSPRect(0, 0, (float)texture.getWidth(), (float)texture.getHeight());
+  for(auto& spr : sprites) { spr.setBitmap(texture); }
 }
 
 void Plane::draw() {
-  gfx->renderTarget->DrawBitmap(bmp, destRect, opacity, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, srcRect);
+  //~~@
+  while(scrollx < 0) { scrollx += screenRect.width;  }
+  while(scrolly < 0) { scrolly += screenRect.height; }
+  while(scrollx > screenRect.width ) { scrollx -= screenRect.width;  }
+  while(scrolly > screenRect.height) { scrolly -= screenRect.height; }
+
+  sprites[0].destRect = screenRect;
+  sprites[0].destRect.x = -scrollx;
+  sprites[0].destRect.y = -scrolly;
+
+  sprites[1].destRect = sprites[0].destRect;
+  sprites[1].destRect.x += screenRect.width;
+
+  sprites[2].destRect = sprites[0].destRect;
+  sprites[2].destRect.y += screenRect.height;
+
+  sprites[3].destRect = sprites[0].destRect;
+  sprites[3].destRect.x += screenRect.width;
+  sprites[3].destRect.y += screenRect.height;
+
+  for(auto& spr : sprites) { spr.draw(); }
 }

@@ -30,25 +30,34 @@
 #include "MenuManager.h"
 #include "Stella_temp.h"
 #include "Plane.h"
+#include "DepthBatch.h"
 
 //main function - throws error if window fails
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   GSPWindow gameWindow(L"Testing Window", 1080, 600);
   Graphics gfx(gameWindow);
   InputManager input(gameWindow);
-  
+  DepthBatch batch;
+
   Font font(L"Arial");
   font.setColor(D2D1::ColorF(0,1));
   font.setSize(40.0f);
+
   Text text(L"Example of Text!", &font);
-  text.setRect(D2D1::RectF(100.f, 100.f, 300.f, 100.f));
+  text.setRect(GSPRect(200.f, 300.f, 200.f, 200.f));
+  batch.addRO(&text);
+  text.z = 0;
 
   Stella stella;
+  batch.addRO(&stella);
+  stella.z = 100;
 
   Texture bgtex(L"tilesetOpenGameBackground_3.png");
 
   Plane plane;
   plane.setTexture(bgtex);
+  batch.addRO(&plane);
+  plane.z = -100;
 
   while(gameWindow.update()) {
 	  input.ReadFrame();
@@ -56,12 +65,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 
     if(input.IsKeyPressed(InputManager::KEY_DASH)) { stella.update(); }
 
-    //plane.srcRect.x++; //this is busted. I'll fix it. -rb
-	  
+    plane.scrollx += 2;
+
 	  gfx.startDraw();
-    plane.draw();
-	  stella.draw();
-    text.draw();
+    batch.draw();
     gfx.endDraw();
   }
 

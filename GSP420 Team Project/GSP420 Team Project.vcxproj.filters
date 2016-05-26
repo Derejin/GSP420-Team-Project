@@ -81,6 +81,12 @@
     <ClInclude Include="Stella_temp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DepthBatch.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObject.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GSPWindow.cpp">
@@ -127,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="Stella_temp.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthBatch.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

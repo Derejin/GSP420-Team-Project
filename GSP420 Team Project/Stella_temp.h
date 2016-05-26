@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include "Sprite.h"
 
-class Stella {
+class Stella : public RenderObject {
 public:
   Stella();
   void update();

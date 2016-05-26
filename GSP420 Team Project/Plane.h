@@ -1,22 +1,24 @@
 //created by colton on 5/20
-#pragma once
-#include "Texture.h"
-#include "Utility.h"
 
-class Plane {
+#pragma once
+#include "Sprite.h"
+#include "Utility.h"
+#include "RenderObject.h"
+
+class Plane : public RenderObject {
 public:
   void setTexture(Texture& texture);
   void draw();
 
-	float opacity= 1.0f;
+	float opacity = 1.0f;
 	GSPRect srcRect;
-  int z = 0;
+  float scrollx = 0;
+  float scrolly = 0;
 
 private:
-	CComPtr<ID2D1Bitmap> bmp;
+	Sprite sprites[4];
 
 	friend class Graphics;
-  //set these in bootstrap
-	static Graphics* gfx;
-  static GSPRect destRect;
+  //set this in bootstrap
+  static GSPRect screenRect;
 };
