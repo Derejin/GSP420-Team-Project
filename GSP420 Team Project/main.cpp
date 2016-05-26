@@ -56,8 +56,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 
     if(input.IsKeyPressed(InputManager::KEY_DASH)) { stella.update(); }
 
-    //plane.srcRect.x++; //this is busted. I'll fix it. -rb
-	  
+    plane.scrollx += 2;
+
 	  gfx.startDraw();
     plane.draw();
 	  stella.draw();
