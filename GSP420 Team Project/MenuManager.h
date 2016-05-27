@@ -6,12 +6,15 @@
 //updated 5/23/2016 at 3:16 AM by Derek Baumgartner
 //to fill out some sections now that there's Sprite support
 //and change message-handling logic
+//edited 5/26/2016 at 11:33 AM EST by Derek
+//to update to GSPRect and attempt fixing an issue with buttons failing to draw properly
 
 //to mark this as a file that may need changing if the messaging system is changed,
 //here's the menu change symbol: ~~~m
 
 #pragma once
 #include <vector>
+#include "Utility.h"
 #include "MenuButton.h"
 #include "BaseRecipient.h"
 #include "RenderObject.h"
@@ -49,7 +52,7 @@ public:
 
 	//creates a MenuButton object, stores it in the Buttons vector array
 	void AddButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pressedSprite,
-		int width, int height, int posX, int posY, GSPMessage buttonMessage);
+		GSPRect Rect, GSPMessage buttonMessage);
 
 	void Update(); //to be run every frame. Changes selection based on mouse/keyboard inputs,
 				//modifies MenuButtons in the Buttons vector array based on selection,

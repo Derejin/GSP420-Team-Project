@@ -19,9 +19,6 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{de1c847a-7c21-4ee8-a971-97b729145645}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Input">
-      <UniqueIdentifier>{95af2ae9-10bc-4aa4-8404-6ebbdc55df43}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{152a0198-0b64-458b-bf20-d34318280520}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,9 @@
     </Filter>
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{8aa8c8af-bc69-4c5e-ae37-09ca609fed2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Input">
+      <UniqueIdentifier>{95af2ae9-10bc-4aa4-8404-6ebbdc55df43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,13 +58,13 @@
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Graphics\Input</Filter>
     </ClInclude>
     <ClInclude Include="MenuButton.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Graphics\Input</Filter>
     </ClInclude>
     <ClInclude Include="MenuManager.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Graphics\Input</Filter>
     </ClInclude>
     <ClInclude Include="BaseRecipient.h">
       <Filter>Header Files\Messaging</Filter>

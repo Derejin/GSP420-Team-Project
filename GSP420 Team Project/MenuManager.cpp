@@ -35,9 +35,6 @@ void MenuManager::DecodeMessage(int messageValue)
 	//current mouse position, red from the controlling InputManager
 	Point MousePosition = myManager->GetMouseLocation();
 
-	//pointer to message, if DecodeMessage ends up sending a message from a button!
-	GSPMessage* ResultMessage = nullptr;
-
 	switch (messageValue)
 	{
 	case 0: //mouse moved
@@ -81,12 +78,8 @@ void MenuManager::DecodeMessage(int messageValue)
 		if (Buttons[currentSelection].IsHover(MousePosition.X, MousePosition.Y)
 			&& Buttons[currentSelection].GetSprite() == MenuButton::SPRITE_PRESSED)
 		{
-			//create new message, required for GSP420-style messaging system
-			ResultMessage = new GSPMessage;
-			//get this button's message
-			ResultMessage = &Buttons[currentSelection].ReturnMessage();
-			//send it
-			gMessageHandler->HandleMessage(ResultMessage);
+			//just send the message!
+			gMessageHandler->HandleMessage(new GSPMessage(Buttons[currentSelection].ReturnMessage()));
 
 			//then set sprite back to hover
 			Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_HOVER);
@@ -99,12 +92,8 @@ void MenuManager::DecodeMessage(int messageValue)
 
 	case 3: //ENTER pressed
 
-		//create new message, required for GSP420-style messaging system
-		ResultMessage = new GSPMessage;
-		//get this button's message
-		ResultMessage = &Buttons[currentSelection].ReturnMessage();
-		//then send it!
-		gMessageHandler->HandleMessage(ResultMessage);
+		//just send the message!
+		gMessageHandler->HandleMessage(new GSPMessage(Buttons[currentSelection].ReturnMessage()));
 
 		break;
 
@@ -135,10 +124,10 @@ void MenuManager::DecodeMessage(int messageValue)
 
 //AddButton! Creates a button, adds it to the Buttons vector array
 void MenuManager::AddButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pressedSprite,
-	int width, int height, int X, int Y, GSPMessage buttonMessage)
+	GSPRect Rect, GSPMessage buttonMessage)
 {
 	Buttons.emplace_back(MenuButton(buttonSprite, hoverSprite, 
-		pressedSprite, width, height, X, Y, buttonMessage));
+		pressedSprite, Rect, buttonMessage));
 }
 
 //DecrementSelection! Decrements currentSelection and alters the Buttons

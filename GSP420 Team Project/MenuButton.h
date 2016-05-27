@@ -4,11 +4,14 @@
 //to add GSPMessage structure to be utilized for sending messages, and to implement
 //the GiveMessage method (GiveMessage to be completed in Wk4, with addition of a Message system).
 //updated 5/23/2016, to add in the sprite support and move around messaging information
+//edited 5/26/2016 at 11:33 AM EST by Derek
+//to update to GSPRect and attempt fixing an issue with buttons failing to draw properly
 
 //to mark this as a file that may need changing if the messaging system is changed,
 //here's the menu change symbol: ~~~m
 
 #pragma once
+#include "Utility.h"
 #include "Sprite.h"
 #include "GSPMessage.h"
 #include "RenderObject.h"
@@ -28,6 +31,9 @@ private:
 
 	int currentSprite; //current button sprite - which sprite is displayed
 
+	GSPRect buttonRect;
+
+	/* exhanging for GSPRect
 	int spriteWidth; //width of the button, for detecting if mouse is hovering over
 					 //this button
 
@@ -36,6 +42,7 @@ private:
 
 	int posX; //where to draw the button - also for detecting mouse
 	int posY; //where to draw the button - also for detecting mouse
+	*/
 
 	GSPMessage buttonMessage; //message to be sent when button is clicked or selected+ENTER'd.
 						   //Message struct contains message recipient and the message itself
@@ -44,7 +51,7 @@ protected:
 	//constructor, protected so it can only be called by MenuManager
 	//builds according to arguments
 	MenuButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pressedSprite,
-		int width, int height, int X, int Y, GSPMessage theMessage);
+		GSPRect Rect, GSPMessage theMessage);
 
 public:
 

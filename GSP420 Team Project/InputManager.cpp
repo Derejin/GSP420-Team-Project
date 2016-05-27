@@ -18,6 +18,13 @@
 //sets up DirectInput, and sets up connected mouse+keyboard
 InputManager::InputManager(GSPWindow& win)
 {
+	/*tested setting mouse with this block - resulted in very buggy behavior*/
+	//set mouse position to top of window
+	RECT rect = { 0 };
+	GetWindowRect(win.getHandle(), &rect);
+	SetCursorPos(rect.right - win.WIDTH, rect.bottom - win.HEIGHT);
+	
+
 	//zero out pointers
 	input_directInput = 0;
 	input_keyboard = 0;

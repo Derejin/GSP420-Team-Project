@@ -19,6 +19,8 @@
 //to add tests for MenuManager, MenuButton, and the Messaging System
 // however, bug encountered when attempting to instantiate MenuManager. Pushing as separate branch
 // to see help from Richard.
+//edited 5/26/2016 at 11:33 AM EST by Derek
+//to update MenuButton+MenuManager to GSPRect and attempt fixing an issue with buttons failing to draw properly
 
 #include "GSPWindow.h"
 #include "Graphics.h"
@@ -80,8 +82,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   coinSprites[0].srcRect.width /= 8;
 
   coinSprites[0].destRect = coinSprites[1].srcRect;
-  coinSprites[0].destRect.x = 10;
+  coinSprites[0].destRect.x = 540;
   coinSprites[0].destRect.y = 200;
+  coinSprites[0].destRect.width = coinSprites[0].srcRect.width*2;
+  coinSprites[0].destRect.height = coinSprites[0].srcRect.height*2;
 
   //copy the sprite into the other coin sprites,
   //but change srcRect so they use a diff part of the tex
@@ -91,25 +95,37 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 	  coinSprites[i].srcRect.x += (coinSprites[i].srcRect.width)*i;
   }
 
+  //create GSPRect for the first button
+  GSPRect firstButtonRect(coinSprites[0].destRect.x, coinSprites[0].destRect.y, 
+	  coinSprites[0].destRect.width, coinSprites[0].destRect.height);
+
   //create the first example button, which tells testText to move up
   testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
-	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RTESTTEXT, 0));
+	  firstButtonRect, GSPMessage(RTESTTEXT, 0));
 
-  //scoot the destRect.x over by 100, then create a new button
+  //scoot the destRect.x over by 100 for each sprite
   for (int i = 0; i < 7; i++)
 	  coinSprites[i].destRect.x += 100;
 
+  //set the GSPRect for the second button
+  GSPRect secondButtonRect = firstButtonRect;
+  secondButtonRect.x += 100;
+
   //create the second example button -  tells testText to move down
-  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[7],
-	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RTESTTEXT, 1));
+  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
+	  secondButtonRect, GSPMessage(RTESTTEXT, 1));
 
   //scoot the destRect.x over by another 100, then create a new button
   for (int i = 0; i < 7; i++)
 	  coinSprites[i].destRect.x += 100;
 
+  //set the GSPRect for the third button
+  GSPRect thirdButtonRect = secondButtonRect;
+  thirdButtonRect.x += 100;
+
   //create the third example button - tells testText to move back into starting position
-  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[1],
-	  coinSprites[0].srcRect.width, coinSprites[0].srcRect.height, coinSprites[0].destRect.x, coinSprites[0].destRect.y, GSPMessage(RTESTTEXT, 2));
+  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
+	  thirdButtonRect, GSPMessage(RTESTTEXT, 2));
 
   batch.addRO(testMenu);
 
@@ -120,24 +136,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
       if(input.IsKeyPressed(InputManager::KEY_DASH)) { stella.update(); }
 
 	  //for testing if messaging system works
-	  if (input.IsKeyTriggered(InputManager::KEY_W)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 0)); }
-	  if (input.IsKeyTriggered(InputManager::KEY_S)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 1)); }
-	  if (input.IsKeyTriggered(InputManager::KEY_ENTER)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 2)); }
+	 // if (input.IsKeyTriggered(InputManager::KEY_W)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 0)); }
+	 // if (input.IsKeyTriggered(InputManager::KEY_S)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 1)); }
+	 // if (input.IsKeyTriggered(InputManager::KEY_ENTER)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 2)); }
 
-	  /* for testing the menu buttons - currently they don't draw or render or somesuch, so commenting these out
 	  if (input.MouseMoved()) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 0)); }
 	  if (input.IsMouseTriggered(InputManager::MOUSE_LEFT)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 1)); }
 	  if (input.IsMouseReleased(InputManager::MOUSE_LEFT)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 2)); }
-	  if (input.IsKeyTriggered(InputManager::KEY_ENTER)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 3)); }
+	  if (input.IsKeyTriggered(InputManager::KEY_ENTER)) { 
+		  gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 3));
+		  //gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 2));
+	  }
 	  if (input.IsKeyTriggered(InputManager::KEY_UP) || input.IsKeyTriggered(InputManager::KEY_W)) {
 		  gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 4));
+		  //gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 0));
 	  }
 	  if (input.IsKeyTriggered(InputManager::KEY_DOWN) || input.IsKeyTriggered(InputManager::KEY_S)) {
 		  gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 5));
-	  }*/
+		  //gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 1));
+	  }
+	  //menu must update first
+	  testMenu->Update();
 
 	  movableText->Update();
-	  testMenu->Update();
 
       plane.scrollx += 2;
 
