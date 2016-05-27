@@ -34,7 +34,7 @@ void MessageHandler::AddRecipient(BaseRecipient* desiredRecipient, RClass recipi
 	//Or allocate the vector and add in the pointer, fill gap with 0.
 	else
 	{
-		int oldsize = RecipientList.size();
+		size_t oldsize = RecipientList.size();
 		RecipientList.resize((int)recipientID + 1);
 		for (size_t i = oldsize; i < RecipientList.size() - 1; ++i)
 		{
