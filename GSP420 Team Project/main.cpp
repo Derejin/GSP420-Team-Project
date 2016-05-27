@@ -76,56 +76,45 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 
   //menu setup//
   Texture coinTex(L"Full Coins.png");
-  Sprite coinSprites[8];
+  const int NUM_COINS = 8;
+  Sprite coinSprites[NUM_COINS];
 
   coinSprites[0].setBitmap(coinTex);
   coinSprites[0].srcRect.width /= 8;
 
-  coinSprites[0].destRect = coinSprites[1].srcRect;
+  coinSprites[0].destRect = coinSprites[0].srcRect;
   coinSprites[0].destRect.x = 540;
   coinSprites[0].destRect.y = 200;
-  coinSprites[0].destRect.width = coinSprites[0].srcRect.width*2;
-  coinSprites[0].destRect.height = coinSprites[0].srcRect.height*2;
+  coinSprites[0].destRect.width *= 2;
+  coinSprites[0].destRect.height *= 2;
 
   //copy the sprite into the other coin sprites,
   //but change srcRect so they use a diff part of the tex
-  for (int i = 1; i < 7; i++)
+  for (int i = 1; i < NUM_COINS; i++)
   {
 	  coinSprites[i] = coinSprites[0];
-	  coinSprites[i].srcRect.x += (coinSprites[i].srcRect.width)*i;
+	  coinSprites[i].srcRect.x = coinSprites[i].srcRect.width*i;
   }
-
-  //create GSPRect for the first button
-  GSPRect firstButtonRect(coinSprites[0].destRect.x, coinSprites[0].destRect.y, 
-	  coinSprites[0].destRect.width, coinSprites[0].destRect.height);
 
   //create the first example button, which tells testText to move up
   testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
-	  firstButtonRect, GSPMessage(RTESTTEXT, 0));
+	  coinSprites[0].destRect, GSPMessage(RTESTTEXT, 0));
 
   //scoot the destRect.x over by 100 for each sprite
-  for (int i = 0; i < 7; i++)
+  for (int i = 0; i < NUM_COINS; i++)
 	  coinSprites[i].destRect.x += 100;
-
-  //set the GSPRect for the second button
-  GSPRect secondButtonRect = firstButtonRect;
-  secondButtonRect.x += 100;
 
   //create the second example button -  tells testText to move down
   testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
-	  secondButtonRect, GSPMessage(RTESTTEXT, 1));
+	  coinSprites[0].destRect, GSPMessage(RTESTTEXT, 1));
 
-  //scoot the destRect.x over by another 100, then create a new button
-  for (int i = 0; i < 7; i++)
+  //scoot the destRect.x over by another 100 for third button
+  for (int i = 0; i < NUM_COINS; i++)
 	  coinSprites[i].destRect.x += 100;
-
-  //set the GSPRect for the third button
-  GSPRect thirdButtonRect = secondButtonRect;
-  thirdButtonRect.x += 100;
 
   //create the third example button - tells testText to move back into starting position
   testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
-	  thirdButtonRect, GSPMessage(RTESTTEXT, 2));
+	  coinSprites[0].destRect, GSPMessage(RTESTTEXT, 2));
 
   batch.addRO(testMenu);
 

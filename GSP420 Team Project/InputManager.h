@@ -20,6 +20,16 @@ struct Point
 	int X;
 	int Y;
 
+	Point() {
+		X = 0;
+		Y = 0;
+	}
+
+	Point(int x, int y) {
+		X = x;
+		Y = y;
+	}
+
 	//check if equal to another point
 	bool operator== (const Point& other) {
 		if (X == other.X && Y == other.Y)
@@ -63,6 +73,8 @@ private:
 
 											   //mouse position points, for both current and previous frames
 	Point input_MousePos, prev_MousePos;
+
+	HWND windowHandle;
 
 	bool ReadKeyboard(); //reads the keyboard. attempts to reacquire if something goes wrong,
 						 //otherwise returns true.
@@ -115,4 +127,7 @@ public:
 
 	//Getter for input_MousePos
 	Point GetMouseLocation();
+
+	//Getter for mouse delta
+	Point GetMouseDelta();
 };

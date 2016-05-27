@@ -18,12 +18,7 @@
 //sets up DirectInput, and sets up connected mouse+keyboard
 InputManager::InputManager(GSPWindow& win)
 {
-	/*tested setting mouse with this block - resulted in very buggy behavior*/
-	//set mouse position to top of window
-	RECT rect = { 0 };
-	GetWindowRect(win.getHandle(), &rect);
-	SetCursorPos(rect.right - win.WIDTH, rect.bottom - win.HEIGHT);
-	
+	windowHandle = win.getHandle();	
 
 	//zero out pointers
 	input_directInput = 0;
@@ -211,9 +206,8 @@ bool InputManager::ReadMouse()
 //EXPAND THIS FUNCTION with key press checks, to add functionality!
 void InputManager::ProcessInput()
 {
-	//update location of mouse cursor based on mouse changes
-	input_MousePos.X += input_mouseState.lX;
-	input_MousePos.Y += input_mouseState.lY;
+	//update location of mouse cursor
+	input_MousePos = GetMouseLocation();
 
 	//bound the mouse inside the window
 	if (input_MousePos.X < 0) { input_MousePos.X = 0; }
@@ -295,5 +289,13 @@ bool InputManager::IsMouseReleased(InputMouse button)
 //getter to return the exact location of the mouse cursor, as a Point struct
 Point InputManager::GetMouseLocation()
 {
-	return input_MousePos;
+	POINT tempPoint;
+	GetCursorPos(&tempPoint);
+	ScreenToClient(windowHandle, &tempPoint);
+	return Point(tempPoint.x, tempPoint.y);
+}
+
+Point InputManager::GetMouseDelta()
+{
+	return Point(input_mouseState.lX, input_mouseState.lY);
 }
