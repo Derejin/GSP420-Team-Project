@@ -6,11 +6,6 @@
 
 #include "BaseRecipient.h"
 
-//default constructor - just runs MessageQueue.reserve(4).
-BaseRecipient::BaseRecipient() {
-	MessageQueue.reserve(4);
-}
-
 //ReceiveMessage, for adding the message to MessageQueue!
 bool BaseRecipient::ReceiveMessage(GSPMessage *theMessage)
 {
@@ -22,7 +17,7 @@ bool BaseRecipient::ReceiveMessage(GSPMessage *theMessage)
 //if there's a message in the MessageQueue, pass it into the argument message value
 //then remove the message from the queue
 //return true if there's a message
-bool BaseRecipient::ReadMessage(GSPMessage *redMessage)
+bool BaseRecipient::ReadMessage(GSPMessage *&redMessage)
 {
 	//if there are messages
 	if (MessageQueue.size() > 0)

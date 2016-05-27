@@ -18,17 +18,14 @@ private:
 	//queue for storing messages
 	std::vector<GSPMessage*> MessageQueue;
 
-public:
-	//default constructor - just runs MessageQueue.reserve(4).
-	BaseRecipient();
-	
+public:	
 	//function for storing a message in the MessageQueue
 	bool ReceiveMessage(GSPMessage* theMessage);
 
 	//function for checking if there is a message in the queue;
 	//if there is, that message is copied into the passed in "theMessage" argument
 	//then said message removed from MessageQueue and "true" is returned
-	bool ReadMessage(GSPMessage *theMessage);
+	bool ReadMessage(GSPMessage *&theMessage);
 
 	//virtual function for decoding the message. To be defined by any inheritors.
 	//after passing in the messagevalue, be sure you delete the message!

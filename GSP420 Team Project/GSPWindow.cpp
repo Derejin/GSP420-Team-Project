@@ -16,7 +16,7 @@ GSPWindow::GSPWindow(std::wstring title, int width, int height) : WIDTH(width), 
 className(L"DefaultWindowTitle"){
 
 	//window style - can be modified here
-	static const long STYLE = WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE;
+	static const long STYLE = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE;
 
 	//window class declaration and definition
 	WNDCLASS wc;
