@@ -43,7 +43,7 @@ void MenuManager::DecodeMessage(int messageValue)
 		MouseHasMoved = true;
 
 		//and for each button
-		for (size_t i = 0; i < Buttons.size() - 1; i++)
+		for (size_t i = 0; i < Buttons.size(); i++)
 		{
 			//check if the mouse is hovering over it
 			if (Buttons[i].IsHover(MousePosition.X, MousePosition.Y))
