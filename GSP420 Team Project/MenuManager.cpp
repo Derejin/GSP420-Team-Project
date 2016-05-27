@@ -51,7 +51,7 @@ void MenuManager::DecodeMessage(int messageValue)
 				//deselect current Button
 				Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_REGULAR);
 				//update currentSelection
-				currentSelection = i;
+				currentSelection = (int)i;
 				//and that selected button's sprite
 				Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_HOVER);
 
@@ -143,7 +143,7 @@ void MenuManager::DecrementSelection()
 		currentSelection--;
 	//otherwise, set it to the last button in Buttons
 	else
-		currentSelection = (Buttons.size() - 1);
+		currentSelection = (int)Buttons.size() - 1;
 
 	//then update the currently-selected button's sprite
 	Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_HOVER);
