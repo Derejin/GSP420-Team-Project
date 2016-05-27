@@ -17,16 +17,12 @@
 #include "MessageHandler.h" //for access to the MessageHandler singleton.
 
 //parameterized constructor!
-MenuManager::MenuManager(InputManager &inputmanager, int reserveSize)
+MenuManager::MenuManager(InputManager &inputmanager)
 {
-	//initialize currentSelection
 	currentSelection = 0;
 
 	//set pointer towards the passed-in InputManager
 	myManager = &inputmanager;
-
-	//and reserve the requested amount of spots in Buttons!
-	Buttons.reserve(reserveSize);
 }
 
 //reads the passed in messageValue, performs the action.
@@ -39,9 +35,6 @@ void MenuManager::DecodeMessage(int messageValue)
 	//current mouse position, red from the controlling InputManager
 	Point MousePosition = myManager->GetMouseLocation();
 
-	//pointer to message, if DecodeMessage ends up sending a message from a button!
-	GSPMessage* ResultMessage = nullptr;
-
 	switch (messageValue)
 	{
 	case 0: //mouse moved
@@ -50,17 +43,17 @@ void MenuManager::DecodeMessage(int messageValue)
 		MouseHasMoved = true;
 
 		//and for each button
-		for (size_t i = 0; i < Buttons.size() - 1; i++)
+		for (size_t i = 0; i < Buttons.size(); i++)
 		{
 			//check if the mouse is hovering over it
 			if (Buttons[i].IsHover(MousePosition.X, MousePosition.Y))
 			{
 				//deselect current Button
-				Buttons[currentSelection].UpdateSprite(0);
+				Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_REGULAR);
 				//update currentSelection
 				currentSelection = i;
 				//and that selected button's sprite
-				Buttons[currentSelection].UpdateSprite(1);
+				Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_HOVER);
 
 				break;
 			}
@@ -72,8 +65,8 @@ void MenuManager::DecodeMessage(int messageValue)
 		//check if the mouse is hovering over the current button
 		if (Buttons[currentSelection].IsHover(MousePosition.X, MousePosition.Y))
 		{
-			//tell that button to jump to Sprite 2, if so.
-			Buttons[currentSelection].UpdateSprite(2);
+			//tell that button to jump to Sprite Pressed, if so.
+			Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_PRESSED);
 		}
 
 		break;
@@ -81,30 +74,26 @@ void MenuManager::DecodeMessage(int messageValue)
 	case 2: //left mouse button released after being pressed in previously
 
 		//check if the mouse is currently over this button, and if its
-		//sprite is Sprite 2
+		//sprite is Sprite Pressed
 		if (Buttons[currentSelection].IsHover(MousePosition.X, MousePosition.Y)
-			&& Buttons[currentSelection].GetSprite() == 2)
+			&& Buttons[currentSelection].GetSprite() == MenuButton::SPRITE_PRESSED)
 		{
-			//get this button's message
-			ResultMessage = &Buttons[currentSelection].ReturnMessage();
-			//send it
-			gMessageHandler->HandleMessage(ResultMessage);
+			//just send the message!
+			gMessageHandler->HandleMessage(new GSPMessage(Buttons[currentSelection].ReturnMessage()));
 
 			//then set sprite back to hover
-			Buttons[currentSelection].UpdateSprite(1);
+			Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_HOVER);
 		}
-		//if not, just set the button to Sprite 0.
+		//if not, just set the button to Sprite Regular.
 		else
-			Buttons[currentSelection].UpdateSprite(0);
+			Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_REGULAR);
 
 		break;
 
 	case 3: //ENTER pressed
 
-		//get this button's message
-		ResultMessage = &Buttons[currentSelection].ReturnMessage();
-		//then send it!
-		gMessageHandler->HandleMessage(ResultMessage);
+		//just send the message!
+		gMessageHandler->HandleMessage(new GSPMessage(Buttons[currentSelection].ReturnMessage()));
 
 		break;
 
@@ -135,10 +124,10 @@ void MenuManager::DecodeMessage(int messageValue)
 
 //AddButton! Creates a button, adds it to the Buttons vector array
 void MenuManager::AddButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pressedSprite,
-	int width, int height, int X, int Y, GSPMessage buttonMessage)
+	GSPRect Rect, GSPMessage buttonMessage)
 {
 	Buttons.emplace_back(MenuButton(buttonSprite, hoverSprite, 
-		pressedSprite, width, height, X, Y, buttonMessage));
+		pressedSprite, Rect, buttonMessage));
 }
 
 //DecrementSelection! Decrements currentSelection and alters the Buttons
@@ -146,8 +135,8 @@ void MenuManager::AddButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pres
 //do not call if mouse moved this frame, or if Buttons.size() <= 1
 void MenuManager::DecrementSelection()
 {
-	//de-select current button by setting its sprite to 0
-	Buttons[currentSelection].UpdateSprite(0);
+	//de-select current button by setting its sprite to regular
+	Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_REGULAR);
 
 	//if currentSelection > 0, then decrement it
 	if (currentSelection > 0)
@@ -157,7 +146,7 @@ void MenuManager::DecrementSelection()
 		currentSelection = (Buttons.size() - 1);
 
 	//then update the currently-selected button's sprite
-	Buttons[currentSelection].UpdateSprite(1);
+	Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_HOVER);
 }
 
 //IncrementSelection! Increments currentSelection and alters the Buttons
@@ -165,8 +154,8 @@ void MenuManager::DecrementSelection()
 //do not call if mouse moved this frame, or if Buttons.size() <= 1
 void MenuManager::IncrementSelection()
 {
-	//de-select current button by setting its sprite to 0
-	Buttons[currentSelection].UpdateSprite(0);
+	//de-select current button by setting its sprite to regular
+	Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_REGULAR);
 
 	//if currentSelection is not the last button in the Buttons vector array,
 	//then increment it
@@ -177,7 +166,7 @@ void MenuManager::IncrementSelection()
 		currentSelection = 0;
 
 	//then update the currently-selected button's sprite
-	Buttons[currentSelection].UpdateSprite(1);
+	Buttons[currentSelection].UpdateSprite(MenuButton::SPRITE_HOVER);
 }
 
 
@@ -190,8 +179,7 @@ void MenuManager::Update()
 {
 	//message reading logic likely needs updating!
 
-	//currentMessage, for storing the message Update currently is acting upon
-	//set its receiver to none, and its message to 401, for "no message found"
+	//currentMessage, for storing and acting upon the received messages if there are any
 	GSPMessage* currentMessage = nullptr;
 
 	//read latest message, if there is one. decode it, delete it, then read the next and decode it.
@@ -202,7 +190,10 @@ void MenuManager::Update()
 		//delete
 		delete currentMessage;
 	}
+}
 
+void MenuManager::draw()
+{
 	//draw all the buttons in the Buttons array
-  for(auto& btn : Buttons) { btn.Draw(); }
+	for (auto& btn : Buttons) { btn.draw(); }
 }

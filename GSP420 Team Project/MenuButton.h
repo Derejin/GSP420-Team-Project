@@ -4,15 +4,19 @@
 //to add GSPMessage structure to be utilized for sending messages, and to implement
 //the GiveMessage method (GiveMessage to be completed in Wk4, with addition of a Message system).
 //updated 5/23/2016, to add in the sprite support and move around messaging information
+//edited 5/26/2016 at 11:33 AM EST by Derek
+//to update to GSPRect and attempt fixing an issue with buttons failing to draw properly
 
 //to mark this as a file that may need changing if the messaging system is changed,
 //here's the menu change symbol: ~~~m
 
 #pragma once
+#include "Utility.h"
 #include "Sprite.h"
 #include "GSPMessage.h"
+#include "RenderObject.h"
 
-class MenuButton
+class MenuButton: public RenderObject
 {
 	//so MenuManager can access the constructor!
 	friend class MenuManager;
@@ -27,6 +31,9 @@ private:
 
 	int currentSprite; //current button sprite - which sprite is displayed
 
+	GSPRect buttonRect;
+
+	/* exhanging for GSPRect
 	int spriteWidth; //width of the button, for detecting if mouse is hovering over
 					 //this button
 
@@ -35,6 +42,7 @@ private:
 
 	int posX; //where to draw the button - also for detecting mouse
 	int posY; //where to draw the button - also for detecting mouse
+	*/
 
 	GSPMessage buttonMessage; //message to be sent when button is clicked or selected+ENTER'd.
 						   //Message struct contains message recipient and the message itself
@@ -43,9 +51,16 @@ protected:
 	//constructor, protected so it can only be called by MenuManager
 	//builds according to arguments
 	MenuButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pressedSprite,
-		int width, int height, int X, int Y, GSPMessage theMessage);
+		GSPRect Rect, GSPMessage theMessage);
 
 public:
+
+	//enum for sprite updates
+	enum SpriteType {
+		SPRITE_REGULAR,	//0
+		SPRITE_HOVER,	//1
+		SPRITE_PRESSED	//2
+	};
 
 	bool IsHover(int X, int Y); 	//checks X coordinate against posX and spriteWidth
 									//checks Y coordinate against posY and spriteHeight
@@ -56,10 +71,7 @@ public:
 
 	int GetSprite() { return currentSprite; } //getter for currentSprite!
 
-	void UpdateSprite(int spriteState); 	//updates currentSprite to the corresponding argument int value
-											//0 means regular. updates (not hovered over)
-											//1 means hoverSprite (mouse over button, but not pressed in)
-											//2 means pressedSprite (mouse over button when left mouse pressed)
+	void UpdateSprite(SpriteType spriteState); 	//updates currentSprite to the corresponding argument SpriteType value
 
-	void Draw(); //draws the sprite! needs Sprite support to draw, however.
+	void draw(); //draws the sprite!
 };

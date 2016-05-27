@@ -6,25 +6,25 @@
 //updated 5/23/2016 at 3:16 AM by Derek Baumgartner
 //to fill out some sections now that there's Sprite support
 //and change message-handling logic
+//edited 5/26/2016 at 11:33 AM EST by Derek
+//to update to GSPRect and attempt fixing an issue with buttons failing to draw properly
 
 //to mark this as a file that may need changing if the messaging system is changed,
 //here's the menu change symbol: ~~~m
 
 #pragma once
 #include <vector>
+#include "Utility.h"
 #include "MenuButton.h"
 #include "BaseRecipient.h"
+#include "RenderObject.h"
 
 //declare the InputManager class here, for usage in this class
 class InputManager;
 
-class MenuManager : public BaseRecipient
+class MenuManager : public BaseRecipient, public RenderObject
 {
 private:
-
-	//default constructor. Should not be used! privatized to discourage its use
-	MenuManager();
-
 	std::vector<MenuButton> Buttons; //vector array for storing this menu's buttons
 
 	int currentSelection; //currently selected button in the vector array
@@ -40,7 +40,7 @@ private:
 public:
 	//constructor. sets currentSelection to 0, Buttons.reserve(reserveSize), and sets
 	//myManger to the passed-in inputmanager
-	MenuManager(InputManager &inputmanager, int reserveSize);
+	MenuManager(InputManager &inputmanager);
 
 	void DecodeMessage(int messageValue); //reads the passed-in message value, acts on it
 										//0 for "mouse moved"
@@ -52,10 +52,11 @@ public:
 
 	//creates a MenuButton object, stores it in the Buttons vector array
 	void AddButton(Sprite buttonSprite, Sprite hoverSprite, Sprite pressedSprite,
-		int width, int height, int posX, int posY, GSPMessage buttonMessage);
+		GSPRect Rect, GSPMessage buttonMessage);
 
 	void Update(); //to be run every frame. Changes selection based on mouse/keyboard inputs,
 				//modifies MenuButtons in the Buttons vector array based on selection,
 				//and tells a MenuButton to send its message if it is clicked on/ENTER'd.
-				//also tells MenuButtons to be drawn.
+
+	void draw(); //tells MenuButtons to be drawn
 };

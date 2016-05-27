@@ -18,6 +18,8 @@
 //sets up DirectInput, and sets up connected mouse+keyboard
 InputManager::InputManager(GSPWindow& win)
 {
+	windowHandle = win.getHandle();	
+
 	//zero out pointers
 	input_directInput = 0;
 	input_keyboard = 0;
@@ -81,7 +83,7 @@ InputManager::InputManager(GSPWindow& win)
 	//assert it worked properly
 	assert(!FAILED(result) && "DirectInput: Mouse Set Cooperative Level Failed");
 
-	//now acquire mouse for use with DirectINput
+	//now acquire mouse for use with DirectInput
 	result = input_mouse->Acquire();
 	//assert it worked properly
 	assert(!FAILED(result) && "DirectInput: Mouse Acquire Failed");
@@ -124,6 +126,13 @@ bool InputManager::ReadFrame()
 	//result, for asserts
 	bool result;
 
+	//copy current keyboard and mouse states into previous states, to save previous frame states
+	prev_keyboardState = input_keyboardState;
+	prev_mouseState = input_mouseState;
+
+	//copy current mousePos into the previous, as well
+	prev_MousePos = input_MousePos;
+
 	//read keyboard state
 	result = ReadKeyboard();
 	assert(result && "Keyboard Read Failed");
@@ -163,7 +172,6 @@ bool InputManager::ReadKeyboard()
 		}
 	}
 	
-	//for success, return true
 	return true;
 }
 
@@ -191,7 +199,6 @@ bool InputManager::ReadMouse()
 		}
 	}
 
-	//return true, for success
 	return true;
 }
 
@@ -199,9 +206,8 @@ bool InputManager::ReadMouse()
 //EXPAND THIS FUNCTION with key press checks, to add functionality!
 void InputManager::ProcessInput()
 {
-	//update location of mouse cursor based on mouse changes
-	input_MousePos.X += input_mouseState.lX;
-	input_MousePos.Y += input_mouseState.lY;
+	//update location of mouse cursor
+	input_MousePos = GetMouseLocation();
 
 	//bound the mouse inside the window
 	if (input_MousePos.X < 0) { input_MousePos.X = 0; }
@@ -209,22 +215,87 @@ void InputManager::ProcessInput()
 	if (input_MousePos.X > input_screenWidth) { input_MousePos.X = input_screenWidth; }
 	if (input_MousePos.Y > input_screenHeight) { input_MousePos.Y = input_screenHeight; }
 
-	//keyboard checks here?
+	//keyboard checks here? likely just app-layer stuff instead
 
-	//and finish
+
 	return;
 }
 
-//key checking function! pass in the key you want to check as the argument,
-//and if it's pressed down this will return true
+//returns true if the mouse moved this frame
+bool InputManager::MouseMoved()
+{
+	if (input_MousePos == prev_MousePos)
+		return false;
+	else
+		return true;
+}
+
+//KEYBOARD CHECKING FUNCTIONS//
+//If the passed-in key is held down, will return true
 bool InputManager::IsKeyPressed(InputKey key)
 {
 	//bitwise check, returns true if pressed down and false if not
 	return input_keyboardState[keyMap[key]] && 0x80;
 }
 
+//if the passed-in key is initially pressed in this frame, will return true
+bool InputManager::IsKeyTriggered(InputKey key)
+{
+	//if the key wasn't pressed in the previous frame, but is in this frame
+	if (!(prev_keyboardState[keyMap[key]] && 0x80) && IsKeyPressed(key))
+		return true;
+	else
+		return false;
+}
+
+//if the passed-in key was released this frame, will return true
+bool InputManager::IsKeyReleased(InputKey key)
+{
+	//if the key was pressed in the previous frame, but not in this frame
+	if ((prev_keyboardState[keyMap[key]] && 0x80) && !IsKeyPressed(key))
+		return true;
+	else
+		return false;
+}
+
+//MOUSE CHECKING FUNCTIONS//
+//if the passed-in mousebutton is held down, will return true
+bool InputManager::IsMousePressed(InputMouse button)
+{
+	//bitwise check, returns true if pressed down and false if not
+	return input_mouseState.rgbButtons[button] && 0x80;
+}
+
+//if the passed-in mousebutton is initially pressed in this frame, will return true
+bool InputManager::IsMouseTriggered(InputMouse button)
+{
+	//if the mousebutton wasn't pressed in the previous frame, but is in this frame
+	if (!(prev_mouseState.rgbButtons[button] && 0x80) && IsMousePressed(button))
+		return true;
+	else
+		return false;
+}
+
+//if the passed-in mousebutton is released this frame, will return true
+bool InputManager::IsMouseReleased(InputMouse button)
+{
+	//if the mousebutton was pressed in the previous frame, but isn't in this frame
+	if ((prev_mouseState.rgbButtons[button] && 0x80) && !IsMousePressed(button))
+		return true;
+	else
+		return false;
+}
+
 //getter to return the exact location of the mouse cursor, as a Point struct
 Point InputManager::GetMouseLocation()
 {
-	return input_MousePos;
+	POINT tempPoint;
+	GetCursorPos(&tempPoint);
+	ScreenToClient(windowHandle, &tempPoint);
+	return Point(tempPoint.x, tempPoint.y);
+}
+
+Point InputManager::GetMouseDelta()
+{
+	return Point(input_mouseState.lX, input_mouseState.lY);
 }
