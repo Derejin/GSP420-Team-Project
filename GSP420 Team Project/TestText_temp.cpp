@@ -1,7 +1,7 @@
 #include "TestText_temp.h"
 
 
-TestText::TestText() : font(L"Ariel"), text(L"Press W, S, or ENTER to move this textbox!", &font){
+TestText::TestText() : font(L"Ariel"), text(L"Press W or S to select a button, and press ENTER to use it!", &font){
 	text.setRect(GSPRect(400.f, 150.f, 200.f, 200.f));
 	font.setColor(D2D1::ColorF(0, 1));
 	text.setFont(&font);
