@@ -34,7 +34,7 @@
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{8aa8c8af-bc69-4c5e-ae37-09ca609fed2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Graphics\Input">
+    <Filter Include="Header Files\Input">
       <UniqueIdentifier>{95af2ae9-10bc-4aa4-8404-6ebbdc55df43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -58,13 +58,13 @@
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Header Files\Graphics\Input</Filter>
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="MenuButton.h">
-      <Filter>Header Files\Graphics\Input</Filter>
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="MenuManager.h">
-      <Filter>Header Files\Graphics\Input</Filter>
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="BaseRecipient.h">
       <Filter>Header Files\Messaging</Filter>
@@ -94,6 +94,9 @@
       <Filter>Header Files\Testing</Filter>
     </ClInclude>
     <ClInclude Include="TestText_temp.h">
+      <Filter>Header Files\Testing</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
       <Filter>Header Files\Testing</Filter>
     </ClInclude>
   </ItemGroup>
@@ -149,6 +152,9 @@
     <ClCompile Include="TestText_temp.cpp">
       <Filter>Source Files\Testing</Filter>
     </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Source Files\Testing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="test image.png">
@@ -161,6 +167,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="tilesetOpenGameBackground_3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="buttons.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

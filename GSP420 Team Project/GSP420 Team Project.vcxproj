@@ -34,6 +34,7 @@
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Stella_temp.h" />
+    <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestText_temp.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
@@ -54,11 +55,16 @@
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stella_temp.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestText_temp.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="buttons.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Image>
     <Image Include="Full Coins.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

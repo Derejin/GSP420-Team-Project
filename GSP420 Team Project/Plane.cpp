@@ -11,11 +11,10 @@ void Plane::setTexture(Texture& texture) {
 }
 
 void Plane::draw() {
-  //~~@
-  while(scrollx < 0) { scrollx += screenRect.width;  }
-  while(scrolly < 0) { scrolly += screenRect.height; }
-  while(scrollx > screenRect.width ) { scrollx -= screenRect.width;  }
-  while(scrolly > screenRect.height) { scrolly -= screenRect.height; }
+  if(scrollx < 0) { scrollx += screenRect.width;  }
+  if(scrolly < 0) { scrolly += screenRect.height; }
+  if(scrollx > screenRect.width ) { scrollx -= screenRect.width;  }
+  if(scrolly > screenRect.height) { scrolly -= screenRect.height; }
 
   sprites[0].destRect = screenRect;
   sprites[0].destRect.x = -scrollx;

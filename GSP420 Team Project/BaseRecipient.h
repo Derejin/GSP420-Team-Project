@@ -30,4 +30,7 @@ public:
 	//virtual function for decoding the message. To be defined by any inheritors.
 	//after passing in the messagevalue, be sure you delete the message!
 	virtual void DecodeMessage(int messageValue) {}
+
+  //decode all waiting messages (and empty the queue)
+  void processQueue();
 };
