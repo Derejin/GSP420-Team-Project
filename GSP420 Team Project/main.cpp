@@ -24,136 +24,29 @@
 
 #include "GSPWindow.h"
 #include "Graphics.h"
-#include "Text.h"
-#include "Font.h"
 #include "InputManager.h"
-#include "Sprite.h"
 #include "MessageHandler.h"
-#include "MenuManager.h"
-#include "Plane.h"
-#include "DepthBatch.h"
+#include "TestScene.h"
 
-//test files
-#include "Stella_temp.h"
-#include "TestText_temp.h"
-
-//main function - throws error if window fails
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   GSPWindow gameWindow(L"Testing Window", 1080, 600);
   Graphics gfx(gameWindow);
   InputManager input(gameWindow);
-  DepthBatch batch;
-
-  MenuManager *testMenu = new MenuManager(input);
-
-  //messenger setup
   gMessageHandler->Instantiate();
-  gMessageHandler->AddRecipient(testMenu, RTESTMENU);
 
-  Font font(L"Arial");
-  font.setColor(D2D1::ColorF(0,1));
-  font.setSize(40.0f);
-
-  Text text(L"Example of Text!", &font);
-  text.setRect(GSPRect(200.f, 150.f, 200.f, 200.f));
-  batch.addRO(&text);
-  text.z = 0;
-
-  Stella stella;
-  batch.addRO(&stella);
-  stella.z = 100;
-
-  TestText * movableText = new TestText();
-  gMessageHandler->AddRecipient(movableText, RTESTTEXT);
-  batch.addRO(movableText);
-
-  Texture bgtex(L"tilesetOpenGameBackground_3.png");
-
-  Plane plane;
-  plane.setTexture(bgtex);
-  batch.addRO(&plane);
-  plane.z = -100;
-
-  //menu setup//
-  Texture coinTex(L"Full Coins.png");
-  const int NUM_COINS = 8;
-  Sprite coinSprites[NUM_COINS];
-
-  coinSprites[0].setBitmap(coinTex);
-  coinSprites[0].srcRect.width /= 8;
-
-  coinSprites[0].destRect = coinSprites[0].srcRect;
-  coinSprites[0].destRect.x = 540;
-  coinSprites[0].destRect.y = 200;
-  coinSprites[0].destRect.width *= 2;
-  coinSprites[0].destRect.height *= 2;
-
-  //copy the sprite into the other coin sprites,
-  //but change srcRect so they use a diff part of the tex
-  for (int i = 1; i < NUM_COINS; i++)
-  {
-	  coinSprites[i] = coinSprites[0];
-	  coinSprites[i].srcRect.x = coinSprites[i].srcRect.width*i;
-  }
-
-  //create the first example button, which tells testText to move up
-  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
-	  coinSprites[0].destRect, GSPMessage(RTESTTEXT, 0));
-
-  //scoot the destRect.x over by 100 for each sprite
-  for (int i = 0; i < NUM_COINS; i++)
-	  coinSprites[i].destRect.x += 100;
-
-  //create the second example button -  tells testText to move down
-  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
-	  coinSprites[0].destRect, GSPMessage(RTESTTEXT, 1));
-
-  //scoot the destRect.x over by another 100 for third button
-  for (int i = 0; i < NUM_COINS; i++)
-	  coinSprites[i].destRect.x += 100;
-
-  //create the third example button - tells testText to move back into starting position
-  testMenu->AddButton(coinSprites[0], coinSprites[5], coinSprites[6],
-	  coinSprites[0].destRect, GSPMessage(RTESTTEXT, 2));
-
-  batch.addRO(testMenu);
+  TestScene scene(input, gameWindow.WIDTH, gameWindow.HEIGHT);
 
   while(gameWindow.update()) {
 	  input.ReadFrame();
-	  if(input.IsKeyPressed(InputManager::KEY_ESC)) { break; }
 
-      if(input.IsKeyPressed(InputManager::KEY_DASH)) { stella.update(); }
-
-	  //for testing if messaging system works
-	 // if (input.IsKeyTriggered(InputManager::KEY_W)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 0)); }
-	 // if (input.IsKeyTriggered(InputManager::KEY_S)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 1)); }
-	 // if (input.IsKeyTriggered(InputManager::KEY_ENTER)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 2)); }
-
-	  if (input.MouseMoved()) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 0)); }
-	  if (input.IsMouseTriggered(InputManager::MOUSE_LEFT)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 1)); }
-	  if (input.IsMouseReleased(InputManager::MOUSE_LEFT)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 2)); }
-	  if (input.IsKeyTriggered(InputManager::KEY_ENTER)) { 
-		  gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 3));
-		  //gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 2));
-	  }
-	  if (input.IsKeyTriggered(InputManager::KEY_UP) || input.IsKeyTriggered(InputManager::KEY_W)) {
-		  gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 4));
-		  //gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 0));
-	  }
-	  if (input.IsKeyTriggered(InputManager::KEY_DOWN) || input.IsKeyTriggered(InputManager::KEY_S)) {
-		  gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 5));
-		  //gMessageHandler->HandleMessage(new GSPMessage(RTESTTEXT, 1));
-	  }
-	  //menu must update first
-	  testMenu->Update();
-
-	  movableText->Update();
-
-      plane.scrollx += 2;
-
-	  gfx.startDraw();
-      batch.draw();
+    if(scene.update()) {
+  	  gfx.startDraw();
+      scene.draw();
       gfx.endDraw();
+    }
+    else {
+      break;
+    }
   }
 
 	return 0;

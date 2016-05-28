@@ -2,11 +2,12 @@
 #include <algorithm>
 
 void DepthBatch::draw() {
-  sort();
+  if(dirty) { sort(); }
   for(auto ro : list) { ro->draw(); }
 }
 
 void DepthBatch::addRO(RenderObject* obj) {
+  dirty = true;
   list.push_back(obj);
 }
 
@@ -16,4 +17,5 @@ void DepthBatch::removeRO(RenderObject* obj) {
 
 void DepthBatch::sort() {
   std::sort(list.begin(), list.end(), [](RenderObject* a, RenderObject* b) { return a->z < b->z; });
+  dirty = false;
 }

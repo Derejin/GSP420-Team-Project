@@ -35,3 +35,11 @@ bool BaseRecipient::ReadMessage(GSPMessage *&redMessage)
 	else
 		return false;
 }
+
+void BaseRecipient::processQueue() {
+  GSPMessage* msg;
+  while(ReadMessage(msg)) {
+    DecodeMessage(msg->theMessage);
+    delete msg;
+  }
+}
