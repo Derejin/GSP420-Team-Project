@@ -18,7 +18,9 @@ private:
 	//queue for storing messages
 	std::vector<GSPMessage*> MessageQueue;
 
-public:	
+public:
+  virtual ~BaseRecipient() {}
+
 	//function for storing a message in the MessageQueue
 	bool ReceiveMessage(GSPMessage* theMessage);
 
