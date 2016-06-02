@@ -20,9 +20,8 @@ public:
 private:
   IWICImagingFactory* factory;
 
-  //linkage to the gfx object for RT access - remember to bind during bootstrap
-  static Graphics* gfx;
+  friend class GraphicsCore;
+  static Graphics* gfx; //set in bootstrap
 
-  friend class Graphics; //this is here temporarily for testing. I'll remove it later. (RB)
 };
 

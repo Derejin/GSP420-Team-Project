@@ -18,7 +18,6 @@ public:
 private:
 	Sprite sprites[4];
 
-	friend class Graphics;
-  //set this in bootstrap
-  static GSPRect screenRect;
+	friend class GraphicsCore;
+  static GSPRect screenRect; //set in bootstrap
 };

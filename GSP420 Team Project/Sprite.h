@@ -15,8 +15,7 @@ public:
 private:
 	CComPtr<ID2D1Bitmap> bmp;
 
-	friend class Graphics;
-  //set this in bootstrap
-  static Graphics* gfx;
+	friend class GraphicsCore;
+  static Graphics* gfx; //set in bootstrap
 
 };

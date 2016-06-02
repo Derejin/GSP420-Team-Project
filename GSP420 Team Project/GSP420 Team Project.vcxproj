@@ -19,13 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseCore.h" />
     <ClInclude Include="BaseRecipient.h" />
     <ClInclude Include="DepthBatch.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="GraphicsCore.h" />
     <ClInclude Include="GSPMessage.h" />
     <ClInclude Include="GSPWindow.h" />
     <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="InputCore.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuManager.h" />
@@ -45,6 +48,7 @@
     <ClCompile Include="DepthBatch.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="GraphicsCore.cpp" />
     <ClCompile Include="GSPWindow.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputManager.cpp" />

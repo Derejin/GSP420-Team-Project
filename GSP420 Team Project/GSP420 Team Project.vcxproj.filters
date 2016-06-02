@@ -37,11 +37,14 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{95af2ae9-10bc-4aa4-8404-6ebbdc55df43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Cores">
+      <UniqueIdentifier>{91aa62a4-cd27-43bf-9c70-35c172305374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Cores">
+      <UniqueIdentifier>{e14f7f2f-2372-46bd-abe7-9a5b1880df2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GSPWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -99,11 +102,20 @@
     <ClInclude Include="TestScene.h">
       <Filter>Header Files\Testing</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicsCore.h">
+      <Filter>Header Files\Cores</Filter>
+    </ClInclude>
+    <ClInclude Include="GSPWindow.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="InputCore.h">
+      <Filter>Header Files\Cores</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCore.h">
+      <Filter>Header Files\Cores</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GSPWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -154,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>Source Files\Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="GSPWindow.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsCore.cpp">
+      <Filter>Source Files\Cores</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
