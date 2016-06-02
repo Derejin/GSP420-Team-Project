@@ -15,11 +15,7 @@
 //For Visual Studio, this means Project Properties->Configuration Properties->General->Character Set
 //is set to "Use Unicode Character Set".
 
-class GSPWindow
-{
-private:
-	HWND handle;
-	std::wstring className; //for containing the name of the created window
+class GSPWindow {
 public:
 	GSPWindow(std::wstring windowTitle, int width, int height);
 	~GSPWindow();
@@ -29,4 +25,9 @@ public:
 
 	const int WIDTH;
 	const int HEIGHT;
+
+private:
+  HWND handle;
+  std::wstring className; //for containing the name of the created window
+
 };

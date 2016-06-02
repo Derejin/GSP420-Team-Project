@@ -35,9 +35,9 @@ private:
   bool bold = false;
   bool italic = false;
 
-  friend class Graphics;
+  friend class GraphicsCore;
   friend class Text;
-  static Graphics* gfx;
+  static Graphics* gfx; //set in bootstrap
   static CComPtr<IDWriteFactory> factory;
 
 };
