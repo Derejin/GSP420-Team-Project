@@ -173,6 +173,9 @@
     <ClCompile Include="GraphicsCore.cpp">
       <Filter>Source Files\Cores</Filter>
     </ClCompile>
+    <ClCompile Include="InputCore.cpp">
+      <Filter>Source Files\Cores</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="test image.png">
