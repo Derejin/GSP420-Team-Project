@@ -16,7 +16,8 @@
 class GraphicsCore : public BaseCore {
 public:
   GraphicsCore(std::wstring windowTitle, int width, int height);
-  void Update(float dt); //flush message queue and render
+
+  void Update(float dt) override; //flush message queue and render
 
   using UID = unsigned long long;
 
@@ -66,6 +67,7 @@ private:
   void flushQueue();
   void executeAndDeleteMessage(SMessage* msg);
 
+  friend class InputCore;
   GSPWindow window;
   Graphics gfx;
   ImageLoader imgLoader;

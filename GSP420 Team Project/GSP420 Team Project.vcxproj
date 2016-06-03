@@ -51,6 +51,7 @@
     <ClCompile Include="GraphicsCore.cpp" />
     <ClCompile Include="GSPWindow.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
+    <ClCompile Include="InputCore.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuButton.cpp" />
