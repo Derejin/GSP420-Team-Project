@@ -26,6 +26,8 @@ void Text::draw() {
   //any change will set the 'dirty' flag to true, so we check it here and reset the foramt only when needed
   if(font->dirty) { font->resetFormat(); }
 
-  font->gfx->renderTarget->DrawText(string.c_str(), (UINT)string.size(), font->format, rect, font->brush);
+  if(font && !string.empty()) {
+    font->gfx->renderTarget->DrawText(string.c_str(), (UINT)string.size(), font->format, rect, font->brush);
+  }
 }
 
