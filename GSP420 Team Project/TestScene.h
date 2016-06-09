@@ -6,6 +6,8 @@
 #include "Text.h"
 #include "Font.h"
 #include "Sprite.h"
+#include "Audio.h"
+#include "Sound.h"
 
 class InputManager;
 
@@ -16,6 +18,8 @@ public:
   void draw();
 
 private:
+  Audio audio;
+  Sound snd;
   Font font;
   Text staticText;
   Stella stella;

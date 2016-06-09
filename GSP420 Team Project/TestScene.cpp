@@ -7,7 +7,8 @@ TestScene::TestScene(InputManager& inputMgr, int screenWidth, int screenHeight) 
   font(L"Arial"),
   staticText(L"GSP420 Week 4 Demo\nUse buttons or press 'S' to walk.", &font),
   bgtex(L"tilesetOpenGameBackground_3.png"),
-  menu(inputMgr)
+  menu(inputMgr),
+  snd(audio.createSound("SFX/button-37.mp3"))
 {
   gMessageHandler->AddRecipient(&menu, RTESTMENU);
 
@@ -71,7 +72,10 @@ bool TestScene::update() {
   if(input->IsKeyPressed(InputManager::KEY_ESC)) { return false; }
 
   if(input->MouseMoved())                               { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 0)); }
-  if(input->IsMouseTriggered(InputManager::MOUSE_LEFT)) { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 1)); }
+  if(input->IsMouseTriggered(InputManager::MOUSE_LEFT)) {
+    gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 1));
+    snd.play();
+  }
   if(input->IsMouseReleased(InputManager::MOUSE_LEFT))  { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 2)); }
   if(input->IsKeyTriggered(InputManager::KEY_ENTER))    { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 3)); }
   if(input->IsKeyTriggered(InputManager::KEY_UP))       { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 4)); }

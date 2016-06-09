@@ -1,0 +1,19 @@
+Sound Effects: (Derek)
+-Step (for running) - Pat, from SoundBible.com
+-Jump - Jump, from SoundBible.com
+-Dash - Dash
+-Menu button "selected" sound - Menu Positive
+-Menu button "negative" sound - Menu Negative
+-*splat* (For running into wall) - Jab, from SoundBible.com
+-Pile of junk tumbling over (for dashing through junk) - gun-gunshot02, from Soundjay.com
+-Simple pause sound - button-10, from Soundjay.com
+-Simple unpause sound - button-37, from Soundjay.com
+
+Pat sound effect from SoundBible.com. 
+Recorded by Mike Koenig, retrieved from http://soundbible.com/969-Pat.html
+
+Jab sound effect from SoundBible.com.
+Recorded by Mike Koenig, retrieved from http://soundbible.com/995-Jab.html
+
+Jump sound effect from SoundBible.com
+Recorded by snottyboy, retrieved from http://soundbible.com/1343-Jump.html
