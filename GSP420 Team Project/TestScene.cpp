@@ -8,7 +8,8 @@ TestScene::TestScene(InputManager& inputMgr, int screenWidth, int screenHeight) 
   staticText(L"GSP420 Week 4 Demo\nUse buttons or press 'S' to walk.", &font),
   bgtex(L"tilesetOpenGameBackground_3.png"),
   menu(inputMgr),
-  snd(audio.createSound("SFX/button-37.mp3"))
+  snd("SFX/button-37.mp3"),
+  song("BGM/Undaunted.mp3")
 {
   gMessageHandler->AddRecipient(&menu, RTESTMENU);
 

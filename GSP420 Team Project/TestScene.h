@@ -18,8 +18,8 @@ public:
   void draw();
 
 private:
-  Audio audio;
   Sound snd;
+  Song song;
   Font font;
   Text staticText;
   Stella stella;

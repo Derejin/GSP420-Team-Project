@@ -6,12 +6,11 @@
 Audio::Audio() {
   FMOD::System_Create(&system);
   system->init(MAX_CHANNELS, FMOD_INIT_NORMAL, 0);
+  Sound::system = system;
+  Song::system = system;
 }
 
 Audio::~Audio() {
   system->release();
 }
 
-Sound Audio::createSound(const std::string& filename) {
-  return Sound(filename, system);
-}
