@@ -1,3 +1,6 @@
+#define IC_DISABLED
+#ifndef IC_DISABLED
+
 #include "InputCore.h"
 #include <vector>
 
@@ -89,3 +92,4 @@ void InputCore::destroyMenu(UID id) {
   menus.erase(id);
 }
 
+#endif

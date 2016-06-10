@@ -3,6 +3,8 @@
 #include "Utility.h"
 #include "RenderObject.h"
 
+class Graphics;
+
 class Sprite : public RenderObject {
 public:
 	void setBitmap(Texture& texture);
@@ -15,7 +17,7 @@ public:
 private:
 	CComPtr<ID2D1Bitmap> bmp;
 
-	friend class GraphicsCore;
+	friend class Graphics;
   static Graphics* gfx; //set in bootstrap
 
 };

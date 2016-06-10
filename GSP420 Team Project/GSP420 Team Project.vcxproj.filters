@@ -13,85 +13,97 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Graphics">
-      <UniqueIdentifier>{c059c570-298c-4344-a9c2-810345a9459f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{de1c847a-7c21-4ee8-a971-97b729145645}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Input">
-      <UniqueIdentifier>{152a0198-0b64-458b-bf20-d34318280520}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Messaging">
-      <UniqueIdentifier>{d8ee0b90-4312-48c7-b8c8-d2e6ab4831b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Messaging">
-      <UniqueIdentifier>{837e5121-83cd-4d1f-bb39-121f2d00c793}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Testing">
       <UniqueIdentifier>{6faad531-fce8-4b57-b0a5-4d7962c7ed00}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{8aa8c8af-bc69-4c5e-ae37-09ca609fed2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Input">
-      <UniqueIdentifier>{95af2ae9-10bc-4aa4-8404-6ebbdc55df43}</UniqueIdentifier>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{72999b13-a16f-48fc-ba91-fa69ffc344e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Cores">
+    <Filter Include="Header Files\Engine\Cores">
       <UniqueIdentifier>{91aa62a4-cd27-43bf-9c70-35c172305374}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Cores">
+    <Filter Include="Header Files\Engine\Graphics">
+      <UniqueIdentifier>{c059c570-298c-4344-a9c2-810345a9459f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Input">
+      <UniqueIdentifier>{95af2ae9-10bc-4aa4-8404-6ebbdc55df43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Messaging">
+      <UniqueIdentifier>{837e5121-83cd-4d1f-bb39-121f2d00c793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Audio">
+      <UniqueIdentifier>{31e15ebc-2b28-474c-b847-fbbaa7c191d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{2cba532f-6ab8-416d-a8d1-26353ef8fa07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Cores">
       <UniqueIdentifier>{e14f7f2f-2372-46bd-abe7-9a5b1880df2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics">
+      <UniqueIdentifier>{de1c847a-7c21-4ee8-a971-97b729145645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Input">
+      <UniqueIdentifier>{152a0198-0b64-458b-bf20-d34318280520}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Messaging">
+      <UniqueIdentifier>{d8ee0b90-4312-48c7-b8c8-d2e6ab4831b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Audio">
+      <UniqueIdentifier>{7ec0569b-0dcd-40b4-98e7-9ff45b3b0dd1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Graphics.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="ImageLoader.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="MenuButton.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="MenuManager.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="BaseRecipient.h">
-      <Filter>Header Files\Messaging</Filter>
+      <Filter>Header Files\Engine\Messaging</Filter>
     </ClInclude>
     <ClInclude Include="MessageHandler.h">
-      <Filter>Header Files\Messaging</Filter>
+      <Filter>Header Files\Engine\Messaging</Filter>
     </ClInclude>
     <ClInclude Include="GSPMessage.h">
-      <Filter>Header Files\Messaging</Filter>
+      <Filter>Header Files\Engine\Messaging</Filter>
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Plane.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="DepthBatch.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="RenderObject.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Stella_temp.h">
       <Filter>Header Files\Testing</Filter>
@@ -103,16 +115,25 @@
       <Filter>Header Files\Testing</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsCore.h">
-      <Filter>Header Files\Cores</Filter>
+      <Filter>Header Files\Engine\Cores</Filter>
     </ClInclude>
     <ClInclude Include="GSPWindow.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="InputCore.h">
-      <Filter>Header Files\Cores</Filter>
+      <Filter>Header Files\Engine\Cores</Filter>
     </ClInclude>
     <ClInclude Include="BaseCore.h">
-      <Filter>Header Files\Cores</Filter>
+      <Filter>Header Files\Engine\Cores</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Header Files\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header Files\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Song.h">
+      <Filter>Header Files\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -120,43 +141,43 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="ImageLoader.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Source Files\Engine\Input</Filter>
     </ClCompile>
     <ClCompile Include="MenuButton.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Source Files\Engine\Input</Filter>
     </ClCompile>
     <ClCompile Include="MenuManager.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Source Files\Engine\Input</Filter>
     </ClCompile>
     <ClCompile Include="BaseRecipient.cpp">
-      <Filter>Source Files\Messaging</Filter>
+      <Filter>Source Files\Engine\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="MessageHandler.cpp">
-      <Filter>Source Files\Messaging</Filter>
+      <Filter>Source Files\Engine\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Plane.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="DepthBatch.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Stella_temp.cpp">
       <Filter>Source Files\Testing</Filter>
@@ -168,13 +189,22 @@
       <Filter>Source Files\Testing</Filter>
     </ClCompile>
     <ClCompile Include="GSPWindow.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsCore.cpp">
-      <Filter>Source Files\Cores</Filter>
+      <Filter>Source Files\Engine\Cores</Filter>
     </ClCompile>
     <ClCompile Include="InputCore.cpp">
-      <Filter>Source Files\Cores</Filter>
+      <Filter>Source Files\Engine\Cores</Filter>
+    </ClCompile>
+    <ClCompile Include="fmod example.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source Files\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

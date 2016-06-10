@@ -20,7 +20,7 @@ public:
 private:
   IWICImagingFactory* factory;
 
-  friend class GraphicsCore;
+  friend class Graphics;
   static Graphics* gfx; //set in bootstrap
 
 };

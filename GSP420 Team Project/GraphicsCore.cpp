@@ -1,3 +1,6 @@
+#define GC_DISABLED
+#ifndef GC_DISABLED
+
 #include "GraphicsCore.h"
 
 GraphicsCore::GraphicsCore(std::wstring windowTitle, int width, int height) : 
@@ -187,3 +190,4 @@ void GraphicsCore::executeAndDeleteMessage(SMessage* msg) {
   delete msg;
 }
 
+#endif
