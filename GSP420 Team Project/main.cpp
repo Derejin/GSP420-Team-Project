@@ -27,11 +27,13 @@
 #include "InputManager.h"
 #include "MessageHandler.h"
 #include "TestScene.h"
+#include "Audio.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
   GSPWindow gameWindow(L"Testing Window", 1080, 600);
   Graphics gfx(gameWindow);
   InputManager input(gameWindow);
+  Audio audio;
   gMessageHandler->Instantiate();
 
   TestScene scene(input, gameWindow.WIDTH, gameWindow.HEIGHT);

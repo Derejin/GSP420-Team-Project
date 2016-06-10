@@ -206,6 +206,9 @@
     <ClCompile Include="Sound.cpp">
       <Filter>Source Files\Engine\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Song.cpp">
+      <Filter>Source Files\Engine\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="test image.png">

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Sound.h"
+#include "Song.h"
 
 namespace FMOD {
   class System;
@@ -10,7 +11,6 @@ class Audio {
 public:
   Audio();
   ~Audio();
-  Sound createSound(const std::string& filename);
 
 private:
   static const int MAX_CHANNELS = 512;

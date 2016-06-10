@@ -1,10 +1,16 @@
 #include "Sound.h"
 #include <fmod.hpp>
 
-Sound::Sound(const std::string& filename, FMOD::System* system) {
+FMOD::System* Sound::system = nullptr;
+
+Sound::Sound(const std::string& filename) {
   //~~@ look at unused args here
   system->createSound(filename.c_str(), FMOD_2D, nullptr, &snd);
   system->playSound(snd, nullptr, true, &chan);
+}
+
+Sound::~Sound() {
+  snd->release();
 }
 
 void Sound::play() {

@@ -66,6 +66,7 @@
     <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="MessageHandler.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Song.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stella_temp.cpp" />
