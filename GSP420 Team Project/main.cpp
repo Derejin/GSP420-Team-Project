@@ -22,34 +22,11 @@
 //edited 5/26/2016 at 11:33 AM EST by Derek
 //to update MenuButton+MenuManager to GSPRect and attempt fixing an issue with buttons failing to draw properly
 
-#include "GSPWindow.h"
-#include "Graphics.h"
-#include "InputManager.h"
-#include "MessageHandler.h"
-#include "TestScene.h"
-#include "Audio.h"
+#include "Game.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
-  GSPWindow gameWindow(L"Testing Window", 1080, 600);
-  Graphics gfx(gameWindow);
-  InputManager input(gameWindow);
-  Audio audio;
-  gMessageHandler->Instantiate();
-
-  TestScene scene(input, gameWindow.WIDTH, gameWindow.HEIGHT);
-
-  while(gameWindow.update()) {
-	  input.ReadFrame();
-
-    if(scene.update()) {
-  	  gfx.startDraw();
-      scene.draw();
-      gfx.endDraw();
-    }
-    else {
-      break;
-    }
-  }
+  Game game;
+  game.run();
 
 	return 0;
 }

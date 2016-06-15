@@ -1,21 +1,20 @@
 #pragma once
 #include "Plane.h"
 #include "DepthBatch.h"
-#include "MenuManager.h"
 #include "Stella_temp.h"
 #include "Text.h"
 #include "Font.h"
 #include "Sprite.h"
 #include "Audio.h"
 #include "Sound.h"
+#include "Scene.h"
 
-class InputManager;
-
-class TestScene {
+class TestScene : public Scene {
 public:
-  TestScene(InputManager& inputMgr, int screenWidth, int screenHeight);
-  bool update();
-  void draw();
+  TestScene(SharedStore* store);
+  ~TestScene();
+  Scene* update(float dt) override;
+  void draw() override;
 
 private:
   Sound snd;
@@ -26,9 +25,6 @@ private:
   Texture bgtex;
   Plane plane;
   DepthBatch batch;
-  MenuManager menu;
   std::vector<Text> menuLabels;
-
-  InputManager* input;
 
 };
