@@ -1,13 +1,13 @@
 #include "TestScene.h"
 #include "MessageHandler.h"
 #include "InputManager.h"
+#include "SharedStore.h"
 
-TestScene::TestScene(InputManager& inputMgr, int screenWidth, int screenHeight) :
-  input(&inputMgr),
+TestScene::TestScene(SharedStore* store) :
+  Scene(store),
   font(L"Arial"),
   staticText(L"GSP420 Week 4 Demo\nUse buttons or press 'S' to walk.", &font),
   bgtex(L"tilesetOpenGameBackground_3.png"),
-  menu(inputMgr),
   snd("SFX/button-37.mp3"),
   song("BGM/Undaunted.mp3")
 {
@@ -38,7 +38,7 @@ TestScene::TestScene(InputManager& inputMgr, int screenWidth, int screenHeight) 
   btnSpr[0].srcRect.height /= 3;
 
   btnSpr[0].destRect = btnSpr[0].srcRect;
-  btnSpr[0].destRect.x = screenWidth - (btnSpr[0].srcRect.width  + 20);
+  btnSpr[0].destRect.x = store->screenWidth - (btnSpr[0].srcRect.width  + 20);
   btnSpr[0].destRect.y = 20;
 
   //make copies and adjust them
@@ -69,26 +69,20 @@ TestScene::TestScene(InputManager& inputMgr, int screenWidth, int screenHeight) 
   }
 }
 
-bool TestScene::update() {
-  if(input->IsKeyPressed(InputManager::KEY_ESC)) { return false; }
+TestScene::~TestScene() {
+  //gMessageHandler->RemoveRecipient(RTESTMENU);
+}
 
-  if(input->MouseMoved())                               { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 0)); }
-  if(input->IsMouseTriggered(InputManager::MOUSE_LEFT)) {
-    gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 1));
-    snd.play();
-  }
-  if(input->IsMouseReleased(InputManager::MOUSE_LEFT))  { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 2)); }
-  if(input->IsKeyTriggered(InputManager::KEY_ENTER))    { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 3)); }
-  if(input->IsKeyTriggered(InputManager::KEY_UP))       { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 4)); }
-  if(input->IsKeyTriggered(InputManager::KEY_DOWN))     { gMessageHandler->HandleMessage(new GSPMessage(RTESTMENU, 5)); }
-
-  if(input->IsKeyPressed(InputManager::KEY_S)) { gMessageHandler->HandleMessage(new GSPMessage(RSTELLA, Stella::WALK)); }
-
+Scene* TestScene::update(float dt) {
   menu.Update();
+
+  if(store->input.IsKeyPressed(InputManager::KEY_ESC)) { return nullptr; }
+  if(store->input.IsKeyPressed(InputManager::KEY_S)) { gMessageHandler->HandleMessage(new GSPMessage(RSTELLA, Stella::WALK)); }
+
   stella.update();
   plane.scrollx += 2;
 
-  return true;
+  return this;
 }
 
 void TestScene::draw() {
