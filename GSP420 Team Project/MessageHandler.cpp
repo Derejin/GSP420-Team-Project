@@ -25,10 +25,11 @@ void MessageHandler::AddRecipient(BaseRecipient* desiredRecipient, RClass recipi
 	//If the vector memory has been allocated the replace the pointer
 	if ((size_t)recipientID < RecipientList.size())
 	{
+		/* commenting out the delete functionality, since we store our MenuManagers by value
 		if (RecipientList[(int)recipientID])
 		{
 			delete RecipientList[(int)recipientID];
-		}
+		}*/
 		RecipientList[(int)recipientID] = desiredRecipient;
 	}
 	//Or allocate the vector and add in the pointer, fill gap with 0.
@@ -52,7 +53,8 @@ void MessageHandler::RemoveRecipient(RClass recipientID)
 {
 	if (RecipientList.size() - 1 > (size_t)recipientID)
 	{
-		delete RecipientList[(int)recipientID];
+		//delete RecipientList[(int)recipientID];
+		//commenting out the delete functionality, since we store our MenuManagers by value
 		RecipientList[(int)recipientID] = 0;
 	}
 }

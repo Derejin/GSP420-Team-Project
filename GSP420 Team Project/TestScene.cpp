@@ -70,7 +70,7 @@ TestScene::TestScene(SharedStore* store) :
 }
 
 TestScene::~TestScene() {
-  //gMessageHandler->RemoveRecipient(RTESTMENU);
+  gMessageHandler->RemoveRecipient(RTESTMENU);
 }
 
 Scene* TestScene::update(float dt) {
