@@ -15,7 +15,8 @@ enum RClass
 {
 	RNONE, //no recipient
 	RTESTMENU, //for test version of menumanager, for Wk4 Code Demonstration+Testing
-	RSTELLA //for code demonstration - stella object
+	RSTELLA, //for code demonstration - stella object
+	RSCENE //for the current scene's message box
 };
 
 //GSPMessage structure!
