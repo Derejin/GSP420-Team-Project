@@ -1,9 +1,9 @@
 #include "Game.h"
-#include "TestScene.h"
+#include "GameplayScene.h"
 #include "MessageHandler.h"
 
 Game::Game() :
-  scene(new TestScene(&store))
+  scene(new GameplayScene(&store))
 {
   //nop
 }
