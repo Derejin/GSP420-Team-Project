@@ -10,6 +10,7 @@ Sound::Sound(const std::string& filename) {
 }
 
 Sound::~Sound() {
+  chan->stop();
   snd->release();
 }
 

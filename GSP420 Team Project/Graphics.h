@@ -19,6 +19,9 @@ public:
   //finishes draw pass
   void endDraw();
 
+  void setRotation(float degrees, D2D1_POINT_2F pivot);
+  void resetRotation();
+
 private:
   CComPtr<ID2D1Factory> factory;
   CComPtr<ID2D1HwndRenderTarget> renderTarget;

@@ -8,7 +8,7 @@
 //to update to GSPRect and attempt fixing an issue with buttons failing to draw properly
 
 //to mark this as a file that may need changing if the messaging system is changed,
-//here's the menu change symbol: ~~~m
+//here's the menu change symbol: ~_~m
 
 #pragma once
 #include "Utility.h"

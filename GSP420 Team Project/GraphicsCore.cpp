@@ -185,7 +185,7 @@ void GraphicsCore::flushQueue(){
 
 void GraphicsCore::executeAndDeleteMessage(SMessage* msg) {
 
-  //~~_ message processing goeth here
+  //~ ~_ message processing goeth here
 
   delete msg;
 }

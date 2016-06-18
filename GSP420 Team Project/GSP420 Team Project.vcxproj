@@ -34,6 +34,7 @@
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="InputCore.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="JunkParticleSystem.h" />
     <ClInclude Include="JunkPile.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuManager.h" />
@@ -69,6 +70,7 @@
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputCore.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="JunkParticleSystem.cpp" />
     <ClCompile Include="JunkPile.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuButton.cpp" />

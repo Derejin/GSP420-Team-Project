@@ -14,6 +14,10 @@ struct vec2f {
     *this = *this + other;
     return *this;
   }
+
+  vec2f operator*(float scale) {
+    return vec2f{x * scale, y * scale};
+  }
 };
 
 struct GSPRect {

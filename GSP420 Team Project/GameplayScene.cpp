@@ -1,6 +1,7 @@
 #include "GameplayScene.h"
 #include "SharedStore.h"
 #include <sstream>
+#include <algorithm>
 
 GameplayScene::GameplayScene(SharedStore* store) :
   Scene(store),
@@ -9,7 +10,8 @@ GameplayScene::GameplayScene(SharedStore* store) :
   playerTexture(L"Texture/Player Sprite.png"),
   player(store, playerTexture),
   particles(store, playerTexture),
-  junkDist(junkChance)
+  junkDist(junkChance),
+  song("BGM/Mistake the Getaway.mp3", 0.25f)
 {
   store->speed = store->START_SPEED;
 
@@ -66,13 +68,11 @@ void GameplayScene::updateJunk(float dt) {
   if(player.isDashing()) { rate = store->DASH_SPEED; }
 
   for(auto& p : piles) { p.update(dt, rate); }
+  piles.erase(std::remove_if(piles.begin(), piles.end(), [](JunkPile& p) { return !p.isAlive(); }), piles.end());
 
-  std::deque<JunkPile> newDeque; //~~@
-  for(auto& p : piles) {
-    if(p.isAlive()) { newDeque.push_back(p); }
-  }
+  for(auto& junk : junkParticles) { junk->update(dt, rate); }
+  junkParticles.erase(std::remove_if(junkParticles.begin(), junkParticles.end(), [](std::unique_ptr<JunkParticleSystem>& p) { return p->isFinished(); }), junkParticles.end());
 
-  piles = newDeque;
 }
 
 void GameplayScene::updateRooftops(float dt) {
@@ -108,7 +108,7 @@ void GameplayScene::draw() {
   particles.draw();
   player.draw();
   for(auto& roof : rooftops) { roof.draw(); }
-  for(auto& pile : piles) { pile.draw(); }
+  for(auto& junk : junkParticles) { junk->draw(); }
   text.draw();
 }
 
@@ -119,7 +119,8 @@ void GameplayScene::genNextRoof() {
   if(junkDist(store->rng)) { //add junk
     auto& cur = rooftops.back().getCollider();
     vec2f position{cur.x + (cur.width / 2), cur.y};
-    piles.emplace_back(position);
+    junkParticles.emplace_back(std::make_unique<JunkParticleSystem>(store, position));
+    piles.emplace_back(position, junkParticles.back().get());
   }
 
 }

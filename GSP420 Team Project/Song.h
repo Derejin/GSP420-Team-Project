@@ -9,7 +9,7 @@ namespace FMOD {
 
 class Song {
 public:
-  Song(const std::string& filename);
+  Song(const std::string& filename, float vol = 1.0f);
   ~Song();
 
   void pause(bool pause);
