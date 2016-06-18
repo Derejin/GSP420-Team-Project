@@ -11,8 +11,8 @@ PlayerCharacter::PlayerCharacter(SharedStore* store, const Texture& texture) :
   jumpSound("SFX/Jump-SoundBible.com-1007297584.mp3")
 {
   rightStepSound.setVolume(0.75f);
-  dashSound.setVolume(0);//1.5f);
-  jumpSound.setVolume(0);//0.125f);
+  dashSound.setVolume(1.5f);
+  jumpSound.setVolume(0.125f);
 
   spr.setBitmap(tex);
   spr.srcRect.width /= SPRITE_FRAMES;
