@@ -6,6 +6,8 @@
 #include <random>
 #include "Font.h"
 #include "Text.h"
+#include "Rooftop.h"
+#include "DashParticleSystem.h"
 
 class GameplayScene : public Scene {
 public:
@@ -17,30 +19,27 @@ public:
   //MenuManager menu; inherited from Scene
 
 private:
-  GSPRect genNextRoof(GSPRect prev);
+  void genNextRoof();
 
-  Scene* playUpdate(float dt);
   Scene* pausedUpdate(float dt);
+  Scene* playUpdate(float dt);
+  Scene* splattedUpdate(float dt);
+  void updateRooftops(float dt);
+  void updateScore(float dt);
+  void updatePlayer(float dt);
+
+  Texture playerTexture; //do not rearrange declaration order
 
   PlayerCharacter player;
-
-  Texture dtex;
-  Sprite dspr;
+  DashParticleSystem particles;
 
   Font font;
   Text text;
 
-  float time = 0;
-
-  const float START_SPEED = 400.0f;
-  const float MAX_SPEED = 1500.0f;
-  float speed = START_SPEED;
-
-  std::deque<GSPRect> rooftops;
+  std::deque<Rooftop> rooftops;
   std::unordered_map<Pile*, GSPRect> piles;
 
   //SharedStore* store; inherited from Scene
   bool paused = false;
 
-  std::mt19937 rng;
 };

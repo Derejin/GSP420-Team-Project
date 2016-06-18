@@ -1,99 +1,139 @@
 #include "PlayerCharacter.h"
+#include "SharedStore.h"
 
-PlayerCharacter::PlayerCharacter() :
-  tex(L"Texture/Player Sprite.png")
-  #ifdef VIEW_PLAYER_COLLIDERS
-  , dbgTex(L"Texture/utility box.png")
-  #endif
+PlayerCharacter::PlayerCharacter(SharedStore* store, const Texture& texture) :
+  store(store),
+  tex(texture)
 {
-  //~~@ magic numbers
   spr.setBitmap(tex);
-  spr.srcRect.width /= 8;
+  spr.srcRect.width /= SPRITE_FRAMES;
 
   spr.destRect = spr.srcRect;
-  spr.destRect.width /= 2;
-  spr.destRect.height /= 2;
+  spr.destRect.width  *= SPRITE_SCALE;
+  spr.destRect.height *= SPRITE_SCALE;
 
   collider = spr.destRect;
-  collider.width /= 2;
+  collider.width  /= 2;
   collider.height /= 3;
 
   sensor = collider;
   sensor.height = 2;
   
+  //magic numbers, but this is pretty fiddly, so they stay for now
   spriteOffset = vec2f{-(spr.destRect.width / 2), 10 - spr.destRect.height};
   colliderOffset = vec2f{-(collider.width / 2), -spr.destRect.height / 2};
   sensorOffset = vec2f{-(sensor.width / 2), 0};
   position = vec2f{300, 300};
 
-  #ifdef VIEW_PLAYER_COLLIDERS
-  dbgSpr.setBitmap(dbgTex);
-  snsSpr.setBitmap(dbgTex);
-  #endif
 }
 
-void PlayerCharacter::update(float dt, float animFpsScale, InputManager& input, const std::deque<GSPRect>& rooftops, const std::unordered_map<Pile*, GSPRect>& piles) {
-  position.y += yVel * dt;
+void PlayerCharacter::update(float dt, const std::vector<GSPRect>& rooftops, const std::unordered_map<Pile*, GSPRect>& piles) {
+  checkRooftops(rooftops);
+  checkPiles(piles);
+  if(splatted) { return; }
 
-  std::vector<GSPRect> roofHits = collider.testOverlap(rooftops);
-  if(roofHits.size()) {
-    splatted = true;
-    return;
+  updateVertical(dt);
+  updateDash(dt);
+
+  position.y += yVel * dt;
+  snapPos();
+
+  frameTimer += dt;
+}
+
+void PlayerCharacter::checkRooftops(const std::vector<GSPRect>& rooftops) {
+  for(auto r : rooftops) {
+    if(r.testOverlap(collider)) {
+      splatted = true;
+      break;
+    }
   }
 
-  roofHits = sensor.testOverlap(rooftops);
-  bool grounded = !roofHits.empty();
-  bool jumpButton = input.IsKeyPressed(InputManager::KEY_JUMP); //~~_
-  if(grounded) {
-    animState = RUNNING;
+  auto roofSteps = sensor.testOverlap(rooftops);
+  grounded = !roofSteps.empty();
 
+  //player is standing on rooftop, so set elevation accordingly
+  for(auto r : roofSteps) {
+    if(r.y < position.y) { position.y = r.y; }
+  }
+
+}
+
+void PlayerCharacter::checkPiles(const std::unordered_map<Pile*, GSPRect>& piles) {
+  //~~_
+}
+
+void PlayerCharacter::updateVertical(float dt) {
+  bool jumpButton = store->input.IsKeyPressed(InputManager::KEY_JUMP);
+
+  if(grounded) {
     yVel = 0;
 
-    float rooftop = 900.0f; //~~@
-    for(auto r : roofHits) {
-      if(r.y < rooftop) { rooftop = r.y; }
-    }
+    if(jumpButton) { position.y -= 3; } //get clearance for sensor
+    else { jumpTime = JUMP_MAX_TIME; } //on ground and button released, so refill jump time
 
-    position.y = rooftop;
-
-    if(jumpButton) { 
-      position.y -= 3;
-    }
-    else {
-      jumpTime = JUMP_MAX_TIME;
-    }
   }
   else { //not grounded
-    if(jumpTime > 0 && jumpButton) {
+    yVel += GRAVITY * dt;
+
+    if(jumpButton && jumpTime > 0) { //jump in progress
       yVel = -JUMP_SPEED;
       jumpTime -= dt;
     }
     else {
-      jumpTime = 0;
-      if(yVel < -UP_MOMENTUM_LIMIT) { yVel *= UP_MOMENTUM_CURB; }
-      yVel += GRAVITY * dt;
+      jumpTime = 0; //jump is over, so empty jump time
+      if(yVel < -UP_MOMENTUM_LIMIT) { yVel *= UP_MOMENTUM_CURB; } //curb excessive climb rates
     }
 
-    animState = JUMPING;
-    if(yVel > 50) { animState = FALLING; }
-
   }
 
-  float fps = 5 * animFpsScale;
-  float hz = 1.0f / fps;
-  while(frameTimer > hz) {
-    frame = (frame + 1) % 5; //~~@ magic
-    frameTimer -= hz;
-  }
-  frameTimer += dt;
-
-  snapPos();
 }
 
+void PlayerCharacter::updateDash(float dt) {
+  bool button = store->input.IsKeyPressed(InputManager::KEY_DASH);
+
+  dashTimer -= dt;
+  if(grounded && dashTimer < -DASH_DELAY) { canDash = true; }
+
+  if(button) {
+    if(dashing) {
+      yVel = 0;
+      dashing = dashTimer > 0;
+    }
+    else if(canDash) {
+      dashTimer = DASH_SIZE;
+      dashing = true;
+      canDash = false;
+    }
+
+  }
+  else { //not button
+    if(dashing) { dashTimer = 0; }
+    dashing = false;
+  }
+
+}
+
+
 void PlayerCharacter::draw() {
+  AnimState animState = JUMPING;
+  if(grounded)  { animState = RUNNING; }
+  if(yVel > 50) { animState = FALLING; }
+  if(dashing)   { animState = DASHING; }
+  if(splatted)  { animState = SPLATTED; }
+
   switch(animState) {
   case RUNNING:
-    spr.srcRect.x = frame * spr.srcRect.width;
+    {
+      float animFpsScale = store->speed / store->START_SPEED;
+      float fps = 5 * animFpsScale;
+      float hz = 1.0f / fps;
+      while(frameTimer > hz) {
+        frame = (frame + 1) % RUN_FRAMES;
+        frameTimer -= hz;
+      }
+      spr.srcRect.x = frame * spr.srcRect.width;
+    }
     break;
   case JUMPING:
     spr.srcRect.x = 5 * spr.srcRect.width;
@@ -101,15 +141,22 @@ void PlayerCharacter::draw() {
   case FALLING:
     spr.srcRect.x = 6 * spr.srcRect.width;
     break;
+  case DASHING:
+    spr.srcRect.x = 7 * spr.srcRect.width;
+    break;
   case SPLATTED:
     break;
   }
+
   spr.draw();
 
-  #ifdef VIEW_PLAYER_COLLIDERS
-  dbgSpr.draw();
-  snsSpr.draw();
-  #endif
+}
+
+vec2f PlayerCharacter::getCenterPosition() const {
+  vec2f center{spr.destRect.x, spr.destRect.y};
+  center.x += spr.destRect.width  / 2;
+  center.y += spr.destRect.height / 2;
+  return center;
 }
 
 void PlayerCharacter::snapPos() {
@@ -117,10 +164,4 @@ void PlayerCharacter::snapPos() {
   collider.moveTo(position + colliderOffset);
   sensor.moveTo(position + sensorOffset);
 
-  #ifdef VIEW_PLAYER_COLLIDERS
-  dbgSpr.destRect = collider;
-  snsSpr.destRect = sensor;
-  #endif
 }
-
-

@@ -4,18 +4,16 @@
 
 GameplayScene::GameplayScene(SharedStore* store) :
   Scene(store),
-  dtex(L"Texture/utility box.png"),
   font(L"Arial"),
   text(L"derp", &font),
-  rng(std::random_device{}())
+  playerTexture(L"Texture/Player Sprite.png"),
+  player(store, playerTexture),
+  particles(store, playerTexture)
 {
+  store->speed = store->START_SPEED;
 
-  rooftops.emplace_back(0.0f,500.0f,1500.0f,1000.0f);
-  for(int i = 0; i < 10; i++) {
-    rooftops.push_back(genNextRoof(rooftops.back()));
-  }
-
-  dspr.setBitmap(dtex);
+  rooftops.emplace_back(0.0f, 550.0f, 1.0f);
+  for(int i = 0; i < 3; i++) { genNextRoof(); }
 
   text.setRect(GSPRect(10, 10, 300, 300));
   font.setColor(D2D1::ColorF::White);
@@ -32,72 +30,69 @@ Scene* GameplayScene::update(float dt) {
   return playUpdate(dt);
 }
 
-Scene* GameplayScene::playUpdate(float dt) {
-  if(player.isDead()) {
-    if(store->input.IsKeyTriggered(InputManager::KEY_DASH)) {
-      return new GameplayScene(store);
-    }
-
-    return this;
-  }
-
-
-  if(rooftops.front().x < -rooftops.front().width) {
-    rooftops.pop_front();
-    rooftops.push_back(genNextRoof(rooftops.back()));
-  }
-
-  player.update(dt, speed / START_SPEED, store->input, rooftops, piles);
-  if(player.isDead()) { return this; }
-
-  if(speed < MAX_SPEED) { speed += 30 * dt; }
-  else if(speed > MAX_SPEED) { speed = MAX_SPEED; }
-
-  for(auto& r : rooftops) {
-    r.moveBy(vec2f{-speed * dt, 0});;
-  }
-
-  time += dt;
-  std::wstringstream ss;
-  ss << time;
-  text.setString(ss.str());
-  return this;
-}
-
 Scene* GameplayScene::pausedUpdate(float dt) {
   return this;
 }
 
+Scene* GameplayScene::playUpdate(float dt) {
+  particles.update(dt);
+  if(player.isDead()) { return splattedUpdate(dt); }
 
-void GameplayScene::draw() {
-  player.draw();
-  for(auto r : rooftops) {
-    dspr.destRect = r;
-    dspr.draw();
+  updateRooftops(dt);
+
+  updatePlayer(dt);
+  if(player.isDead()) { return this; }
+
+  store->time += dt;
+  if(store->speed < store->MAX_SPEED) { store->speed += 30 * dt; }
+  else if(store->speed > store->MAX_SPEED) { store->speed = store->MAX_SPEED; }
+
+  updateScore(dt);
+  return this;
+}
+
+Scene* GameplayScene::splattedUpdate(float dt) {
+  if(store->input.IsKeyTriggered(InputManager::KEY_DASH)) {
+    return new GameplayScene(store);
   }
 
+  return this;
+}
+
+void GameplayScene::updateRooftops(float dt) {
+  float rate = store->speed;
+  if(player.isDashing()) { rate = store->DASH_SPEED; }
+
+  if(rooftops.front().out()) {
+    rooftops.pop_front();
+    genNextRoof();
+  }
+
+  for(auto& r : rooftops) { r.update(dt, rate); }
+}
+
+void GameplayScene::updateScore(float dt) {
+  std::wstringstream ss;
+  store->score = int(store->time * 1000);
+  ss << L"Score: " << store->score;
+  text.setString(ss.str());
+}
+
+void GameplayScene::updatePlayer(float dt) {
+  std::vector<GSPRect> roofColliders;
+  for(auto& roof : rooftops) { roofColliders.push_back(roof.getCollider()); }
+  player.update(dt, roofColliders, piles);
+  if(player.isDashing()) { particles.add(player.getCenterPosition()); }
+}
+
+void GameplayScene::draw() {
+  particles.draw();
+  player.draw();
+  for(auto& roof : rooftops) { roof.draw(); }
   text.draw();
 }
 
-GSPRect GameplayScene::genNextRoof(GSPRect prev) {
-  const float HEIGHT_LIMIT = 200.0f;
-  const float DEPTH_LIMIT = 550.0f;
-
-  float high = prev.y - 100;
-  if(high < HEIGHT_LIMIT) { high = HEIGHT_LIMIT; }
-  float low = prev.y + 100;
-  if(low > DEPTH_LIMIT) { low = DEPTH_LIMIT; }
-
-  std::uniform_real_distribution<float> heightRand(high, low);
-
-  float gap_limit = 250.0f * (speed / START_SPEED);
-  std::uniform_real_distribution<float> gapRand(10.0f, gap_limit);
-
-  std::uniform_real_distribution<float> wideRand(speed * 0.75f, speed * 1.5f);
-
-  prev.x += prev.width + gapRand(rng);
-  prev.y = heightRand(rng);
-  prev.width = wideRand(rng);
-
-  return prev;
+void GameplayScene::genNextRoof() {
+  auto& prev = rooftops.back().getCollider();
+  rooftops.emplace_back(prev.x + prev.width, prev.y, store->speed / store->START_SPEED);
 }

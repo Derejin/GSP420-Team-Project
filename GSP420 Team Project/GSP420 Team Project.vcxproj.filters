@@ -171,6 +171,12 @@
     <ClInclude Include="PlayerCharacter.h">
       <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
     </ClInclude>
+    <ClInclude Include="Rooftop.h">
+      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="DashParticleSystem.h">
+      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -261,6 +267,12 @@
       <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
     </ClCompile>
     <ClCompile Include="PlayerCharacter.cpp">
+      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Rooftop.cpp">
+      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="DashParticleSystem.cpp">
       <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,27 +6,29 @@
 #include <unordered_map>
 #include "InputManager.h"
 
-//#define VIEW_PLAYER_COLLIDERS
-
 class Pile {};
+struct SharedStore;
 
 class PlayerCharacter {
 public:
-  PlayerCharacter();
+  PlayerCharacter(SharedStore* store, const Texture& texture);
 
-  void update(float dt, float animFpsScale, InputManager& input, const std::deque<GSPRect>& rooftops, const std::unordered_map<Pile*, GSPRect>& piles);
+  void update(float dt, const std::vector<GSPRect>& rooftops, const std::unordered_map<Pile*, GSPRect>& piles);
   void draw();
 
   bool isDead() const { return splatted; }
+  bool isDashing() const { return dashing; }
+  vec2f getCenterPosition() const;
 
 private:
   void snapPos();
 
-  #ifdef VIEW_PLAYER_COLLIDERS
-  Texture dbgTex;
-  Sprite dbgSpr;
-  Sprite snsSpr;
-  #endif
+  void checkRooftops(const std::vector<GSPRect>& rooftops);
+  void checkPiles(const std::unordered_map<Pile*, GSPRect>& piles);
+  void updateVertical(float dt);
+  void updateDash(float dt);
+
+  SharedStore* store;
 
   Texture tex;
   Sprite spr;
@@ -36,6 +38,10 @@ private:
   vec2f spriteOffset;
   vec2f colliderOffset;
   vec2f sensorOffset;
+
+  const int SPRITE_FRAMES = 8;
+  const int RUN_FRAMES = 5;
+  const float SPRITE_SCALE = 0.5f;
 
   float yVel = 0;
   const float GRAVITY = 2000.0f;
@@ -48,12 +54,23 @@ private:
   int frame = 0;
   float frameTimer = 0;
 
-  enum AnimState : int {
+  enum AnimState {
     RUNNING,
     JUMPING,
     FALLING,
+    DASHING,
     SPLATTED
-  } animState;
+  };
 
   bool splatted = false;
+
+  bool canDash = false;
+  bool dashing = false;
+
+  const float DASH_DELAY = 0.5f;
+  const float DASH_SIZE = 0.25f;
+  float dashTimer = 0;
+
+  bool grounded;
+
 };

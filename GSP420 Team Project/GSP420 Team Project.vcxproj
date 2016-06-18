@@ -22,6 +22,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseCore.h" />
     <ClInclude Include="BaseRecipient.h" />
+    <ClInclude Include="DashParticleSystem.h" />
     <ClInclude Include="DepthBatch.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="PlayerCharacter.h" />
     <ClInclude Include="RenderObject.h" />
+    <ClInclude Include="Rooftop.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SharedStore.h" />
     <ClInclude Include="Song.h" />
@@ -55,6 +57,7 @@
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BaseRecipient.cpp" />
+    <ClCompile Include="DashParticleSystem.cpp" />
     <ClCompile Include="DepthBatch.cpp" />
     <ClCompile Include="fmod example.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -75,6 +78,7 @@
     <ClCompile Include="MessageHandler.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="Rooftop.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SharedStore.cpp" />
     <ClCompile Include="Song.cpp" />

@@ -47,7 +47,7 @@ struct GSPRect {
     y = vec.y;
   }
 
-  std::vector<GSPRect> testOverlap(const std::deque<GSPRect>& colliders) {
+  std::vector<GSPRect> testOverlap(const std::vector<GSPRect>& colliders) {
     std::vector<GSPRect> hits;
 
     for(auto c : colliders) {
