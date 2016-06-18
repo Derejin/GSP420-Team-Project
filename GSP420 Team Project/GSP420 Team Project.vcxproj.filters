@@ -67,6 +67,12 @@
     <Filter Include="Header Files\Game\Scenes\TestScene">
       <UniqueIdentifier>{6faad531-fce8-4b57-b0a5-4d7962c7ed00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Scenes\MessageBoxes">
+      <UniqueIdentifier>{8d53cf9b-d438-4e52-941b-ba1e54505047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Scenes\MessageBoxes">
+      <UniqueIdentifier>{7eb4583c-018d-4057-bf37-f38bbe01f763}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Game\Scenes\GameplayScene">
       <UniqueIdentifier>{6741c962-f00b-4744-85d2-489a3e08443f}</UniqueIdentifier>
     </Filter>
@@ -164,6 +170,12 @@
     </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>Header Files\Game\Scenes\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Header Files\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleSceneMessageBox.h">
+      <Filter>Header Files\Game\Scenes\MessageBoxes</Filter>
     </ClInclude>
     <ClInclude Include="GameplayScene.h">
       <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
@@ -266,6 +278,12 @@
     <ClCompile Include="TestText_temp.cpp">
       <Filter>Source Files\Game\Scenes\TestScene</Filter>
     </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Source Files\Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleSceneMessageBox.cpp">
+      <Filter>Source Files\Game\Scenes\MessageBoxes</Filter>
+    </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>Source Files\Game\Scenes\TestScene</Filter>
     </ClCompile>
@@ -302,6 +320,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="buttons.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ColtonTitleBackground.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="MenuBorder.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
