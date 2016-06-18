@@ -67,11 +67,11 @@
     <Filter Include="Header Files\Game\Scenes\TestScene">
       <UniqueIdentifier>{6faad531-fce8-4b57-b0a5-4d7962c7ed00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Scenes\GameplayScene">
-      <UniqueIdentifier>{6741c962-f00b-4744-85d2-489a3e08443f}</UniqueIdentifier>
+    <Filter Include="Header Files\Game\Scenes\MessageBoxes">
+      <UniqueIdentifier>{8d53cf9b-d438-4e52-941b-ba1e54505047}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Scenes\GameplayScene">
-      <UniqueIdentifier>{44be52c3-946a-435c-8979-78477ec179a5}</UniqueIdentifier>
+    <Filter Include="Source Files\Game\Scenes\MessageBoxes">
+      <UniqueIdentifier>{7eb4583c-018d-4057-bf37-f38bbe01f763}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -163,25 +163,13 @@
       <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="TestScene.h">
-      <Filter>Header Files\Game\Scenes\TestScene</Filter>
+      <Filter>Header Files\Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="GameplayScene.h">
-      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Header Files\Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerCharacter.h">
-      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Rooftop.h">
-      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
-    </ClInclude>
-    <ClInclude Include="DashParticleSystem.h">
-      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
-    </ClInclude>
-    <ClInclude Include="MultiBackground.h">
-      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
-    </ClInclude>
-    <ClInclude Include="JunkPile.h">
-      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
+    <ClInclude Include="TitleSceneMessageBox.h">
+      <Filter>Header Files\Game\Scenes\MessageBoxes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -260,32 +248,20 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Source Files\Game\Scenes</Filter>
+    </ClCompile>
     <ClCompile Include="Stella_temp.cpp">
       <Filter>Source Files\Game\Scenes\TestScene</Filter>
     </ClCompile>
     <ClCompile Include="TestText_temp.cpp">
       <Filter>Source Files\Game\Scenes\TestScene</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Source Files\Game\Scenes\TestScene</Filter>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Source Files\Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="GameplayScene.cpp">
-      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCharacter.cpp">
-      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Rooftop.cpp">
-      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
-    </ClCompile>
-    <ClCompile Include="DashParticleSystem.cpp">
-      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
-    </ClCompile>
-    <ClCompile Include="MultiBackground.cpp">
-      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
-    </ClCompile>
-    <ClCompile Include="JunkPile.cpp">
-      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
+    <ClCompile Include="TitleSceneMessageBox.cpp">
+      <Filter>Source Files\Game\Scenes\MessageBoxes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +278,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="buttons.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ColtonTitleBackground.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="MenuBorder.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
