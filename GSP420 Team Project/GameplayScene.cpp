@@ -63,6 +63,8 @@ void GameplayScene::updateRooftops(float dt) {
   float rate = store->speed;
   if(player.isDashing()) { rate = store->DASH_SPEED; }
 
+  bg.update(dt, rate); //this doesn't belong here, but whatever
+
   if(rooftops.front().out()) {
     rooftops.pop_front();
     genNextRoof();
@@ -86,6 +88,7 @@ void GameplayScene::updatePlayer(float dt) {
 }
 
 void GameplayScene::draw() {
+  bg.draw();
   particles.draw();
   player.draw();
   for(auto& roof : rooftops) { roof.draw(); }

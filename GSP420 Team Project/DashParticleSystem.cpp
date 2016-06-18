@@ -49,6 +49,8 @@ void DashParticleSystem::draw() {
     p.spr.destRect.x -= p.spr.destRect.width  / 2;
     p.spr.destRect.y -= p.spr.destRect.height / 2;
 
+    p.spr.opacity *= 2;
+
     p.spr.draw();
   }
 }

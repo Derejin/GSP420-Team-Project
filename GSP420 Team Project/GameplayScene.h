@@ -8,6 +8,7 @@
 #include "Text.h"
 #include "Rooftop.h"
 #include "DashParticleSystem.h"
+#include "MultiBackground.h"
 
 class GameplayScene : public Scene {
 public:
@@ -32,6 +33,7 @@ private:
 
   PlayerCharacter player;
   DashParticleSystem particles;
+  MultiBackground bg;
 
   Font font;
   Text text;
