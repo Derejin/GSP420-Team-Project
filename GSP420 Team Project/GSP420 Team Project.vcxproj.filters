@@ -180,6 +180,9 @@
     <ClInclude Include="TitleSceneMessageBox.h">
       <Filter>Header Files\Game\Scenes\TitleScene</Filter>
     </ClInclude>
+    <ClInclude Include="JunkParticleSystem.h">
+      <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -276,6 +279,9 @@
       <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
     </ClCompile>
     <ClCompile Include="Rooftop.cpp">
+      <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="JunkParticleSystem.cpp">
       <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,7 +2,7 @@
 //to act as a basis for classes that need to receive messages!
 
 //to mark this as a file that may need changing if the messaging system is changed,
-//here's the menu change symbol: ~~~m
+//here's the menu change symbol: ~_~m
 
 #pragma once
 

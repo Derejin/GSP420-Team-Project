@@ -1,15 +1,12 @@
 #pragma once
-
-#include "Texture.h"
-#include "Sprite.h"
-#include "Sound.h"
+#include "JunkParticleSystem.h"
 #include "Utility.h"
+#include <memory>
 
 class JunkPile {
 public:
-  JunkPile(vec2f position);
+  JunkPile(vec2f position, JunkParticleSystem* parts);
   void update(float dt, float speed);
-  void draw();
 
   void kill();
 
@@ -22,11 +19,8 @@ private:
   vec2f position;
   GSPRect collider;
 
-  Sound crash;
-
   bool alive = true;
 
-  Texture dbgTex;
-  Sprite dbgSpr;
+  JunkParticleSystem* parts;
 
 };

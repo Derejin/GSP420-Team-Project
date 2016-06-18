@@ -39,3 +39,10 @@ void Graphics::endDraw() {
   renderTarget->EndDraw();
 }
 
+void Graphics::setRotation(float degrees, D2D1_POINT_2F pivot) {
+  renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(degrees, pivot));
+}
+
+void Graphics::resetRotation() {
+  renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+}

@@ -31,7 +31,7 @@ TitleScene::TitleScene(SharedStore* store) :
 	mainMenuBorder.destRect = mainMenuBorder.srcRect;
 	mainMenuBorder.destRect.width *= 0.6f;
 	mainMenuBorder.destRect.height -= 10;
-	mainMenuBorder.destRect.x = store->screenWidth / 3 + 13;
+	mainMenuBorder.destRect.x = float(store->screenWidth / 3 + 13);
 	mainMenuBorder.destRect.y = 172;
 	mainMenuBorder.z = -50;
 	batch.addRO(&mainMenuBorder);
@@ -45,7 +45,7 @@ TitleScene::TitleScene(SharedStore* store) :
 	btnSpr[0].srcRect.height /= 3;
 
 	btnSpr[0].destRect = btnSpr[0].srcRect;
-	btnSpr[0].destRect.height *= 0.8;
+	btnSpr[0].destRect.height *= 0.8f;
 	btnSpr[0].destRect.x = (store->screenWidth) / 2 - btnSpr[0].srcRect.width/2;
 	btnSpr[0].destRect.y = 200;
 

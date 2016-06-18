@@ -10,6 +10,8 @@
 #include "DashParticleSystem.h"
 #include "MultiBackground.h"
 #include "JunkPile.h"
+#include "Song.h"
+#include <memory>
 
 class GameplayScene : public Scene {
 public:
@@ -33,6 +35,8 @@ private:
 
   Texture playerTexture; //do not rearrange declaration order
 
+  Song song;
+
   PlayerCharacter player;
   DashParticleSystem particles;
 
@@ -43,6 +47,7 @@ private:
 
   std::deque<Rooftop> rooftops;
   std::deque<JunkPile> piles;
+  std::vector<std::unique_ptr<JunkParticleSystem>> junkParticles;
 
   const float junkChance = 0.33f;
   std::bernoulli_distribution junkDist;

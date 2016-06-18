@@ -2,7 +2,7 @@
 //to define methods for the BaseRecipient class!
 
 //to mark this as a file that may need changing if the messaging system is changed,
-//here's the menu change symbol: ~~~m
+//here's the menu change symbol: ~_~m
 
 #include "BaseRecipient.h"
 

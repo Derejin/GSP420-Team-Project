@@ -6,7 +6,7 @@
 //this file contains the GSPMessage struct and an enum list of potential recipients
 
 //to mark this as a file that may need changing if the messaging system is changed,
-//here's the menu change symbol: ~~~m
+//here's the menu change symbol: ~_~m
 
 #pragma once
 
