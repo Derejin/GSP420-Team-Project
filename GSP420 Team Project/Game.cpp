@@ -1,9 +1,11 @@
 #include "Game.h"
-#include "GameplayScene.h"
+#include "TestScene.h"
+#include "TitleScene.h"
 #include "MessageHandler.h"
 
 Game::Game() :
-  scene(new GameplayScene(&store))
+  //scene(new TestScene(&store))
+	scene(new TitleScene(&store))
 {
   //nop
 }
