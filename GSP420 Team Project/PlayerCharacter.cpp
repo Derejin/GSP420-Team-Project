@@ -3,8 +3,17 @@
 
 PlayerCharacter::PlayerCharacter(SharedStore* store, const Texture& texture) :
   store(store),
-  tex(texture)
+  tex(texture),
+  leftStepSound("SFX/Pat-SoundBible.com-1661659465.mp3"),
+  rightStepSound("SFX/Pat-SoundBible.com-1661659465.mp3"),
+  dashSound("SFX/dash.wav"),
+  splatSound("SFX/Jab-SoundBible.com-1806727891.mp3"),
+  jumpSound("SFX/Jump-SoundBible.com-1007297584.mp3")
 {
+  rightStepSound.setVolume(0.75f);
+  dashSound.setVolume(2.0f);
+  jumpSound.setVolume(0.125f);
+
   spr.setBitmap(tex);
   spr.srcRect.width /= SPRITE_FRAMES;
 
@@ -27,12 +36,12 @@ PlayerCharacter::PlayerCharacter(SharedStore* store, const Texture& texture) :
 
 }
 
-void PlayerCharacter::update(float dt, const std::vector<GSPRect>& rooftops, const std::unordered_map<Pile*, GSPRect>& piles) {
+void PlayerCharacter::update(float dt, const std::vector<GSPRect>& rooftops, std::deque<JunkPile>& piles) {
   checkRooftops(rooftops);
   checkPiles(piles);
   if(splatted) { return; }
 
-  updateVertical(dt);
+  updateJumpLand(dt);
   updateDash(dt);
 
   position.y += yVel * dt;
@@ -45,6 +54,7 @@ void PlayerCharacter::checkRooftops(const std::vector<GSPRect>& rooftops) {
   for(auto r : rooftops) {
     if(r.testOverlap(collider)) {
       splatted = true;
+      splatSound.play();
       break;
     }
   }
@@ -59,18 +69,34 @@ void PlayerCharacter::checkRooftops(const std::vector<GSPRect>& rooftops) {
 
 }
 
-void PlayerCharacter::checkPiles(const std::unordered_map<Pile*, GSPRect>& piles) {
-  //~~_
+void PlayerCharacter::checkPiles(std::deque<JunkPile>& piles) {
+  for(auto& p : piles) {
+    if(collider.testOverlap(p.getCollider()) || sensor.testOverlap(p.getCollider())) {
+      if(dashing) { p.kill(); }
+      else {
+        splatted = true;
+        splatSound.play();
+        break;
+      }
+    }
+  }
 }
 
-void PlayerCharacter::updateVertical(float dt) {
+void PlayerCharacter::updateJumpLand(float dt) {
   bool jumpButton = store->input.IsKeyPressed(InputManager::KEY_JUMP);
 
   if(grounded) {
     yVel = 0;
 
-    if(jumpButton) { position.y -= 3; } //get clearance for sensor
-    else { jumpTime = JUMP_MAX_TIME; } //on ground and button released, so refill jump time
+    if(jumpButton) { 
+      if(jumpTime > 0) {
+        jumpSound.play();
+        position.y -= 3; //get clearance for sensor
+      }
+    }
+    else {
+      jumpTime = JUMP_MAX_TIME; //on ground and button released, so refill jump time
+    }
 
   }
   else { //not grounded
@@ -80,8 +106,8 @@ void PlayerCharacter::updateVertical(float dt) {
       yVel = -JUMP_SPEED;
       jumpTime -= dt;
     }
-    else {
-      jumpTime = 0; //jump is over, so empty jump time
+    else { //button is up or time is over
+      jumpTime = -1.0f; //jump is over, so empty jump time
       if(yVel < -UP_MOMENTUM_LIMIT) { yVel *= UP_MOMENTUM_CURB; } //curb excessive climb rates
     }
 
@@ -104,6 +130,7 @@ void PlayerCharacter::updateDash(float dt) {
       dashTimer = DASH_SIZE;
       dashing = true;
       canDash = false;
+      dashSound.play();
     }
 
   }
@@ -130,6 +157,8 @@ void PlayerCharacter::draw() {
       float hz = 1.0f / fps;
       while(frameTimer > hz) {
         frame = (frame + 1) % RUN_FRAMES;
+        if(frame == 1) { leftStepSound.play(); }
+        if(frame == 4) { rightStepSound.play(); }
         frameTimer -= hz;
       }
       spr.srcRect.x = frame * spr.srcRect.width;

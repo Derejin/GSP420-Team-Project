@@ -8,11 +8,12 @@ GameplayScene::GameplayScene(SharedStore* store) :
   text(L"derp", &font),
   playerTexture(L"Texture/Player Sprite.png"),
   player(store, playerTexture),
-  particles(store, playerTexture)
+  particles(store, playerTexture),
+  junkDist(junkChance)
 {
   store->speed = store->START_SPEED;
 
-  rooftops.emplace_back(0.0f, 550.0f, 1.0f);
+  rooftops.emplace_back(store, 0.0f, 550.0f, 1.0f);
   for(int i = 0; i < 3; i++) { genNextRoof(); }
 
   text.setRect(GSPRect(10, 10, 300, 300));
@@ -39,6 +40,7 @@ Scene* GameplayScene::playUpdate(float dt) {
   if(player.isDead()) { return splattedUpdate(dt); }
 
   updateRooftops(dt);
+  updateJunk(dt);
 
   updatePlayer(dt);
   if(player.isDead()) { return this; }
@@ -57,6 +59,20 @@ Scene* GameplayScene::splattedUpdate(float dt) {
   }
 
   return this;
+}
+
+void GameplayScene::updateJunk(float dt) {
+  float rate = store->speed;
+  if(player.isDashing()) { rate = store->DASH_SPEED; }
+
+  for(auto& p : piles) { p.update(dt, rate); }
+
+  std::deque<JunkPile> newDeque;
+  for(auto& p : piles) {
+    if(p.isAlive()) { newDeque.push_back(p); }
+  }
+
+  piles = newDeque;
 }
 
 void GameplayScene::updateRooftops(float dt) {
@@ -92,10 +108,18 @@ void GameplayScene::draw() {
   particles.draw();
   player.draw();
   for(auto& roof : rooftops) { roof.draw(); }
+  for(auto& pile : piles) { pile.draw(); }
   text.draw();
 }
 
 void GameplayScene::genNextRoof() {
   auto& prev = rooftops.back().getCollider();
-  rooftops.emplace_back(prev.x + prev.width, prev.y, store->speed / store->START_SPEED);
+  rooftops.emplace_back(store, prev.x + prev.width, prev.y, store->speed / store->START_SPEED);
+
+  if(junkDist(store->rng)) { //add junk
+    auto& cur = rooftops.back().getCollider();
+    vec2f position{cur.x + (cur.width / 2), cur.y};
+    piles.emplace_back(position);
+  }
+
 }

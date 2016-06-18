@@ -3,12 +3,13 @@
 #include "PlayerCharacter.h"
 #include <unordered_map>
 #include <deque>
-#include <random>
+#include "SharedStore.h"
 #include "Font.h"
 #include "Text.h"
 #include "Rooftop.h"
 #include "DashParticleSystem.h"
 #include "MultiBackground.h"
+#include "JunkPile.h"
 
 class GameplayScene : public Scene {
 public:
@@ -26,6 +27,7 @@ private:
   Scene* playUpdate(float dt);
   Scene* splattedUpdate(float dt);
   void updateRooftops(float dt);
+  void updateJunk(float dt);
   void updateScore(float dt);
   void updatePlayer(float dt);
 
@@ -33,13 +35,17 @@ private:
 
   PlayerCharacter player;
   DashParticleSystem particles;
+
   MultiBackground bg;
 
   Font font;
   Text text;
 
   std::deque<Rooftop> rooftops;
-  std::unordered_map<Pile*, GSPRect> piles;
+  std::deque<JunkPile> piles;
+
+  const float junkChance = 0.33f;
+  std::bernoulli_distribution junkDist;
 
   //SharedStore* store; inherited from Scene
   bool paused = false;

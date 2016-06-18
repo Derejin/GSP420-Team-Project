@@ -1,15 +1,11 @@
 #include "Rooftop.h"
+#include "SharedStore.h"
 
 std::vector<Texture> Rooftop::textures;
-std::mt19937 Rooftop::rng(std::random_device{}());
 std::uniform_int_distribution<int> Rooftop::widthDist(5,15);
 std::uniform_int_distribution<size_t> Rooftop::texDist;
 
-Rooftop::Rooftop(float prevRoofTailX, float prevRoofHeight, float speedRatio) 
-  #ifdef VIEW_ROOFTOP_COLLIDERS
-  : debugTex(L"Texture/utility box.png")
-  #endif
-{
+Rooftop::Rooftop(SharedStore* store, float prevRoofTailX, float prevRoofHeight, float speedRatio) {
   if(textures.empty()) { loadTextures(); }
 
   float high = prevRoofHeight - MAX_STEP_UP;
@@ -23,14 +19,14 @@ Rooftop::Rooftop(float prevRoofTailX, float prevRoofHeight, float speedRatio)
   float gap_limit = SLOW_GAP_LIMIT * speedRatio;
   std::uniform_real_distribution<float> gapRand(0.0f, gap_limit);
 
-  int width = widthDist(rng);
+  int width = widthDist(store->rng);
 
-  collider.x = prevRoofTailX + gapRand(rng);
-  collider.y = heightRand(rng);
+  collider.x = prevRoofTailX + gapRand(store->rng);
+  collider.y = heightRand(store->rng);
   collider.width = width * 100.0f;
   collider.height = 1000.0f;
 
-  size_t which = texDist(rng);
+  size_t which = texDist(store->rng);
   for(int i = 0; i < width; i++) {
     sprites.emplace_back();
     auto& spr = sprites.back();

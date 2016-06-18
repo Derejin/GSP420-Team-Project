@@ -5,11 +5,11 @@
 #include "Utility.h"
 #include <random>
 
-//#define VIEW_ROOFTOP_COLLIDERS
+struct SharedStore;
 
 class Rooftop {
 public:
-  Rooftop(float prevRoofTailX, float prevRoofHeight, float speedRatio);
+  Rooftop(SharedStore* store, float prevRoofTailX, float prevRoofHeight, float speedRatio);
   void update(float dt, float speed);
   void draw();
   GSPRect getCollider() const;
@@ -24,7 +24,6 @@ private:
   const float MAX_STEP_DOWN = 100.0f;
   const float SLOW_GAP_LIMIT = 250.0f;
 
-  static std::mt19937 rng;
   static std::vector<Texture> textures;
   static std::uniform_int_distribution<int> widthDist;
   static std::uniform_int_distribution<size_t> texDist;
@@ -32,9 +31,6 @@ private:
   std::vector<Sprite> sprites;
   GSPRect collider;
 
-  #ifdef VIEW_ROOFTOP_COLLIDERS
-  Sprite debugSpr;
-  Texture debugTex;
-  #endif
+  SharedStore* store;
 
 };

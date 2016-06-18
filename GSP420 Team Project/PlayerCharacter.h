@@ -5,15 +5,16 @@
 #include <deque>
 #include <unordered_map>
 #include "InputManager.h"
+#include "Sound.h"
+#include "JunkPile.h"
 
-class Pile {};
 struct SharedStore;
 
 class PlayerCharacter {
 public:
   PlayerCharacter(SharedStore* store, const Texture& texture);
 
-  void update(float dt, const std::vector<GSPRect>& rooftops, const std::unordered_map<Pile*, GSPRect>& piles);
+  void update(float dt, const std::vector<GSPRect>& rooftops, std::deque<JunkPile>& piles);
   void draw();
 
   bool isDead() const { return splatted; }
@@ -24,11 +25,17 @@ private:
   void snapPos();
 
   void checkRooftops(const std::vector<GSPRect>& rooftops);
-  void checkPiles(const std::unordered_map<Pile*, GSPRect>& piles);
-  void updateVertical(float dt);
+  void checkPiles(std::deque<JunkPile>& piles);
+  void updateJumpLand(float dt);
   void updateDash(float dt);
 
   SharedStore* store;
+
+  Sound leftStepSound;
+  Sound rightStepSound;
+  Sound dashSound;
+  Sound splatSound;
+  Sound jumpSound;
 
   Texture tex;
   Sprite spr;
