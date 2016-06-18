@@ -21,7 +21,7 @@ void Plane::draw() {
   sprites[0].destRect.y = -scrolly;
 
   sprites[1].destRect = sprites[0].destRect;
-  sprites[1].destRect.x += screenRect.width;
+  sprites[1].destRect.x += screenRect.width - 1;
 
   sprites[2].destRect = sprites[0].destRect;
   sprites[2].destRect.y += screenRect.height;

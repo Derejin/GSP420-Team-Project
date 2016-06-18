@@ -1,5 +1,20 @@
 #pragma once
 #include <d2d1.h>
+#include <vector>
+#include <deque>
+
+struct vec2f {
+  float x, y;
+
+  vec2f operator+(vec2f other) {
+    return vec2f{x + other.x, y + other.y};
+  }
+
+  vec2f operator+=(vec2f other) {
+    *this = *this + other;
+    return *this;
+  }
+};
 
 struct GSPRect {
   float x = 0;
@@ -21,4 +36,37 @@ struct GSPRect {
   operator D2D1_RECT_F() const {
     return D2D1::RectF(x, y, x+width, y+height);
   }
+
+  void moveBy(vec2f vec) {
+    x += vec.x;
+    y += vec.y;
+  }
+
+  void moveTo(vec2f vec) {
+    x = vec.x;
+    y = vec.y;
+  }
+
+  std::vector<GSPRect> testOverlap(const std::vector<GSPRect>& colliders) {
+    std::vector<GSPRect> hits;
+
+    for(auto c : colliders) {
+      if(testOverlap(c)) { hits.push_back(c); }
+    }
+
+    return hits;
+  }
+
+  bool testOverlap(GSPRect other) {
+    D2D1_RECT_F a = *this;
+    D2D1_RECT_F b = other;
+
+    if(a.top > b.bottom) { return false; }
+    if(a.left > b.right) { return false; }
+    if(a.bottom < b.top) { return false; }
+    if(a.right < b.left) { return false; }
+
+    return true;
+  }
 };
+

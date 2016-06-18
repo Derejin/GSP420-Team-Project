@@ -1,12 +1,12 @@
 #include "Sound.h"
 #include <fmod.hpp>
+#include <cassert>
 
 FMOD::System* Sound::system = nullptr;
 
 Sound::Sound(const std::string& filename) {
-  //~~@ look at unused args here
-  system->createSound(filename.c_str(), FMOD_2D, nullptr, &snd);
-  system->playSound(snd, nullptr, true, &chan);
+  auto result = system->createSound(filename.c_str(), FMOD_2D, nullptr, &snd);
+  result = system->playSound(snd, nullptr, true, &chan);
 }
 
 Sound::~Sound() {
@@ -14,8 +14,8 @@ Sound::~Sound() {
 }
 
 void Sound::play() {
-  chan->setPosition(0, FMOD_TIMEUNIT_MS);
-  chan->setPaused(false);
+  auto result = chan->setPosition(0, FMOD_TIMEUNIT_MS);
+  result = chan->setPaused(false);
 }
 
 bool Sound::isPlaying() const {

@@ -1,10 +1,8 @@
 #include "Game.h"
-#include "TestScene.h"
 #include "TitleScene.h"
 #include "MessageHandler.h"
 
 Game::Game() :
-  //scene(new TestScene(&store))
 	scene(new TitleScene(&store))
 {
   //nop
@@ -35,4 +33,6 @@ void Game::run() {
     }
 
   }
+
+  if(scene) { scene.reset(nullptr); }
 }

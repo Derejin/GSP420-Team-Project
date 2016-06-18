@@ -1,5 +1,5 @@
 #include "TitleScene.h"
-#include "TestScene.h"
+#include "GameplayScene.h"
 #include "MessageHandler.h"
 #include "InputManager.h"
 #include "SharedStore.h"
@@ -8,10 +8,10 @@ TitleScene::TitleScene(SharedStore* store) :
 	Scene(store),
 	font(L"Ariel"),
 	staticText(L"Title Sprite Here", &font), //replace w/ sprite!
-	bgtex(L"ColtonTitleBackground.png"), //replace
+	bgtex(L"Texture/ColtonTitleBackground.png"), //replace
 	snd("SFX/button-37.mp3"),
 	song("BGM/Undaunted.mp3"),
-	menuBorder(L"MenuBorder.png")
+	menuBorder(L"Texture/MenuBorder.png")
 {
 	gMessageHandler->AddRecipient(&menu, RTESTMENU);
 	gMessageHandler->AddRecipient(&messageBox, RSCENE);
@@ -29,14 +29,14 @@ TitleScene::TitleScene(SharedStore* store) :
 
 	mainMenuBorder.setBitmap(menuBorder);
 	mainMenuBorder.destRect = mainMenuBorder.srcRect;
-	mainMenuBorder.destRect.width *= 0.6;
+	mainMenuBorder.destRect.width *= 0.6f;
 	mainMenuBorder.destRect.height -= 10;
-	mainMenuBorder.destRect.x = (store->screenWidth) / 3 + 13;
+	mainMenuBorder.destRect.x = store->screenWidth / 3 + 13;
 	mainMenuBorder.destRect.y = 172;
 	mainMenuBorder.z = -50;
 	batch.addRO(&mainMenuBorder);
 
-	Texture buttons(L"buttons.png");
+	Texture buttons(L"Texture/buttons.png");
 	std::vector<Sprite> btnSpr;
 
 	//config first button; button textures are three buttons tiled one above another
@@ -100,13 +100,13 @@ Scene* TitleScene::update(float dt) {
 		return this;
 
 	case 1: //move to Game scene
-		return new TestScene(store); //placeholder
+		return new GameplayScene(store); //placeholder
 
 	case 2: //move to Highscore scene
-		return new TestScene(store); //placeholder
+		; //placeholder
 
 	case 3: //move to Credits scene
-		return new TestScene(store); //placeholder
+    ; //placeholder
 
 	case 4: //exit
 		return nullptr;
