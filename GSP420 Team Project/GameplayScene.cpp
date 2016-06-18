@@ -67,7 +67,7 @@ void GameplayScene::updateJunk(float dt) {
 
   for(auto& p : piles) { p.update(dt, rate); }
 
-  std::deque<JunkPile> newDeque;
+  std::deque<JunkPile> newDeque; //~~@
   for(auto& p : piles) {
     if(p.isAlive()) { newDeque.push_back(p); }
   }
