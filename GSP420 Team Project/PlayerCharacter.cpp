@@ -8,7 +8,8 @@ PlayerCharacter::PlayerCharacter(SharedStore* store, const Texture& texture) :
   rightStepSound("SFX/Pat-SoundBible.com-1661659465.mp3"),
   dashSound("SFX/dash.wav"),
   splatSound("SFX/Jab-SoundBible.com-1806727891.mp3"),
-  jumpSound("SFX/Jump-SoundBible.com-1007297584.mp3")
+  jumpSound("SFX/Jump-SoundBible.com-1007297584.mp3"),
+  dizzyTex(L"Texture/dizzy.png")
 {
   rightStepSound.setVolume(0.75f);
   dashSound.setVolume(1.5f);
@@ -37,6 +38,9 @@ PlayerCharacter::PlayerCharacter(SharedStore* store, const Texture& texture) :
 }
 
 void PlayerCharacter::update(float dt, const std::vector<GSPRect>& rooftops, std::deque<JunkPile>& piles) {
+  frameTimer += dt;
+  if(splatted) { return; }
+
   checkRooftops(rooftops);
   checkPiles(piles);
   if(splatted) { return; }
@@ -46,15 +50,12 @@ void PlayerCharacter::update(float dt, const std::vector<GSPRect>& rooftops, std
 
   position.y += yVel * dt;
   snapPos();
-
-  frameTimer += dt;
 }
 
 void PlayerCharacter::checkRooftops(const std::vector<GSPRect>& rooftops) {
   for(auto r : rooftops) {
     if(r.testOverlap(collider)) {
-      splatted = true;
-      splatSound.play();
+      doSplat();
       break;
     }
   }
@@ -74,8 +75,7 @@ void PlayerCharacter::checkPiles(std::deque<JunkPile>& piles) {
     if(collider.testOverlap(p.getCollider()) || sensor.testOverlap(p.getCollider())) {
       if(dashing) { p.kill(); }
       else {
-        splatted = true;
-        splatSound.play();
+        doSplat();
         break;
       }
     }
@@ -143,6 +143,13 @@ void PlayerCharacter::updateDash(float dt) {
 
 }
 
+void PlayerCharacter::doSplat() {
+  splatted = true;
+  splatSound.play();
+  spr.setBitmap(dizzyTex);
+  spr.srcRect.width /= 2;
+  frame = 0;
+}
 
 void PlayerCharacter::draw() {
   AnimState animState = JUMPING;
@@ -176,6 +183,14 @@ void PlayerCharacter::draw() {
     spr.srcRect.x = 7 * spr.srcRect.width;
     break;
   case SPLATTED:
+    {
+      float hz = 1.0f / 4;
+      while(frameTimer > hz) {
+        frame = (frame + 1) % DIZZY_FRAMES;
+        frameTimer -= hz;
+      }
+      spr.srcRect.x = frame * spr.srcRect.width;
+    }
     break;
   }
 

@@ -1,8 +1,8 @@
 #include "JunkParticleSystem.h"
 
-JunkParticleSystem::JunkParticleSystem(SharedStore* store, vec2f position) :
+JunkParticleSystem::JunkParticleSystem(SharedStore* store, vec2f position, Texture* tex) :
   store(store),
-  tex(L"Texture/junk.png"),
+  tex(tex),
   crash("SFX/gun-gunshot-02.mp3"),
   basePosition(position)
 {
@@ -49,7 +49,7 @@ void JunkParticleSystem::addParticle() {
   const int COLUMNS = 18;
   const int ROWS = 21;
 
-  p.spr.setBitmap(tex);
+  p.spr.setBitmap(*tex);
   p.spr.srcRect.width  /= COLUMNS;
   p.spr.srcRect.height /= ROWS;
   std::uniform_int_distribution<int> swDist(0, COLUMNS - 1);
@@ -63,7 +63,7 @@ void JunkParticleSystem::addParticle() {
   std::uniform_real_distribution<float> xDist(-100.0f, 100.0f);
   std::uniform_real_distribution<float> yDist(-300.0f, 0.0f);
   p.position = vec2f{xDist(store->rng), yDist(store->rng)};
-  p.velocity = p.position * 10.0f;
+  p.velocity = p.position * 5.0f;
   p.position += basePosition;
 
   std::uniform_real_distribution<float> anglePicker(0.0f, 360.0f);

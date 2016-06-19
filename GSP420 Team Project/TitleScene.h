@@ -9,7 +9,7 @@
 #include "Scene.h"
 #include "TitleSceneMessageBox.h"
 
-class TitleScene : public Scene{
+class TitleScene : public Scene {
 public:
 	TitleScene(SharedStore* store);
 	~TitleScene();

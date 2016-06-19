@@ -28,6 +28,7 @@ private:
   void checkPiles(std::deque<JunkPile>& piles);
   void updateJumpLand(float dt);
   void updateDash(float dt);
+  void doSplat();
 
   SharedStore* store;
 
@@ -38,6 +39,7 @@ private:
   Sound jumpSound;
 
   Texture tex;
+  Texture dizzyTex;
   Sprite spr;
   GSPRect collider;
   GSPRect sensor;
@@ -48,6 +50,7 @@ private:
 
   const int SPRITE_FRAMES = 8;
   const int RUN_FRAMES = 5;
+  const int DIZZY_FRAMES = 2;
   const float SPRITE_SCALE = 0.5f;
 
   float yVel = 0;

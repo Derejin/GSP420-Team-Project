@@ -7,7 +7,7 @@
 
 class JunkParticleSystem {
 public:
-  JunkParticleSystem(SharedStore* store, vec2f position);
+  JunkParticleSystem(SharedStore* store, vec2f position, Texture* tex);
   void update(float dt, float speed);
   void draw();
 
@@ -19,7 +19,7 @@ private:
   SharedStore* store;
 
   Sound crash;
-  Texture tex;
+  Texture* tex;
   bool finished = false;
   bool active = false;
   float timer = 3.0f;

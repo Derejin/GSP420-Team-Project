@@ -9,6 +9,7 @@ struct SharedStore;
 
 class Rooftop {
 public:
+  Rooftop(SharedStore* store, bool first);
   Rooftop(SharedStore* store, float prevRoofTailX, float prevRoofHeight, float speedRatio);
   void update(float dt, float speed);
   void draw();

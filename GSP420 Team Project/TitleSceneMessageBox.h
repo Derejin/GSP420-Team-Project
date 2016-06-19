@@ -6,5 +6,5 @@ class TitleSceneMessageBox : public BaseRecipient
 public:
 	void DecodeMessage(int messageValue);
 
-	int acceptedValue;
+	int acceptedValue = 0;
 };
