@@ -41,8 +41,8 @@ private:
 
   Texture playerTexture; //do not rearrange declaration order
 
-  Song song;
   const float SONG_VOLUME = 0.25f;
+  Song song;
 
   PlayerCharacter player;
   DashParticleSystem particles;
@@ -53,9 +53,12 @@ private:
 
   Font font;
   Text scoreText;
+  Sprite scoreBG;
+
   Font pauseFont;
   std::vector<Text> menuText;
 
+  bool justDidJunk = true;
   std::deque<Rooftop> rooftops;
   std::deque<JunkPile> piles;
   std::vector<std::unique_ptr<JunkParticleSystem>> junkParticles;

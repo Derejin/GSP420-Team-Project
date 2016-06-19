@@ -5,6 +5,30 @@ std::vector<Texture> Rooftop::textures;
 std::uniform_int_distribution<int> Rooftop::widthDist(5,15);
 std::uniform_int_distribution<size_t> Rooftop::texDist;
 
+
+Rooftop::Rooftop(SharedStore* store, bool first) {
+  assert(first && "usage guard triggered - first must be true");
+
+  if(textures.empty()) { loadTextures(); }
+
+  int width = 10;
+
+  collider.x = 0.0f;
+  collider.y = 500.0f;
+  collider.width = width * 100.0f;
+  collider.height = 1000.0f;
+
+  size_t which = texDist(store->rng);
+  for(int i = 0; i < width; i++) {
+    sprites.emplace_back();
+    auto& spr = sprites.back();
+    spr.setBitmap(textures[which]);
+    spr.destRect = spr.srcRect;
+    spr.destRect.y = collider.y;
+  }
+
+}
+
 Rooftop::Rooftop(SharedStore* store, float prevRoofTailX, float prevRoofHeight, float speedRatio) {
   if(textures.empty()) { loadTextures(); }
 

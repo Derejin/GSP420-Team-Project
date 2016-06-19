@@ -23,10 +23,18 @@ GameplayScene::GameplayScene(SharedStore* store) :
   pausePlane.setTexture(blackTex);
   pausePlane.opacity = 0.65f;
 
-  rooftops.emplace_back(store, 0.0f, 550.0f, 1.0f);
+  rooftops.emplace_back(store, true);
   for(int i = 0; i < 3; i++) { genNextRoof(); }
 
-  scoreText.setRect(GSPRect(10, 10, 300, 300));
+  scoreBG.setBitmap(blackTex);
+  scoreBG.destRect = GSPRect(0, 5, 150, 25);
+  scoreBG.opacity = 0.5f;
+  scoreBG.destRect.x = (store->screenWidth - scoreBG.destRect.width) / 2;
+
+  GSPRect scoreRect = scoreBG.destRect;
+  scoreRect.x += 5;
+
+  scoreText.setRect(scoreRect);
   font.setColor(D2D1::ColorF::White);
 
   createPauseMenu();
@@ -86,7 +94,7 @@ Scene* GameplayScene::playUpdate(float dt) {
 
 Scene* GameplayScene::splattedUpdate(float dt) {
   if(store->input.IsKeyTriggered(InputManager::KEY_DASH) || store->input.IsMousePressed(InputManager::MOUSE_LEFT)) {
-    return new GameplayScene(store);
+    return new TitleScene(store);
   }
 
   player.update(dt, std::vector<GSPRect>(), std::deque<JunkPile>());
@@ -146,6 +154,7 @@ void GameplayScene::draw() {
   particles.draw();
   for(auto& roof : rooftops) { roof.draw(); }
   for(auto& junk : junkParticles) { junk->draw(); }
+  scoreBG.draw();
   scoreText.draw();
   player.draw();
 
@@ -161,11 +170,15 @@ void GameplayScene::genNextRoof() {
   auto& prev = rooftops.back().getCollider();
   rooftops.emplace_back(store, prev.x + prev.width, prev.y, store->speed / store->START_SPEED);
 
-  if(junkDist(store->rng)) { //add junk
+  if(justDidJunk) {
+    justDidJunk = false;
+  }
+  else if(junkDist(store->rng)) { //add junk
     auto& cur = rooftops.back().getCollider();
     vec2f position{cur.x + (cur.width / 2), cur.y};
     junkParticles.emplace_back(std::make_unique<JunkParticleSystem>(store, position, &junkTexture));
     piles.emplace_back(position, junkParticles.back().get());
+    justDidJunk = true;
   }
 
 }
@@ -215,6 +228,6 @@ void GameplayScene::createPauseMenu() {
   menuText.emplace_back(L"Quit", &pauseFont);
   
   menuText[0].setRect(GSPRect(487.0f, 232.0f, 200.0f, 100.0f));
-  menuText[1].setRect(GSPRect(515.0f, 354.0f, 200.0f, 100.0f));
+  menuText[1].setRect(GSPRect(512.0f, 354.0f, 200.0f, 100.0f));
 
 }
