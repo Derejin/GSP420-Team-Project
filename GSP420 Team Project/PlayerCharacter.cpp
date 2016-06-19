@@ -83,7 +83,8 @@ void PlayerCharacter::checkPiles(std::deque<JunkPile>& piles) {
 }
 
 void PlayerCharacter::updateJumpLand(float dt) {
-  bool jumpButton = store->input.IsKeyPressed(InputManager::KEY_JUMP);
+  bool jumpButton = (store->input.IsKeyPressed(InputManager::KEY_JUMP)
+	  || store->input.IsMousePressed(InputManager::MOUSE_RIGHT));
 
   if(grounded) {
     yVel = 0;
@@ -116,7 +117,8 @@ void PlayerCharacter::updateJumpLand(float dt) {
 }
 
 void PlayerCharacter::updateDash(float dt) {
-  bool button = store->input.IsKeyPressed(InputManager::KEY_DASH);
+  bool button = (store->input.IsKeyPressed(InputManager::KEY_DASH)
+	  || store->input.IsMousePressed(InputManager::MOUSE_LEFT));
 
   dashTimer -= dt;
   if(grounded && dashTimer < -DASH_DELAY) { canDash = true; }
