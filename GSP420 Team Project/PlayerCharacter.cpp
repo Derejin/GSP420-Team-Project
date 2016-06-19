@@ -84,11 +84,12 @@ void PlayerCharacter::checkPiles(std::deque<JunkPile>& piles) {
 
 void PlayerCharacter::updateJumpLand(float dt) {
   bool jumpButton = store->input.IsKeyPressed(InputManager::KEY_JUMP);
+  bool mouseJump = store->input.IsMousePressed(InputManager::MOUSE_RIGHT);
 
   if(grounded) {
     yVel = 0;
 
-    if(jumpButton) { 
+    if(jumpButton || mouseJump) { 
       if(jumpTime > 0) {
         jumpSound.play();
         position.y -= 3; //get clearance for sensor
@@ -102,7 +103,7 @@ void PlayerCharacter::updateJumpLand(float dt) {
   else { //not grounded
     yVel += GRAVITY * dt;
 
-    if(jumpButton && jumpTime > 0) { //jump in progress
+    if((jumpButton || mouseJump) && jumpTime > 0) { //jump in progress
       yVel = -JUMP_SPEED;
       jumpTime -= dt;
     }
@@ -117,11 +118,12 @@ void PlayerCharacter::updateJumpLand(float dt) {
 
 void PlayerCharacter::updateDash(float dt) {
   bool button = store->input.IsKeyPressed(InputManager::KEY_DASH);
+  bool mouse = store->input.IsMousePressed(InputManager::MOUSE_LEFT);
 
   dashTimer -= dt;
   if(grounded && dashTimer < -DASH_DELAY) { canDash = true; }
 
-  if(button) {
+  if(button || mouse) {
     if(dashing) {
       yVel = 0;
       dashing = dashTimer > 0;

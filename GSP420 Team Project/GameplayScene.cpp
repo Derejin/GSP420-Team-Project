@@ -56,7 +56,8 @@ Scene* GameplayScene::playUpdate(float dt) {
 }
 
 Scene* GameplayScene::splattedUpdate(float dt) {
-  if(store->input.IsKeyTriggered(InputManager::KEY_DASH)) {
+  if(store->input.IsKeyTriggered(InputManager::KEY_DASH)
+	  || store->input.IsMousePressed(InputManager::MOUSE_LEFT)) {
     return new GameplayScene(store);
   }
 
