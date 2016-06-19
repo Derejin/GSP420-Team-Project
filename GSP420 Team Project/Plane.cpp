@@ -24,11 +24,15 @@ void Plane::draw() {
   sprites[1].destRect.x += screenRect.width - 1;
 
   sprites[2].destRect = sprites[0].destRect;
-  sprites[2].destRect.y += screenRect.height;
+  sprites[2].destRect.y += screenRect.height - 1;
 
   sprites[3].destRect = sprites[0].destRect;
   sprites[3].destRect.x += screenRect.width;
   sprites[3].destRect.y += screenRect.height;
 
-  for(auto& spr : sprites) { spr.draw(); }
+  for(auto& spr : sprites) {
+    spr.srcRect = srcRect;
+    spr.opacity = opacity;
+    spr.draw();
+  }
 }

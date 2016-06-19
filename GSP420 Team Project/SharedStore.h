@@ -20,7 +20,7 @@ struct SharedStore {
   const float MAX_SPEED = 1500.0f;
   const float DASH_SPEED = 2000.0f;
 
-  RClass msgTgt = RTESTMENU;
+  RClass msgTgt = RNONE;
   float speed;
   float time = 0;
 

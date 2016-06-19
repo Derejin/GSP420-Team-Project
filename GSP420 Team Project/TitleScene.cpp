@@ -13,8 +13,9 @@ TitleScene::TitleScene(SharedStore* store) :
 	song("BGM/Undaunted.mp3"),
 	menuBorder(L"Texture/MenuBorder.png")
 {
-	gMessageHandler->AddRecipient(&menu, RTESTMENU);
-	gMessageHandler->AddRecipient(&messageBox, RSCENE);
+	gMessageHandler->AddRecipient(&menu, RTITLEMENU);
+  store->msgTgt = RTITLEMENU;
+	gMessageHandler->AddRecipient(&messageBox, RTITLESCENE);
 
 	font.setColor(D2D1::ColorF(1, 1)); //black
 	font.setSize(40.0f);
@@ -56,14 +57,14 @@ TitleScene::TitleScene(SharedStore* store) :
 	btnSpr.back().srcRect.y += btnSpr.back().srcRect.height;
 
 	//adjust messages!
-	menu.AddButton(btnSpr[0], btnSpr[1], btnSpr[2], btnSpr[0].destRect, GSPMessage(RSCENE, 1));
+	menu.AddButton(btnSpr[0], btnSpr[1], btnSpr[2], btnSpr[0].destRect, GSPMessage(RTITLESCENE, 1));
 	//move destRect of all three sprites, then add next button; do so twice
 	for (auto& spr : btnSpr) { spr.destRect.y += spr.destRect.height + 20; }
-	menu.AddButton(btnSpr[0], btnSpr[1], btnSpr[2], btnSpr[0].destRect, GSPMessage(RSCENE, 2));
+	menu.AddButton(btnSpr[0], btnSpr[1], btnSpr[2], btnSpr[0].destRect, GSPMessage(RTITLESCENE, 2));
 	for (auto& spr : btnSpr) { spr.destRect.y += spr.destRect.height + 20; }
-	menu.AddButton(btnSpr[0], btnSpr[1], btnSpr[2], btnSpr[0].destRect, GSPMessage(RSCENE, 3));
+	menu.AddButton(btnSpr[0], btnSpr[1], btnSpr[2], btnSpr[0].destRect, GSPMessage(RTITLESCENE, 3));
 	for (auto& spr : btnSpr) { spr.destRect.y += spr.destRect.height + 20; }
-	menu.AddButton(btnSpr[0], btnSpr[1], btnSpr[2], btnSpr[0].destRect, GSPMessage(RSCENE, 4));
+	menu.AddButton(btnSpr[0], btnSpr[1], btnSpr[2], btnSpr[0].destRect, GSPMessage(RTITLESCENE, 4));
 	batch.addRO(&menu);
 
 	menuLabels.emplace_back(L"Start Game", &font);
@@ -81,8 +82,8 @@ TitleScene::TitleScene(SharedStore* store) :
 }
 
 TitleScene::~TitleScene() {
-	gMessageHandler->RemoveRecipient(RTESTMENU); //doubt this is needed
-	gMessageHandler->RemoveRecipient(RSCENE); //don't think this one is either
+	gMessageHandler->RemoveRecipient(RTITLEMENU); //doubt this is needed
+	gMessageHandler->RemoveRecipient(RTITLESCENE); //don't think this one is either
 }
 
 Scene* TitleScene::update(float dt) {

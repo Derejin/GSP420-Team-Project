@@ -35,9 +35,6 @@ Rooftop::Rooftop(SharedStore* store, float prevRoofTailX, float prevRoofHeight, 
     spr.destRect.y = collider.y;
   }
 
-  #ifdef VIEW_ROOFTOP_COLLIDERS
-  debugSpr.setBitmap(debugTex);
-  #endif
 }
 
 void Rooftop::update(float dt, float speed) {
@@ -51,11 +48,6 @@ void Rooftop::update(float dt, float speed) {
 
 void Rooftop::draw() {
   for(auto& spr : sprites) { spr.draw(); }
-
-  #ifdef VIEW_ROOFTOP_COLLIDERS
-  debugSpr.destRect = collider;
-  debugSpr.draw();
-  #endif
 }
 
 GSPRect Rooftop::getCollider() const {

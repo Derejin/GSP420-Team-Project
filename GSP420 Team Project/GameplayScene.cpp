@@ -2,47 +2,76 @@
 #include "SharedStore.h"
 #include <sstream>
 #include <algorithm>
+#include "TitleScene.h"
 
 GameplayScene::GameplayScene(SharedStore* store) :
   Scene(store),
   font(L"Arial"),
-  text(L"derp", &font),
+  pauseFont(L"Arial"),
+  scoreText(L"derp", &font),
   playerTexture(L"Texture/Player Sprite.png"),
   player(store, playerTexture),
   particles(store, playerTexture),
   junkDist(junkChance),
-  song("BGM/Mistake the Getaway.mp3", 0.25f)
+  song("BGM/Mistake the Getaway.mp3", SONG_VOLUME),
+  junkTexture(L"Texture/junk.png"),
+  blackTex(L"Texture/Planes/black.png")
 {
   store->speed = store->START_SPEED;
+  store->time = 0;
+
+  pausePlane.setTexture(blackTex);
+  pausePlane.opacity = 0.65f;
 
   rooftops.emplace_back(store, 0.0f, 550.0f, 1.0f);
   for(int i = 0; i < 3; i++) { genNextRoof(); }
 
-  text.setRect(GSPRect(10, 10, 300, 300));
+  scoreText.setRect(GSPRect(10, 10, 300, 300));
   font.setColor(D2D1::ColorF::White);
 
+  createPauseMenu();
 }
 
 GameplayScene::~GameplayScene() {
+  gMessageHandler->RemoveRecipient(RGPSCENE);
+  setPaused(false);
 }
 
 Scene* GameplayScene::update(float dt) {
-  if(store->input.IsKeyPressed(InputManager::KEY_ESC)) { return nullptr; }
-
   if(paused) { return pausedUpdate(dt); }
   return playUpdate(dt);
 }
 
 Scene* GameplayScene::pausedUpdate(float dt) {
+  if(store->input.IsKeyTriggered(InputManager::KEY_ESC)) { setPaused(false); }
+
+  menu.Update();
+  msgReciever.processQueue();
+
+  switch(msgReciever.acceptedValue) {
+  case 0: break;
+  case 1:
+    setPaused(false);
+    msgReciever.acceptedValue = 0;
+    break;
+  case 2: return new TitleScene(store);
+  }
+
   return this;
 }
 
 Scene* GameplayScene::playUpdate(float dt) {
+  if(store->input.IsKeyTriggered(InputManager::KEY_ESC)) { 
+    setPaused(true);
+    return this;
+  }
+
   particles.update(dt);
   if(player.isDead()) { return splattedUpdate(dt); }
 
   updateRooftops(dt);
   updateJunk(dt);
+  updateJunkParticles(dt);
 
   updatePlayer(dt);
   if(player.isDead()) { return this; }
@@ -56,10 +85,12 @@ Scene* GameplayScene::playUpdate(float dt) {
 }
 
 Scene* GameplayScene::splattedUpdate(float dt) {
-  if(store->input.IsKeyTriggered(InputManager::KEY_DASH)
-	  || store->input.IsMousePressed(InputManager::MOUSE_LEFT)) {
+  if(store->input.IsKeyTriggered(InputManager::KEY_DASH) || store->input.IsMousePressed(InputManager::MOUSE_LEFT)) {
     return new GameplayScene(store);
   }
+
+  player.update(dt, std::vector<GSPRect>(), std::deque<JunkPile>());
+  updateJunkParticles(dt);
 
   return this;
 }
@@ -70,6 +101,12 @@ void GameplayScene::updateJunk(float dt) {
 
   for(auto& p : piles) { p.update(dt, rate); }
   piles.erase(std::remove_if(piles.begin(), piles.end(), [](JunkPile& p) { return !p.isAlive(); }), piles.end());
+}
+
+void GameplayScene::updateJunkParticles(float dt) {
+  float rate = store->speed;
+  if(player.isDashing()) { rate = store->DASH_SPEED; }
+  if(player.isDead()) { rate = 0.0f; }
 
   for(auto& junk : junkParticles) { junk->update(dt, rate); }
   junkParticles.erase(std::remove_if(junkParticles.begin(), junkParticles.end(), [](std::unique_ptr<JunkParticleSystem>& p) { return p->isFinished(); }), junkParticles.end());
@@ -94,7 +131,7 @@ void GameplayScene::updateScore(float dt) {
   std::wstringstream ss;
   store->score = int(store->time * 1000);
   ss << L"Score: " << store->score;
-  text.setString(ss.str());
+  scoreText.setString(ss.str());
 }
 
 void GameplayScene::updatePlayer(float dt) {
@@ -107,10 +144,17 @@ void GameplayScene::updatePlayer(float dt) {
 void GameplayScene::draw() {
   bg.draw();
   particles.draw();
-  player.draw();
   for(auto& roof : rooftops) { roof.draw(); }
   for(auto& junk : junkParticles) { junk->draw(); }
-  text.draw();
+  scoreText.draw();
+  player.draw();
+
+  if(paused) {
+    pausePlane.draw();
+    menu.draw();
+    for(auto& t : menuText) { t.draw(); }
+  }
+
 }
 
 void GameplayScene::genNextRoof() {
@@ -120,8 +164,57 @@ void GameplayScene::genNextRoof() {
   if(junkDist(store->rng)) { //add junk
     auto& cur = rooftops.back().getCollider();
     vec2f position{cur.x + (cur.width / 2), cur.y};
-    junkParticles.emplace_back(std::make_unique<JunkParticleSystem>(store, position));
+    junkParticles.emplace_back(std::make_unique<JunkParticleSystem>(store, position, &junkTexture));
     piles.emplace_back(position, junkParticles.back().get());
   }
+
+}
+
+void GameplayScene::setPaused(bool pause) {
+  if(paused == pause) { return; }
+
+  paused = pause;
+  if(paused) {
+    song.setVolume(SONG_VOLUME * 0.5f);
+    gMessageHandler->AddRecipient(&menu, RGPMENU);
+  }
+  else {
+    song.setVolume(SONG_VOLUME);
+    gMessageHandler->RemoveRecipient(RGPMENU);
+  }
+}
+
+void GameplayScene::createPauseMenu() {
+  Texture buttonTex(L"Texture/buttons.png");
+  std::vector<Sprite> btnFrames;
+  btnFrames.emplace_back();
+
+  btnFrames[0].setBitmap(buttonTex);
+  btnFrames[0].srcRect.height /= 3;
+  btnFrames[0].destRect = btnFrames[0].srcRect;
+  btnFrames[0].destRect.x = (store->screenWidth - btnFrames[0].srcRect.width) / 2;
+  btnFrames[0].destRect.y = 200;
+
+  btnFrames.push_back(btnFrames.back());
+  btnFrames.back().srcRect.y += btnFrames.back().srcRect.height;
+  btnFrames.push_back(btnFrames.back());
+  btnFrames.back().srcRect.y += btnFrames.back().srcRect.height;
+
+  menu.AddButton(btnFrames[0], btnFrames[1], btnFrames[2], btnFrames[0].destRect, GSPMessage(RGPSCENE, 1));
+  for(auto& spr : btnFrames) { spr.destRect.y += spr.destRect.height + 20; }
+  menu.AddButton(btnFrames[0], btnFrames[1], btnFrames[2], btnFrames[0].destRect, GSPMessage(RGPSCENE, 2));
+  for(auto& spr : btnFrames) { spr.destRect.y += spr.destRect.height + 20; }
+
+  gMessageHandler->AddRecipient(&msgReciever, RGPSCENE);
+  store->msgTgt = RGPMENU;
+
+  pauseFont.setColor(D2D1::ColorF::Black);
+  pauseFont.setSize(30.0f);
+
+  menuText.emplace_back(L"Resume", &pauseFont);
+  menuText.emplace_back(L"Quit", &pauseFont);
+  
+  menuText[0].setRect(GSPRect(487.0f, 232.0f, 200.0f, 100.0f));
+  menuText[1].setRect(GSPRect(515.0f, 354.0f, 200.0f, 100.0f));
 
 }
