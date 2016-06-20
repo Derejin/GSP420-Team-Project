@@ -5,6 +5,8 @@
 #include "Audio.h"
 #include "GSPMessage.h"
 #include <random>
+#include <memory>
+#include <string>
 
 struct SharedStore {
   SharedStore();
@@ -20,7 +22,7 @@ struct SharedStore {
   const float MAX_SPEED = 1500.0f;
   const float DASH_SPEED = 2000.0f;
 
-  RClass msgTgt = RTESTMENU;
+  RClass msgTgt = RNONE;
   float speed;
   float time = 0;
 
@@ -34,6 +36,10 @@ struct SharedStore {
 
   //tools
   std::mt19937 rng;
+  std::unique_ptr<Song> bgm;
+  std::string songPath;
+  float songBaseVol;
+  float oldBaseVol;
 
 };
 
