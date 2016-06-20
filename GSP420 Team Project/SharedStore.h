@@ -5,6 +5,8 @@
 #include "Audio.h"
 #include "GSPMessage.h"
 #include <random>
+#include <memory>
+#include <string>
 
 struct SharedStore {
   SharedStore();
@@ -34,6 +36,10 @@ struct SharedStore {
 
   //tools
   std::mt19937 rng;
+  std::unique_ptr<Song> bgm;
+  std::string songPath;
+  float songBaseVol;
+  float oldBaseVol;
 
 };
 

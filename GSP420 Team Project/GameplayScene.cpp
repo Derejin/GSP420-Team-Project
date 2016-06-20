@@ -13,10 +13,14 @@ GameplayScene::GameplayScene(SharedStore* store) :
   player(store, playerTexture),
   particles(store, playerTexture),
   junkDist(junkChance),
-  song("BGM/Mistake the Getaway.mp3", SONG_VOLUME),
+  //song("BGM/Mistake the Getaway.mp3", SONG_VOLUME),
   junkTexture(L"Texture/junk.png"),
   blackTex(L"Texture/Planes/black.png")
 {
+  store->oldBaseVol = store->songBaseVol;
+  store->songBaseVol = SONG_VOLUME;
+  store->songPath = "BGM/Mistake the Getaway.mp3";
+
   store->speed = store->START_SPEED;
   store->time = 0;
 
@@ -188,11 +192,11 @@ void GameplayScene::setPaused(bool pause) {
 
   paused = pause;
   if(paused) {
-    song.setVolume(SONG_VOLUME * 0.5f);
+    store->bgm->setVolume(SONG_VOLUME * 0.5f);
     gMessageHandler->AddRecipient(&menu, RGPMENU);
   }
   else {
-    song.setVolume(SONG_VOLUME);
+    store->bgm->setVolume(SONG_VOLUME);
     gMessageHandler->RemoveRecipient(RGPMENU);
   }
 }

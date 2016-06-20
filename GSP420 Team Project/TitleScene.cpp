@@ -10,9 +10,13 @@ TitleScene::TitleScene(SharedStore* store) :
 	staticText(L"Title Sprite Here", &font), //replace w/ sprite!
 	bgtex(L"Texture/ColtonTitleBackground.png"), //replace
 	snd("SFX/button-37.mp3"),
-	song("BGM/Undaunted.mp3"),
+	//song("BGM/Undaunted.mp3"),
 	menuBorder(L"Texture/MenuBorder.png")
 {
+  store->oldBaseVol = store->songBaseVol;
+  store->songBaseVol = 1.0f;
+  store->songPath = "BGM/Undaunted.mp3";
+
 	gMessageHandler->AddRecipient(&menu, RTITLEMENU);
   store->msgTgt = RTITLEMENU;
 	gMessageHandler->AddRecipient(&messageBox, RTITLESCENE);

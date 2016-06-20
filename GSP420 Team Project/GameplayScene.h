@@ -42,7 +42,7 @@ private:
   Texture playerTexture; //do not rearrange declaration order
 
   const float SONG_VOLUME = 0.25f;
-  Song song;
+  //Song song;
 
   PlayerCharacter player;
   DashParticleSystem particles;

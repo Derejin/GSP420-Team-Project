@@ -3,13 +3,17 @@
 #include "MessageHandler.h"
 
 Game::Game() :
-	scene(new TitleScene(&store))
+	scene(new TitleScene(&store)),
+  fadeTex(L"Texture/Planes/black.png")
 {
-  //nop
+  fader.setTexture(fadeTex);
+  fader.opacity = 0;
 }
 
 void Game::run() {
   timer.getDT();
+  scene->update(0);
+  fadeIn();
 
   while(scene && store.window.update()) {
     store.input.ReadFrame();
@@ -28,11 +32,52 @@ void Game::run() {
       scene->draw();
       store.gfx.endDraw();
     }
-    else {
+    else { //changed to new scene, so do fadey stuff
+      fadeOut();
+
       scene.reset(next);
+      if(!scene) { break; }
+      scene->update(0);
+
+      fadeIn();
     }
 
   }
 
   if(scene) { scene.reset(nullptr); }
+}
+
+void Game::fadeOut() {
+  float fadeTimer = 0;
+  while((fadeTimer < FADE_DURATION) && store.window.update()) {
+    fader.opacity = fadeTimer / FADE_DURATION;
+    store.bgm->setVolume((1.0f - fader.opacity) * store.oldBaseVol);
+
+    store.gfx.startDraw();
+    scene->draw();
+    fader.draw();
+    store.gfx.endDraw();
+
+    fadeTimer += timer.getDT();
+  }
+  store.bgm->setVolume(0);
+}
+
+void Game::fadeIn() {
+  store.bgm.reset(new Song(store.songPath, 0.1f));
+
+  float fadeTimer = FADE_DURATION;
+  while(store.window.update()) {
+    fadeTimer -= timer.getDT();
+    if(fadeTimer <= 0) { break; }
+
+    fader.opacity = fadeTimer / FADE_DURATION;
+    store.bgm->setVolume((1.0f - fader.opacity) * store.songBaseVol);
+
+    store.gfx.startDraw();
+    scene->draw();
+    fader.draw();
+    store.gfx.endDraw();
+  }
+  store.bgm->setVolume(store.songBaseVol);
 }

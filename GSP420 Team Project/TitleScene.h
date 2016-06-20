@@ -18,7 +18,7 @@ public:
 
 private:
 	Sound snd;
-	Song song;
+	//Song song;
 	Font font;
 	Text staticText;
 	Texture bgtex;
