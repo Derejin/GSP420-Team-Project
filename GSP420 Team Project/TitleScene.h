@@ -26,6 +26,7 @@ private:
 	Plane plane;
 	DepthBatch batch;
 	Sprite mainMenuBorder;
+	Sprite titleBorder;
 	std::vector<Text> menuLabels;
 
 	TitleSceneMessageBox messageBox;
