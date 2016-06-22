@@ -17,7 +17,11 @@ enum RClass
   RGPMENU, //gameplay scene buttons
 	RGPSCENE, //gameplay scene reciever
   RTITLEMENU, //title scene buttons
-	RTITLESCENE //title scene reciever
+	RTITLESCENE, //title scene reciever
+  RTEXTMENU, //text scene button
+  RTEXTSCENE, //text scene reciever
+  RHIGHSCORE,
+  RHIGHSCORESCENE
 };
 
 //GSPMessage structure!

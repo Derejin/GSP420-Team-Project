@@ -1,0 +1,48 @@
+                                                                                CREDITS
+
+Dash sound effect - original resource (by Derek)
+Menu selection sound effect - original resource (by Derek)
+Menu cancel sound effect - original resource (by Derek)
+
+Step sound effect - Recorded by Mike Koenig CC3.0 (unmodified)
+retrieved from http://soundbible.com/969-Pat.html
+
+Jab sound effect - Recorded by Mike Koenig CC3.0 (unmodified)
+retrieved from http://soundbible.com/995-Jab.html
+
+Jump sound effect - Recorded by snottyboy CC3.0 (unmodified)
+retrieved from http://soundbible.com/1343-Jump.html
+
+Junk sound effect - from Soundjay.com
+Pause sound effect - from Soundjay.com
+Unpause sound effect - from Soundjay.com
+SoundJay Terms of Use: http://www.soundjay.com/tos.html
+
+Rooftop graphics - original resources (by Colby)
+
+Menu border graphic - Created by dialectric CC0
+retrieved from http://opengameart.org/content/2d-game-board-borders
+
+Junk graphics - Created by Mindfields5, edited by Ciphtertext008. CC0
+retrieved from http://opengameart.org/content/biomechanical-tile-sprite-sheet-001
+
+Character sprite graphics - Created by bevouliin CC0
+retrieved from http://opengameart.org/content/bevouliin-free-running-and-jumping-mascot-sprite-sheets
+
+Dashing character frame - original resource (by Derek)
+
+"Monkeys Spinning Monkeys" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+"Mistake the Getaway" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+"Undaunted" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+Background graphics - ~~???~~
+
+Audio engine : FMOD Studio by Firelight Technologies

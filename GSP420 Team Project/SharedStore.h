@@ -40,6 +40,7 @@ struct SharedStore {
   std::string songPath;
   float songBaseVol;
   float oldBaseVol;
+  std::wstring textFile;
 
 };
 

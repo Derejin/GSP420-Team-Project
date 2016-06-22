@@ -73,6 +73,12 @@
     <Filter Include="Header Files\Game\Scenes\TitleScene">
       <UniqueIdentifier>{b5257a04-a705-4902-b835-8566ca284156}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Scenes\TextScene">
+      <UniqueIdentifier>{672ecfe7-8335-435d-b3ff-c3a38a8b35af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Scenes\TextScene">
+      <UniqueIdentifier>{5ec06f37-cc3d-41f4-ad09-d17895c20397}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -183,6 +189,12 @@
     <ClInclude Include="JunkParticleSystem.h">
       <Filter>Header Files\Game\Scenes\GameplayScene</Filter>
     </ClInclude>
+    <ClInclude Include="TextScene.h">
+      <Filter>Header Files\Game\Scenes\TextScene</Filter>
+    </ClInclude>
+    <ClInclude Include="High_Score.h">
+      <Filter>Header Files\Game\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -283,6 +295,12 @@
     </ClCompile>
     <ClCompile Include="JunkParticleSystem.cpp">
       <Filter>Source Files\Game\Scenes\GameplayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TextScene.cpp">
+      <Filter>Source Files\Game\Scenes\TextScene</Filter>
+    </ClCompile>
+    <ClCompile Include="High_Score.cpp">
+      <Filter>Source Files\Game\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
