@@ -3,6 +3,9 @@
 #include <vector>
 #include <deque>
 
+//this header contains general utilities.
+
+//simple 2D float vector
 struct vec2f {
   float x, y;
 
@@ -20,6 +23,8 @@ struct vec2f {
   }
 };
 
+//A rect expressed as x/y/width/height for convenience.
+//It converts automatically to and from D2D1_RECT_F.
 struct GSPRect {
   float x = 0;
   float y = 0;

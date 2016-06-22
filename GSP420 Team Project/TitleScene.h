@@ -9,6 +9,9 @@
 #include "Scene.h"
 #include "TitleSceneMessageBox.h"
 
+//Top-level menu scene where player selects which
+//scene they want to transition to
+
 class TitleScene : public Scene {
 public:
 	TitleScene(SharedStore* store);

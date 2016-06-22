@@ -19,6 +19,8 @@ public:
   //finishes draw pass
   void endDraw();
 
+  //these are utility functions (dirty hack) used by JunkParticleSystem.
+  //they are untested outside that context.
   void setRotation(float degrees, D2D1_POINT_2F pivot);
   void resetRotation();
 

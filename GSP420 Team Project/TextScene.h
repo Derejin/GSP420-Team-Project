@@ -7,6 +7,10 @@
 #include "Text.h"
 #include "TitleSceneMessageBox.h"
 
+//This scene serves for the credits scene and the instructions scene.
+//When it loads the contents fo the file indicated by store->textFile
+//and it then displays that text to the user.
+
 class TextScene : public Scene {
 public:
   TextScene(SharedStore* store);

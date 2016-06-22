@@ -7,7 +7,7 @@ The longer you live, the more points you get.
 If you fall into a pit or hit a wall, you lose!
 If you come across a pile of junk, you have to dash to break through it, or else you will lose.
 
-Press X or the Right Mosue Button to Jump.
+Press X or the Right Mouse Button to Jump.
 Hold down Jump to jump higher; release it quickly to jump lower.
 
 Press Z or the Left Mouse Button to Dash.

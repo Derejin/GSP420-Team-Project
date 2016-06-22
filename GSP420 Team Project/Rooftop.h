@@ -5,15 +5,27 @@
 #include "Utility.h"
 #include <random>
 
+//entity class for rooftops. Primarily concerned with generation,
+
 struct SharedStore;
 
 class Rooftop {
 public:
+  //use this ctor for the first roof to make sure the player can start fairly
   Rooftop(SharedStore* store, bool first);
+  
+  //use this for the rest
+  //speedRatio is current speed / start speed
   Rooftop(SharedStore* store, float prevRoofTailX, float prevRoofHeight, float speedRatio);
+
+  //scrolls
   void update(float dt, float speed);
+
   void draw();
+
   GSPRect getCollider() const;
+
+  //returns true when the roof has scrolled out and can be replaced
   bool out() const;
 
 private:

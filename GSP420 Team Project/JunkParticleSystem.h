@@ -5,14 +5,19 @@
 #include "Sound.h"
 #include "SharedStore.h"
 
+//Particle system for junk piles.
+
 class JunkParticleSystem {
 public:
+  //position is the bottom center
+
   JunkParticleSystem(SharedStore* store, vec2f position, Texture* tex);
   void update(float dt, float speed);
   void draw();
 
   bool isFinished() const { return finished; }
 
+  //begins 'explosion' effect
   void activate();
 
 private:

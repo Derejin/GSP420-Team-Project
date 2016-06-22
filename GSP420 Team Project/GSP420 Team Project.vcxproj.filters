@@ -303,4 +303,15 @@
       <Filter>Source Files\Game\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="credits.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="hiscores.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="instructions.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

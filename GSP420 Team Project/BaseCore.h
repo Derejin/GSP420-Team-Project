@@ -2,6 +2,8 @@
 #include <queue>
 #include <windows.h>
 
+//vestigial class from unused interface design
+
 class SMessage;
 
 class BaseCore {

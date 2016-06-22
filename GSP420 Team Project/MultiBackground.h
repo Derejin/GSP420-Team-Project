@@ -3,6 +3,8 @@
 #include "Plane.h"
 #include "DepthBatch.h"
 
+//scrolling parallax background for gameplay scene
+
 class MultiBackground {
 public:
   MultiBackground();

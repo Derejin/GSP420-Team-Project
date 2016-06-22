@@ -1,9 +1,14 @@
-//created by colton on 5/20
-
 #pragma once
 #include "Sprite.h"
 #include "Utility.h"
 #include "RenderObject.h"
+
+//The Plane class implements a fullscreen RenderObject.
+//In order to use it, create an instance and call the setTexture()
+//to bind a texture to draw from.
+//Usage is generally similar to Sprite, but Plane is fullscreen and
+//can be used for continually scrolling backgrounds or foregrounds
+//that repeat at their borders.
 
 class Plane : public RenderObject {
 public:
@@ -20,4 +25,5 @@ private:
 
 	friend class Graphics;
   static GSPRect screenRect; //set in bootstrap
+
 };

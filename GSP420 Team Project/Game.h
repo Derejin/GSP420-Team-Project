@@ -7,6 +7,10 @@
 #include "Plane.h"
 #include "Song.h"
 
+//Top-level encapsulation for the game
+//Contains the main control loop and the main state machine.
+//Create an instance and invoke its .run() member to start the game.
+
 class Game {
 public:
   Game();

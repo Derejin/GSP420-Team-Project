@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 
+//Creating a song object will stream the indicated sound file from disk
+//and play it back in an infinite loop. The playback will begin automatically.
+
 namespace FMOD {
   class System;
   class Sound;
