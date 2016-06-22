@@ -3,12 +3,14 @@
 #include <sstream>
 #include <algorithm>
 #include "TitleScene.h"
+#include "High_Score.h"
 #include <vector>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <ctime>
 #include <iomanip>
+
 
 GameplayScene::GameplayScene(SharedStore* store) :
   Scene(store),
@@ -114,7 +116,7 @@ Scene* GameplayScene::playUpdate(float dt) {
 
 Scene* GameplayScene::splattedUpdate(float dt) {
   if(store->input.IsKeyTriggered(InputManager::KEY_DASH) || store->input.IsMousePressed(InputManager::MOUSE_LEFT)) {
-    return new TitleScene(store);
+    return new High_Score(store);
   }
 
   player.update(dt, std::vector<GSPRect>(), std::deque<JunkPile>());
