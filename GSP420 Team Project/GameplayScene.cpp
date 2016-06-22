@@ -3,6 +3,12 @@
 #include <sstream>
 #include <algorithm>
 #include "TitleScene.h"
+#include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <ctime>
+#include <iomanip>
 
 GameplayScene::GameplayScene(SharedStore* store) :
   Scene(store),
@@ -13,10 +19,17 @@ GameplayScene::GameplayScene(SharedStore* store) :
   player(store, playerTexture),
   particles(store, playerTexture),
   junkDist(junkChance),
-  //song("BGM/Mistake the Getaway.mp3", SONG_VOLUME),
   junkTexture(L"Texture/junk.png"),
-  blackTex(L"Texture/Planes/black.png")
+  blackTex(L"Texture/Planes/black.png"),
+  pauseSnd("SFX/button-37.mp3"),
+  unpauseSnd("SFX/button-10.mp3"),
+  hiScoreFont(L"Arial", 40.0f),
+  hiScoreText(L"New High Score!", &hiScoreFont)
 {
+  hiScoreFont.setBold(true);
+
+  unpauseSnd.setVolume(0.15f);
+
   store->oldBaseVol = store->songBaseVol;
   store->songBaseVol = SONG_VOLUME;
   store->songPath = "BGM/Mistake the Getaway.mp3";
@@ -46,7 +59,7 @@ GameplayScene::GameplayScene(SharedStore* store) :
 
 GameplayScene::~GameplayScene() {
   gMessageHandler->RemoveRecipient(RGPSCENE);
-  setPaused(false);
+  setPaused(false); //removes menu
 }
 
 Scene* GameplayScene::update(float dt) {
@@ -73,20 +86,23 @@ Scene* GameplayScene::pausedUpdate(float dt) {
 }
 
 Scene* GameplayScene::playUpdate(float dt) {
+  particles.update(dt);
+  if(player.isDead()) { return splattedUpdate(dt); }
+
   if(store->input.IsKeyTriggered(InputManager::KEY_ESC)) { 
     setPaused(true);
     return this;
   }
-
-  particles.update(dt);
-  if(player.isDead()) { return splattedUpdate(dt); }
 
   updateRooftops(dt);
   updateJunk(dt);
   updateJunkParticles(dt);
 
   updatePlayer(dt);
-  if(player.isDead()) { return this; }
+  if(player.isDead()) { 
+    updateHiScores();
+    return this;
+  }
 
   store->time += dt;
   if(store->speed < store->MAX_SPEED) { store->speed += 30 * dt; }
@@ -168,6 +184,23 @@ void GameplayScene::draw() {
     for(auto& t : menuText) { t.draw(); }
   }
 
+  if(gotHiScore) {
+    GSPRect baseRect(float(store->screenWidth - 325) / 2, 250.0f, 325.0f, 100.0f);
+    hiScoreFont.setColor(D2D1::ColorF::Black);
+
+    for(float x = -3; x <= 3; x++) {
+      for(float y = -3; y <= 3; y++) {
+        GSPRect temp = baseRect;
+        temp.moveBy(vec2f{x, y});
+        hiScoreText.setRect(temp);
+        hiScoreText.draw();
+      }
+    }
+
+    hiScoreText.setRect(baseRect);
+    hiScoreFont.setColor(D2D1::ColorF::Red);
+    hiScoreText.draw();
+  }
 }
 
 void GameplayScene::genNextRoof() {
@@ -192,10 +225,12 @@ void GameplayScene::setPaused(bool pause) {
 
   paused = pause;
   if(paused) {
+    pauseSnd.play();
     store->bgm->setVolume(SONG_VOLUME * 0.5f);
     gMessageHandler->AddRecipient(&menu, RGPMENU);
   }
   else {
+    unpauseSnd.play();
     store->bgm->setVolume(SONG_VOLUME);
     gMessageHandler->RemoveRecipient(RGPMENU);
   }
@@ -235,3 +270,45 @@ void GameplayScene::createPauseMenu() {
   menuText[1].setRect(GSPRect(512.0f, 354.0f, 200.0f, 100.0f));
 
 }
+
+void GameplayScene::updateHiScores() {
+  std::vector<std::pair<int, std::string>> scores(5);
+
+  {
+    std::ifstream file("hiscores.txt");
+    assert(file && "Failed to open file.");
+
+    for(int i = 0; i < 5; i++) {
+      std::getline(file, scores[i].second);
+      scores[i].first = std::stoi(scores[i].second);
+      std::getline(file, scores[i].second);
+    }
+  }
+
+  time_t now;
+  time(&now);
+  std::stringstream ss;
+  tm temp;
+  localtime_s(&temp, &now);
+  ss << std::put_time(&temp, "%m/%d/%Y");
+  std::pair<int, std::string> myScore(store->score, ss.str());
+  ss.str("");
+
+  for(auto iter = scores.begin(); iter != scores.end(); iter++) {
+    if(iter->first < myScore.first) {
+      scores.insert(iter, myScore);
+      scores.pop_back();
+      gotHiScore = true;
+      break;
+    }
+  }
+
+  std::ofstream file("hiscores.txt");
+  assert(file && "Failed to open file.");
+
+  for(auto sc : scores) {
+    file << sc.first << "\n" << sc.second << "\n";
+  }
+}
+
+

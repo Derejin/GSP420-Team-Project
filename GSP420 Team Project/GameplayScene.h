@@ -23,11 +23,7 @@ public:
   Scene* update(float dt) override;
   void draw() override;
 
-  //MenuManager menu; inherited from Scene
-
 private:
-  void genNextRoof();
-
   Scene* pausedUpdate(float dt);
   Scene* playUpdate(float dt);
   Scene* splattedUpdate(float dt);
@@ -38,14 +34,21 @@ private:
   void updatePlayer(float dt);
   void setPaused(bool pause);
   void createPauseMenu();
+  void genNextRoof();
 
-  Texture playerTexture; //do not rearrange declaration order
+  void updateHiScores();
+
+  //do not rearrange declaration order past this point
+
+  Texture playerTexture; 
 
   const float SONG_VOLUME = 0.25f;
-  //Song song;
 
   PlayerCharacter player;
   DashParticleSystem particles;
+
+  Sound pauseSnd;
+  Sound unpauseSnd;
 
   MultiBackground bg;
   Texture blackTex;
@@ -67,9 +70,11 @@ private:
   const float junkChance = 0.33f;
   std::bernoulli_distribution junkDist;
 
-  //SharedStore* store; inherited from Scene
   bool paused = false;
 
   TitleSceneMessageBox msgReciever;
 
+  bool gotHiScore = false;
+  Font hiScoreFont;
+  Text hiScoreText;
 };

@@ -63,7 +63,7 @@ InputManager::InputManager(GSPWindow& win)
 	//now acquire keyboard for use with DirectInput
 	result = input_keyboard->Acquire();
 	//and assert it worked properly
-	assert(!FAILED(result) && "DirectInput: Keyboard Acquire Failed");
+	//assert(!FAILED(result) && "DirectInput: Keyboard Acquire Failed");
 
 	//MOUSE SETUP//
 	//initialize mouse
@@ -86,7 +86,7 @@ InputManager::InputManager(GSPWindow& win)
 	//now acquire mouse for use with DirectInput
 	result = input_mouse->Acquire();
 	//assert it worked properly
-	assert(!FAILED(result) && "DirectInput: Mouse Acquire Failed");
+	//assert(!FAILED(result) && "DirectInput: Mouse Acquire Failed");
 }
 
 //destructor - releases the keyboard, the mouse, and DirectInput

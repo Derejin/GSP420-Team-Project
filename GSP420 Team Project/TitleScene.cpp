@@ -3,6 +3,8 @@
 #include "MessageHandler.h"
 #include "InputManager.h"
 #include "SharedStore.h"
+#include "TextScene.h"
+#include "High_Score.h"
 
 TitleScene::TitleScene(SharedStore* store) :
 	Scene(store),
@@ -108,10 +110,11 @@ Scene* TitleScene::update(float dt) {
 		return new GameplayScene(store); //placeholder
 
 	case 2: //move to Highscore scene
-		; //placeholder
+		return new High_Score(store);
 
 	case 3: //move to Credits scene
-    ; //placeholder
+    store->textFile = L"credits.txt";
+    return new TextScene(store);
 
 	case 4: //exit
 		return nullptr;

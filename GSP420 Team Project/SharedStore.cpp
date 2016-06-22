@@ -2,7 +2,7 @@
 #include "MessageHandler.h"
 
 SharedStore::SharedStore() :
-  window(L"Testing Window", screenWidth, screenHeight),
+  window(L"Run, Man, Run!", screenWidth, screenHeight),
   gfx(window),
   input(window),
   rng(std::random_device{}())
