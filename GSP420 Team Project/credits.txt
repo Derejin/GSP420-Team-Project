@@ -4,10 +4,8 @@ Dash sound effect - original resource (by Derek)
 Menu selection sound effect - original resource (by Derek)
 Menu cancel sound effect - original resource (by Derek)
 
-Step sound effect - Recorded by Mike Koenig CC3.0 (unmodified)
+Step and Jab sound effects - Recorded by Mike Koenig CC3.0 (unmodified)
 retrieved from http://soundbible.com/969-Pat.html
-
-Jab sound effect - Recorded by Mike Koenig CC3.0 (unmodified)
 retrieved from http://soundbible.com/995-Jab.html
 
 Jump sound effect - Recorded by snottyboy CC3.0 (unmodified)
@@ -43,6 +41,10 @@ http://creativecommons.org/licenses/by/3.0/
 Licensed under Creative Commons: By Attribution 3.0 License
 http://creativecommons.org/licenses/by/3.0/
 
-Background graphics - ~~???~~
+Background graphics - by Carlos Sandoval (carlos85333@sbcglobal.net) Used with expressed permission
+http://spritefx.blogspot.com/2013/04/sprite-background-buildings.html
+http://spritefx.blogspot.com/2013/04/sprite-background-sky.html
+http://spritefx.blogspot.com/2014/01/sprite-background-water.html
+http://spritefx.blogspot.com/2013/04/rock-sprites.html
 
 Audio engine : FMOD Studio by Firelight Technologies
