@@ -1,10 +1,17 @@
-Press Z or the Left Mouse Button to Dash.
+                                                                                INSTRUCTIONS
+
+Welcome to Run, Man, Run!
+This is an infinite runner game: You gain points by surviving.
+The longer you live, the more points you get.
+
+If you fall into a pit or hit a wall, you lose!
+If you come across a pile of junk, you have to dash to break through it, or else you will lose.
+
 Press X or the Right Mosue Button to Jump.
 Hold down Jump to jump higher; release it quickly to jump lower.
 
-You gain points by surviving. 
-If you fall into a pit or hit a wall, you lose!
+Press Z or the Left Mouse Button to Dash.
+There is a short delay before you can dash again.
+You can dash while airborne, but you'll need to land before you can dash again.
 
-If you come across a pile of junk, you have to dash to break through it, or else you will lose.
-
-Survive as long as you can!
+Survive as long as you can and try to beat the high score!
