@@ -95,6 +95,20 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TitleSceneMessageBox.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="credits.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Text>
+    <Text Include="hiscores.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Text>
+    <Text Include="instructions.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Text>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CB0797B1-C76F-403A-A8D6-B1780EE10398}</ProjectGuid>
     <RootNamespace>GSP420TeamProject</RootNamespace>

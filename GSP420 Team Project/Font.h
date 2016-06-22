@@ -2,6 +2,7 @@
 //This class represents a loaded font face and formatting information,
 //such as size/bold/italic/color
 //a Font object can be linked to a Text object to enable it to draw text
+//Multiple Text objects can safely share the same Font object
 
 #pragma once
 #include <string>

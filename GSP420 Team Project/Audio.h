@@ -3,6 +3,9 @@
 #include "Sound.h"
 #include "Song.h"
 
+//An Audio object must exist for the Song and Sound classes to function.
+//No further interaction with this class should be required.
+
 namespace FMOD {
   class System;
 }

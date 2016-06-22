@@ -9,6 +9,9 @@
 #include "Scene.h"
 #include "TitleSceneMessageBox.h"
 
+//High scores scene where player can view the top 5 recorded
+//scores and the dates on which they were achieved.
+
 class High_Score : public Scene {
 public:
 	High_Score(SharedStore* store);

@@ -1,10 +1,11 @@
-//Encapsulates a D2D bitmap interface - relates loaded texture for use with Sprite/Plane
-//created 5/17 at 17:50 by Richard
-
 #pragma once
 #include <d2d1.h>
 #include <atlbase.h>
 #include <string>
+
+//This class encapsulates a loaded texture for use with the
+//Sprite and/or Plane classes. Mutliple Sprites and Planes
+//can share the same Texture object safely.
 
 class ImageLoader;
 

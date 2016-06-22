@@ -1,6 +1,10 @@
 #pragma once
 #include <string>
 
+//A Sound object loads a sound into memory and then the play()
+//function can be called to play it on demand as many times as
+//you like.
+
 namespace FMOD {
   class System;
   class Sound;

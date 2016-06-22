@@ -4,6 +4,8 @@
 #include "Sprite.h"
 #include <deque>
 
+//creates the trailing particles behind the player character when dashing
+
 struct SharedStore;
 
 class DashParticleSystem {

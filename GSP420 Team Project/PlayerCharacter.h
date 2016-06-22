@@ -8,6 +8,8 @@
 #include "Sound.h"
 #include "JunkPile.h"
 
+//Player entity
+
 struct SharedStore;
 
 class PlayerCharacter {

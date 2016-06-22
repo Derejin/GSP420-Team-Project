@@ -1,5 +1,7 @@
 #pragma once
 
+//vestigial class from unused interface design
+
 /*
 InputCore
 bootstraps input core

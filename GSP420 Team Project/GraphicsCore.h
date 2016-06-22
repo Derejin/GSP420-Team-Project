@@ -11,7 +11,7 @@
 #include "Sprite.h"
 #include "Text.h"
 
-//This is absolutely the stupidest thing I've ever coded. >:|
+//vestigial class from unused interface design
 
 class GraphicsCore : public BaseCore {
 public:

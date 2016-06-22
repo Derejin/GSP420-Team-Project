@@ -16,6 +16,9 @@
 #include "TitleSceneMessageBox.h"
 #include "MessageHandler.h"
 
+//This is the gameplay scene, where the player runs across
+//the rooftops.
+
 class GameplayScene : public Scene {
 public:
   GameplayScene(SharedStore* store);
